@@ -7,8 +7,9 @@ import './common/styles/index.scss'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import Detail5day from './common/components/detail5day.tsx'
 import { useState, useEffect, useRef } from 'react'
-import { fetchWeather, fetch5day } from './common/services/api.tsx'
+import { forecastWeather, fetch5day } from './common/services/api.tsx'
 import { createRoot } from 'react-dom/client' // Thay thế ReactDOM.render
+import FivedayWeather from './common/components/fivedayWeather.tsx'
 
 function App() {
   const [city, setCity] = useState<string>('Hanoi')
@@ -18,12 +19,16 @@ function App() {
   const [loading5day, setLoading5day] = useState<boolean>(true)
   const detailSectionRef = useRef<HTMLElement>(null)
 
+  const [weather5day, setWeather5day] = useState<any>(null)
+
   const getWeather = async (city: string) => {
     try {
-      const data = await fetchWeather(city)
-      setWeather(data)
+      const weather = await forecastWeather(city)
+      setWeather(weather.weatherData)
+      setWeather5day(weather.forecastData)
+      console.log('data', weather)
     } catch (error) {
-      console.error('Error fetching weather:', error)
+      console.error('Error fetching weather data:', error)
     } finally {
       setLoadingWeather(false) // Đánh dấu đã tải xong thời tiết
     }
@@ -66,6 +71,7 @@ function App() {
           <Header city={city} setCity={setCity} setWeather={setWeather} />
           <div className='content'>
             <Main weather={weather} />
+            <FivedayWeather weather5day={weather5day} getWeather={getWeather} />
             <section className='detail-5-day' ref={detailSectionRef}></section>
           </div>
           <Footer />

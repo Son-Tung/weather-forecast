@@ -16,3 +16,142 @@
   border-radius: 16px;
   font-family: 'Arial', 'Calibri', sans-serif;
 }
+
+.fiveday {
+  display: flex;
+  overflow-x: auto;
+  position: relative;
+  margin-left: 230px;
+  flex-direction: column;
+}
+
+.five {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.five li {
+  background-color: #fff;
+  padding: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 15px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  display: grid;
+  grid-template-areas:
+      "time temp_max description"
+      "img temp_min humidity";
+  grid-template-columns: auto auto auto;
+  gap: 0px;
+  margin: 3px;
+}
+
+.five li p:nth-child(1) {
+  grid-area: time;
+  position: absolute;
+  margin-bottom: 20px;
+  font-size: 0.9em;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.five li p:nth-child(2) {
+  grid-area: temp_max;
+  position: relative;
+  margin-top: 40px;
+  font-size: 0.9em;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  left: 10px;
+ 
+}
+
+.five li p:nth-child(3) {
+  grid-area: description;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 40px;
+  font-size: 0.8em;
+  font-weight: 0;
+  margin-left: 30px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.five li img {
+  grid-area: img;
+  width: 40px;
+  height: auto;
+  position: relative;
+  bottom: 25px;
+  left: 20px;
+}
+
+.five li p:nth-child(5) {
+  grid-area: temp_min;
+  position: relative;
+  bottom: 10px;
+  font-size: 0.9em;
+  font-family: Arial, Helvetica, sans-serif;
+ left: 10px;
+
+}
+
+.five li p:nth-child(6) {
+  grid-area: humidity;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  bottom: 10px;
+  font-size: 0.8em;
+  font-weight: 0;
+  margin-left: 30px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.five li.compact p:nth-child(3),
+.five li.compact p:nth-child(6) {
+  display: none;
+}
+.weather-image {
+  width: 60px;
+  height: 50px;
+}
+.scroll-button {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: center;
+}
+
+.scroll-button:hover {
+  background-color: #0056b3;
+}
+
+.five li {
+  cursor: pointer; 
+}
+
+.five li.compact {
+  width: 200px;
+}
+.fivetitle{
+  display: flex;
+  justify-content: space-between;
+  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  margin-top: 30px;
+  top: 20px;
+}
+.fivetitle button{
+  border: none;
+  background-color:#deebff  ;
+  cursor: pointer;
+}
+h4 {
+  position: relative;
+  left: 45px;
+}

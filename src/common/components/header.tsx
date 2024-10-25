@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import WeatherLogo from '../../assets/images/svg/IMG.jpg'
 import '../styles/header.scss'
 import { lstCities } from '../../assets/cities'
-import { fetchWeather } from '../services/api'  
+import { forecastWeather } from '../services/api'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import SunnyImage from '../../assets/images/svg/Screenshot_15-10-2024_101422_assets.msn.com.jpeg' // ảnh trời nắng
 import RainyImage from '../../assets/images/svg/Screenshot_15-10-2024_103233_assets.msn.com.jpeg' // ảnh trời mưa
@@ -30,7 +30,7 @@ function Header({ city, setCity, setWeather }: any) {
       if (input.length > 0) {
         const filtered = lstCities.filter((city) => city.name.toLowerCase().includes(input.toLowerCase()))
         // if(filtered?.length){
-          setFilteredCities(filtered)
+        setFilteredCities(filtered)
         // }
       } else {
         setFilteredCities([])
@@ -47,7 +47,7 @@ function Header({ city, setCity, setWeather }: any) {
 
   const getWeather = async (scopeCity?: string) => {
     try {
-      const data = await fetchWeather(scopeCity || city)
+      const data = await forecastWeather(scopeCity || city)
       setWeather(data)
       setFilteredCities([])
     } catch (error) {
@@ -82,7 +82,6 @@ function Header({ city, setCity, setWeather }: any) {
           <div className='search-container'>
             <div className='input-wrapper'>
               <input
-              
                 type='text'
                 value={city}
                 onChange={(e) => handleCityChange(e.target.value)}
@@ -101,7 +100,7 @@ function Header({ city, setCity, setWeather }: any) {
                   ))}
                 </div>
               )}
-              {filteredCities?.length === 0 && city?.length > 0 && (<div>No data</div>)}
+              {filteredCities?.length === 0 && city?.length > 0 && <div>No data</div>}
             </div>
           </div>
         </div>
@@ -125,7 +124,6 @@ function Header({ city, setCity, setWeather }: any) {
           </a>
         </nav>
       </header>
-    
 
       {/* Pop-up thông báo */}
       {showPopup && (
@@ -141,6 +139,4 @@ function Header({ city, setCity, setWeather }: any) {
   )
 }
 
-  export default Header
-
-
+export default Header
