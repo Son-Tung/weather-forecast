@@ -1,41 +1,66 @@
-import './assets/styles/global.scss'
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import Temperature from './common/pages/Tempulature.tsx'
+import { BrowserRouter as Router } from 'react-router-dom'
 import Footer from './common/components/footer.tsx'
-import { useState } from 'react'
-import { fetchWeather } from './common/services/api.tsx'
-import Header from './common/components/header.tsx'
+import Main from './common/components/main.tsx'
+import Header from '../src/common/components/header.tsx'
+import './common/styles/index.scss'
+import '@fortawesome/fontawesome-free/css/all.min.css'
+import Detail5day from './common/components/detail5day.tsx'
+import { useState, useEffect, useRef } from 'react'
+import { forecastWeather } from './common/services/api.tsx'
+import { createRoot } from 'react-dom/client' // Thay thế ReactDOM.render
+import FivedayWeather from './common/components/fivedayWeather.tsx'
+import Details from './common/components/details.tsx'
 
 function App() {
-  const [city, setCity] = useState<string>('')
+  const [city, setCity] = useState<string>('Hanoi')
   const [weather, setWeather] = useState<any>(null)
-
+  const [weather5day, setWeather5day] = useState<any>(null)
+  const [loadingWeather, setLoadingWeather] = useState<boolean>(true)
+  const detailSectionRef = useRef<HTMLElement>(null)
+  
   const getWeather = async (city: string) => {
     try {
-      const data = await fetchWeather(city)
-      console.log('data', data)
-      setWeather(data)
+      const weather = await forecastWeather(city)
+      setWeather(weather.weatherData)
+      setWeather5day(weather.forecastData)
+      console.log('data', weather)
     } catch (error) {
-      console.error('Error:', error)
+      console.error('Error fetching weather data:', error)
+    } finally {
+      setLoadingWeather(false) // Đánh dấu đã tải xong thời tiết
     }
   }
+  
+  useEffect(() => {
+    getWeather(city);
+  }, [city])
+
+  const renderDetail5day = () => {
+    if (detailSectionRef.current && weather && weather5day) {
+      const root = createRoot(detailSectionRef.current) // Tạo root mới
+      root.render(<Detail5day weather={weather} weather5day={weather5day} />)
+    }
+  }
+
+  useEffect(() => {
+    if (!loadingWeather) {
+      renderDetail5day()
+    }
+  }, [loadingWeather, weather, weather5day])
 
   return (
     <>
       <Router>
         <div className='App'>
-          <Header city={city} setCity={setCity} getWeather={getWeather} />
+          <Header city={city} setCity={setCity} setWeather={setWeather} />
           <div className='content'>
-            <div className='Address'>
-              <i className='fas fa-house'></i> <h4>{weather?.name}</h4>
-              <button className='fas fa-chart-bar'></button>
-            </div>
-            <Routes>
-              <Route path='/' element={<Temperature weather={weather} getWeather={getWeather} setCity={setCity} />} />
-            </Routes>
-            <Footer />
+            <Main weather={weather} />
+            <FivedayWeather weather5day={weather5day} getWeather={getWeather} />
+            <section className='detail-5-day' ref={detailSectionRef}></section>
+            <Details />
           </div>
+          <Footer />
         </div>
       </Router>
     </>
