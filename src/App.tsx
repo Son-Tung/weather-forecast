@@ -10,6 +10,7 @@ import { useState, useEffect, useRef } from 'react'
 import { forecastWeather, fetch5day } from './common/services/api.tsx'
 import { createRoot } from 'react-dom/client' // Thay thế ReactDOM.render
 import FivedayWeather from './common/components/fivedayWeather.tsx'
+import Details from './common/components/details.tsx'
 
 function App() {
   const [city, setCity] = useState<string>('Hanoi')
@@ -18,7 +19,6 @@ function App() {
   const [loadingWeather, setLoadingWeather] = useState<boolean>(true)
   const [loading5day, setLoading5day] = useState<boolean>(true)
   const detailSectionRef = useRef<HTMLElement>(null)
-
   const [weather5day, setWeather5day] = useState<any>(null)
 
   const getWeather = async (city: string) => {
@@ -73,6 +73,7 @@ function App() {
             <Main weather={weather} />
             <FivedayWeather weather5day={weather5day} getWeather={getWeather} />
             <section className='detail-5-day' ref={detailSectionRef}></section>
+            <Details />
           </div>
           <Footer />
         </div>
