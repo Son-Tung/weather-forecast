@@ -1,7 +1,7 @@
 const Footer: React.FC<{}> = ({}) => {
   return (
-    <footer className='footer'>
-      <h3>Weather forecast</h3>
+    <footer className='App-footer'>
+      <p>© 2024 Weather App. All rights reserved.</p>
     </footer>
   )
 }

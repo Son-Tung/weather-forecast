@@ -1,7 +1,7 @@
 import '../styles/detail.scss'
 // import React, { useState,  } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css'
-// import { fetchWeather } from '../services/api'  
+// import { fetchWeather } from '../services/api'
 import SunnyImage from '../../assets/images/svg/Screenshot_15-10-2024_101422_assets.msn.com.jpeg' // ảnh trời nắng
 import RainyImage from '../../assets/images/svg/Screenshot_15-10-2024_103233_assets.msn.com.jpeg' // ảnh trời mưa
 import CloudyImage from '../../assets/images/svg/Screenshot_15-10-2024_10259_assets.msn.com.jpeg' // ảnh trời mây
@@ -22,7 +22,7 @@ function Detail({ weather }: any) {
     // thêm các tình trạng thời tiết khác nếu cần
   }
 
-   // Lọc thành phố theo đầu vào từ thanh tìm kiếm
+  // Lọc thành phố theo đầu vào từ thanh tìm kiếm
   //  const handleCityChange = (input: string) => {
   //   setCity(input)
   //   try {
@@ -72,26 +72,27 @@ function Detail({ weather }: any) {
           <div className='weather-info'>
             <div className='weather-header'>
               <img
-                src={weatherImages[weather.weather[0].main.toLowerCase()]} // Lấy ảnh dựa trên tình trạng thời tiết
-                alt={weather.weather[0].description}
+                src={weatherImages[weather?.weather?.[0]?.main.toLowerCase()]} // Lấy ảnh dựa trên tình trạng thời tiết
+                alt={weather?.weather?.[0]?.description}
                 className='weather-image'
               />
               <div className='temperature-details'>
-                <h1>{weather.main.temp}°C</h1>
+                <h1>{weather?.main?.temp}°C</h1>
                 <p className='weather-description'>
-                  {weather.weather[0].description.charAt(0).toUpperCase() + weather.weather[0].description.slice(1)}
+                  {weather?.weather?.[0]?.description.charAt(0).toUpperCase() +
+                    weather?.weather?.[0]?.description?.slice(1)}
                 </p>
 
-                <p className='feels-like'>Feels like {weather.main.feels_like}°C</p>
+                <p className='feels-like'>Feels like {weather?.main?.feels_like}°C</p>
               </div>
             </div>
             <div className='additional-info'>
-              <p>Humidity: {weather.main.humidity}%</p>
-              <p>Vision: {weather.visibility / 1000} km</p>
-              <p>Pressure: {weather.main.pressure} mb</p>
-              <p>Wind speed: {weather.wind.speed} km/h</p>
-              <p>Sunrise: {new Date(weather.sys.sunrise * 1000).toLocaleTimeString()}</p>
-              <p>Sunset: {new Date(weather.sys.sunset * 1000).toLocaleTimeString()}</p>
+              <p>Humidity: {weather?.main?.humidity}%</p>
+              <p>Vision: {weather?.visibility / 1000} km</p>
+              <p>Pressure: {weather?.main?.pressure} mb</p>
+              <p>Wind speed: {weather?.wind?.speed} km/h</p>
+              <p>Sunrise: {new Date(weather?.sys?.sunrise * 1000).toLocaleTimeString()}</p>
+              <p>Sunset: {new Date(weather?.sys?.sunset * 1000).toLocaleTimeString()}</p>
             </div>
           </div>
         ) : (
@@ -99,7 +100,7 @@ function Detail({ weather }: any) {
         )}
       </main>
     </div>
-    )
-  }
-  
-  export default Detail
+  )
+}
+
+export default Detail
