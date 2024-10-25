@@ -1,1 +1,18 @@
 // Mục này sử dụng để định nghĩa style css cho components
+.input-city {
+  background-color: white;
+  border: none;
+  width: 200px;
+  height: 40px;
+  box-sizing: border-box;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.detail-5-day {
+  width: 83.78%;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 16px;
+  font-family: 'Arial', 'Calibri', sans-serif;
+}

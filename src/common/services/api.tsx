@@ -16,3 +16,18 @@ export const fetchWeather = async (city: string): Promise<any> => {
   }
 };
 
+export const fetch5day = async (city: string): Promise<any> => {
+  const apiUrl = `${baseUrl}/forecast?q=${city}&appid=${apiKey}&units=metric`;
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching weather data:', error);
+    throw error;
+  }
+};
+
