@@ -1,11 +1,11 @@
-import './assets/styles/global.scss'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import Temperature from './common/pages/Tempulature.tsx'
 import Footer from './common/components/footer.tsx'
 import { useState } from 'react'
 import { fetchWeather } from './common/services/api.tsx'
-import Header from './common/components/header.tsx'
+import header from '../src/common/components/header.tsx'
+import Main from './common/components/main.tsx'
+import Header from '../src/common/components/header.tsx'
 
 function App() {
   const [city, setCity] = useState<string>('')
@@ -25,15 +25,13 @@ function App() {
     <>
       <Router>
         <div className='App'>
-          <Header city={city} setCity={setCity} getWeather={getWeather} />
+          <Header city={city} setCity={setCity} setWeather={setWeather} />
           <div className='content'>
-            <div className='Address'>
+            {/* <div className='Address'>
               <i className='fas fa-house'></i> <h4>{weather?.name}</h4>
               <button className='fas fa-chart-bar'></button>
-            </div>
-            <Routes>
-              <Route path='/' element={<Temperature weather={weather} getWeather={getWeather} setCity={setCity} />} />
-            </Routes>
+            </div> */}
+            <Main weather={weather} />
             <Footer />
           </div>
         </div>
