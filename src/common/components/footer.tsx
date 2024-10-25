@@ -1,5 +1,3 @@
-import '../../assets/styles/global.scss'
-
 const Footer: React.FC<{}> = ({}) => {
   return (
     <footer className='footer'>

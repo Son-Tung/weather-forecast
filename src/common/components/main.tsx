@@ -1,1 +1,9 @@
-// Định nghĩa các component sử dụng chung trong dự án
+import Detail from "./Detail"
+
+const Main = ({ weather }: any) => {
+  return (
+    <Detail weather={weather} />
+  )
+}
+
+export default Main

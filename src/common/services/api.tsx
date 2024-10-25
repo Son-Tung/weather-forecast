@@ -15,3 +15,4 @@ export const fetchWeather = async (city: string): Promise<any> => {
     throw error;
   }
 };
+

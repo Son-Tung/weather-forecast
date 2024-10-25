@@ -1,0 +1,66 @@
+/* Phần thân */
+.App-body {
+  flex: 1;
+  padding: 40px;
+  background: linear-gradient(to right, #f5f8fc, #ffffff);
+  text-align: center;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+}
+
+.weather-info {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 20px;
+  transition: transform 0.3s ease;
+  width: 95%;
+  margin-left: 50px;
+
+  .weather-header {
+    display: flex;
+    align-items: center;
+    margin-left: 570px;
+  }
+
+  .weather-image {
+    width: 160px;
+    height: 160px;
+    margin-right: 20px;
+  }
+
+  .temperature-details h1 {
+    font-size: 5.5em;
+    color: #333;
+    margin: 0;
+  }
+
+  .weather-description {
+    font-size: 2em;
+    color: #666;
+    margin: 10px 0;
+  }
+
+  .feels-like {
+    font-size: 1.2em;
+    color: #888;
+  }
+
+  .additional-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+    
+
+    p {
+      font-size: 1.2em;
+      color: #333;
+    }
+  }
+}
