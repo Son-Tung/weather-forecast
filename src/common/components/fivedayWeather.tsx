@@ -4,21 +4,53 @@ import '../styles/index.scss'
 const FivedayWeather: React.FC<{
   weather5day: any
   getWeather: (city: string) => Promise<void>
-}> = ({ weather5day }) => {
-  const handleItemClick = useCallback((index: number, listItems: NodeListOf<HTMLLIElement>) => {
-    listItems.forEach((item, idx) => {
-      if (idx !== index) {
-        item.classList.add('compact')
-        item.style.width = '220px'
-        item.style.background = 'rgb(239 242 247)'
-        item.style.color = '#000000'
-      } else {
-        item.classList.remove('compact')
-        item.style.width = '350px'
-        item.style.background = '#ffffff'
-      }
+  onItemSelected: (date: any, weather5day: any) => void
+}> = ({ weather5day, onItemSelected }) => {
+  const groupedByDay = weather5day?.list?.reduce((acc: any, curr: any) => {
+    const date = new Date(curr.dt * 1000).toLocaleDateString('vi-VN', {
+      weekday: 'long',
+      day: 'numeric'
     })
-  }, [])
+    const hour = new Date(curr.dt * 1000).getHours()
+    if (hour >= 0 && hour <= 21) {
+      if (!acc[date]) {
+        acc[date] = {
+          temp_max: curr.main.temp_max,
+          temp_min: curr.main.temp_min,
+          weather: curr.weather[0],
+          humidity: curr.main.humidity,
+          date: new Date(curr.dt * 1000)
+        }
+      } else {
+        acc[date].temp_max = Math.max(acc[date].temp_max, curr.main.temp_max)
+        acc[date].temp_min = Math.min(acc[date].temp_min, curr.main.temp_min)
+        acc[date].humidity = Math.max(acc[date].humidity, curr.main.humidity)
+      }
+    }
+    return acc
+  }, {})
+
+  const days = Object.keys(groupedByDay || {})
+
+  const handleItemClick = useCallback(
+    (index: number, listItems: NodeListOf<HTMLLIElement>, days: any, groupedByDay: any, weather5day: any) => {
+      listItems.forEach((item, idx) => {
+        if (idx !== index) {
+          item.classList.add('compact')
+          item.style.width = '220px'
+          item.style.background = 'rgb(239 242 247)'
+          item.style.color = '#000000'
+        } else {
+          item.classList.remove('compact')
+          item.style.width = '350px'
+          item.style.background = '#ffffff'
+        }
+      })
+
+      onItemSelected(groupedByDay[days[index]]?.date, weather5day)
+    },
+    []
+  )
 
   useEffect(() => {
     const listItems = document.querySelectorAll<HTMLLIElement>('.five li')
@@ -31,39 +63,21 @@ const FivedayWeather: React.FC<{
       } else {
         li.style.width = '350px'
         li.style.background = '#ffffff'
+
+        console.log('days[index]', days[index])
+
+        onItemSelected(groupedByDay[days[index]]?.date, weather5day)
       }
 
-      li.addEventListener('click', () => handleItemClick(index, listItems))
+      li.addEventListener('click', () => handleItemClick(index, listItems, days, groupedByDay, weather5day))
     })
   }, [weather5day, handleItemClick])
 
   if (!weather5day || !weather5day?.list) {
     return <p>Vui lòng tìm kiếm một địa điểm để hiển thị thông tin thời tiết.</p>
   }
-  const groupedByDay = weather5day.list.reduce((acc: any, curr: any) => {
-    const date = new Date(curr.dt * 1000).toLocaleDateString('vi-VN', {
-      weekday: 'long',
-      day: 'numeric'
-    })
-    const hour = new Date(curr.dt * 1000).getHours()
-    if (hour >= 0 && hour <= 21) {
-      if (!acc[date]) {
-        acc[date] = {
-          temp_max: curr.main.temp_max,
-          temp_min: curr.main.temp_min,
-          weather: curr.weather[0],
-          humidity: curr.main.humidity
-        }
-      } else {
-        acc[date].temp_max = Math.max(acc[date].temp_max, curr.main.temp_max)
-        acc[date].temp_min = Math.min(acc[date].temp_min, curr.main.temp_min)
-        acc[date].humidity = Math.max(acc[date].humidity, curr.main.humidity)
-      }
-    }
-    return acc
-  }, {})
 
-  const days = Object.keys(groupedByDay)
+  console.log(days)
 
   return (
     <div className='fiveday'>
@@ -73,6 +87,8 @@ const FivedayWeather: React.FC<{
       </div>
       <ul className='five'>
         {days.slice(0, 5).map((day, index) => {
+          console.log('day', day)
+
           const dayData = groupedByDay[day]
           console.log(dayData)
           return (

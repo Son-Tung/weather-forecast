@@ -1,24 +1,21 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
+import { useEffect, useState } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
+import Header from '../src/common/components/header.tsx'
+import Detail5day from './common/components/detail5day.tsx'
+import FivedayWeather from './common/components/fivedayWeather.tsx'
 import Footer from './common/components/footer.tsx'
 import Main from './common/components/main.tsx'
-import Header from '../src/common/components/header.tsx'
-import './common/styles/index.scss'
-import '@fortawesome/fontawesome-free/css/all.min.css'
-import Detail5day from './common/components/detail5day.tsx'
-import { useState, useEffect, useRef } from 'react'
 import { forecastWeather } from './common/services/api.tsx'
-import { createRoot } from 'react-dom/client' // Thay thế ReactDOM.render
-import FivedayWeather from './common/components/fivedayWeather.tsx'
-import Details from './common/components/details.tsx'
 import WeatherDashboard from './modules/dashboard/pages/WeatherDashboard.tsx'
+import './common/styles/index.scss'
 
 function App() {
   const [city, setCity] = useState<string>('Hanoi')
   const [weather, setWeather] = useState<any>(null)
   const [weather5day, setWeather5day] = useState<any>(null)
-  const [loadingWeather, setLoadingWeather] = useState<boolean>(true)
-  const detailSectionRef = useRef<HTMLElement>(null)
+  const [selectedWeather, setSelectedWeather] = useState<any[]>([])
+  // const [selectedIndex, setSelectedIndex] = useState(0);
 
   const getWeather = async (city: string) => {
     try {
@@ -28,8 +25,6 @@ function App() {
       console.log('data', weather)
     } catch (error) {
       console.error('Error fetching weather data:', error)
-    } finally {
-      setLoadingWeather(false) // Đánh dấu đã tải xong thời tiết
     }
   }
 
@@ -37,18 +32,32 @@ function App() {
     getWeather(city)
   }, [city])
 
-  const renderDetail5day = () => {
-    if (detailSectionRef.current && weather && weather5day) {
-      const root = createRoot(detailSectionRef.current) // Tạo root mới
-      root.render(<Detail5day weather={weather} weather5day={weather5day} />)
+  const onItemSelected = (date: Date, weather5day: any) => {
+    try {
+      const startDate = new Date(date)
+      const endDate = new Date(date)
+      startDate.setHours(0, 0, 0)
+      endDate.setHours(23, 59, 59)
+
+      const startTimestamp = startDate.getTime() / 1000
+      const endTimestamp = endDate.getTime() / 1000
+
+      console.log('weather5day?.list', weather5day?.list)
+
+      const weatherFilter: any = []
+      weather5day?.list?.forEach((weather: any) => {
+        if (startTimestamp <= weather?.dt && weather?.dt <= endTimestamp) {
+          weatherFilter.push(weather)
+        }
+      })
+
+      console.log(weatherFilter)
+
+      setSelectedWeather(weatherFilter)
+    } catch (error) {
+      console.log('onItemSelected', error)
     }
   }
-
-  useEffect(() => {
-    if (!loadingWeather) {
-      renderDetail5day()
-    }
-  }, [loadingWeather, weather, weather5day])
 
   return (
     <>
@@ -57,8 +66,8 @@ function App() {
           <Header city={city} setCity={setCity} setWeather={setWeather} />
           <div className='content'>
             <Main weather={weather} />
-            <FivedayWeather weather5day={weather5day} getWeather={getWeather} />
-            <Detail5day weather={weather} weather5day={weather5day} />
+            <FivedayWeather weather5day={weather5day} getWeather={getWeather} onItemSelected={onItemSelected} />
+            <Detail5day weather={weather} selectedWeather={selectedWeather} />
             <WeatherDashboard city={city} />
           </div>
           <Footer />
