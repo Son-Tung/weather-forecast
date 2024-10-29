@@ -4,6 +4,7 @@ import '../styles/header.scss'
 import { lstCities } from '../../assets/cities'
 import { forecastWeather } from '../services/api'
 import '@fortawesome/fontawesome-free/css/all.min.css'
+import { Link } from 'react-router-dom'
 
 function Header({ city, setCity, setWeather }: any) {
   // const [city, setCity] = useState<string>('')
@@ -93,16 +94,16 @@ function Header({ city, setCity, setWeather }: any) {
         <nav>
           <ul>
             <li>
-              <a href='#'>Home</a>
+              <Link to='/'>Home</Link>
             </li>
             <li>
-              <a href='#'>Map</a>
+              <Link to='/map'>Map</Link>
             </li>
             <li>
-              <a href='#'>Tin tức</a>
+              <Link to='/news'>Tin tức</Link>
             </li>
             <li>
-              <a href='#'>Không khí</a>
+              <Link to='/air-quality'>Không khí</Link>
             </li>
           </ul>
           <a className='menu-icon' onClick={togglePopup}>

@@ -242,6 +242,7 @@ const Detail5day: React.FC<Detail5dayProps> = ({ weather, selectedWeather }) => 
                       </svg>
                     </div>
                   </div>
+                  <div className='hour'>{getHour(weather?.dt_txt)}</div>
                 </div>
                 <div className='hour'>Now</div>
               </div>
@@ -301,7 +302,7 @@ const Detail5day: React.FC<Detail5dayProps> = ({ weather, selectedWeather }) => 
             </button>
           </div>
         )}
-        {activeTab === 2 && <Details />}
+        {activeTab === 2 && <Details selectedWeather={selectedWeather} />}
       </div>
     </>
   )
