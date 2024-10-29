@@ -1,6 +1,7 @@
 import Detail5day from '../../../common/components/detail5day'
 import FivedayWeather from '../../../common/components/fivedayWeather'
 import Main from '../../../common/components/main'
+import WeatherDashboard from './WeatherDashboard'
 
 const HoMe: React.FC<{
   weather: any
@@ -16,6 +17,7 @@ const HoMe: React.FC<{
       <section className='detail-5-day'>
         {selectedWeather?.length && <Detail5day weather={weather} selectedWeather={selectedWeather} />}
       </section>
+      <WeatherDashboard weatherData={weather} />
     </div>
   )
 }
