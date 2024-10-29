@@ -1,0 +1,9 @@
+<svg width="140" height="140" viewBox="5 -12 171 178" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="imgAQIDetails" height="180" width="180" patternUnits="userSpaceOnUse">
+<image href="https://assets.msn.com/weathermapdata/1/static/weather/details/aqi_background5.png" x="0" y="0" width="180" height="180">
+</image></pattern></defs>
+<path class="aqiBackgroundPath-DS-EntryPoint1-1" style="stroke: rgba(0, 0, 0, 0.1)" d="M 90.5 80 m -48 -60 a 76 76 0 1 1 -29 60" transform="rotate(245, 90.5 80)" fill="none" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M 90.5 80 m -48 -60 a 76 76 0 1 1 -29 60" transform="rotate(245, 90.5 80)" fill="none" stroke="#CF550F" stroke-width="8" stroke-linecap="round" stroke-dasharray="410" stroke-linejoin="round" stroke-dashoffset="306.7"></path>
+<g>
+<circle cx="16.4" cy="62.9" r="10" fill="#CF550F">
+</circle><circle cx="16.4" cy="62.9" r="11.5" stroke="white" stroke-width="3"></circle></g>
+</svg>
