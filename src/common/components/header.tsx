@@ -4,10 +4,10 @@ import '../styles/header.scss'
 import { lstCities } from '../../assets/cities'
 import { forecastWeather } from '../services/api'
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import SunnyImage from '../../assets/images/svg/Screenshot_15-10-2024_101422_assets.msn.com.jpeg' // ảnh trời nắng
-import RainyImage from '../../assets/images/svg/Screenshot_15-10-2024_103233_assets.msn.com.jpeg' // ảnh trời mưa
-import CloudyImage from '../../assets/images/svg/Screenshot_15-10-2024_10259_assets.msn.com.jpeg' // ảnh trời mây
-import MistImage from '../../assets/images/svg/Screenshot 2024-10-18 093724.png' // ảnh trời sương mù
+import SunnyImage from '../../assets/images/Screenshot_15-10-2024_101422_assets.msn.com.jpeg' // ảnh trời nắng
+import RainyImage from '../../assets/images/Screenshot_15-10-2024_103233_assets.msn.com.jpeg' // ảnh trời mưa
+import CloudyImage from '../../assets/images/Screenshot_15-10-2024_10259_assets.msn.com.jpeg' // ảnh trời mây
+import MistImage from '../../assets/images/Screenshot 2024-10-18 093724.png' // ảnh trời sương mù
 
 function Header({ city, setCity, setWeather }: any) {
   // const [city, setCity] = useState<string>('')

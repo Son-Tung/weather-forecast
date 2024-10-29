@@ -2,10 +2,10 @@ import '../styles/detail.scss'
 // import React, { useState,  } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css'
 // import { fetchWeather } from '../services/api'
-import SunnyImage from '../../assets/images/svg/Screenshot_15-10-2024_101422_assets.msn.com.jpeg' // ảnh trời nắng
-import RainyImage from '../../assets/images/svg/Screenshot_15-10-2024_103233_assets.msn.com.jpeg' // ảnh trời mưa
-import CloudyImage from '../../assets/images/svg/Screenshot_15-10-2024_10259_assets.msn.com.jpeg' // ảnh trời mây
-import MistImage from '../../assets/images/svg/Screenshot 2024-10-18 093724.png' // ảnh trời sương mù
+import SunnyImage from '../../assets/images/Screenshot_15-10-2024_101422_assets.msn.com.jpeg' // ảnh trời nắng
+import RainyImage from '../../assets/images/Screenshot_15-10-2024_103233_assets.msn.com.jpeg' // ảnh trời mưa
+import CloudyImage from '../../assets/images/Screenshot_15-10-2024_10259_assets.msn.com.jpeg' // ảnh trời mây
+import MistImage from '../../assets/images/Screenshot 2024-10-18 093724.png' // ảnh trời sương mù
 // import { lstCities } from '../../assets/cities'
 
 function Detail({ weather }: any) {
