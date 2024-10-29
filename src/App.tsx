@@ -11,6 +11,7 @@ import { forecastWeather } from './common/services/api.tsx'
 import { createRoot } from 'react-dom/client' // Thay thế ReactDOM.render
 import FivedayWeather from './common/components/fivedayWeather.tsx'
 import Details from './common/components/details.tsx'
+import WeatherDashboard from './modules/dashboard/pages/WeatherDashboard.tsx'
 
 function App() {
   const [city, setCity] = useState<string>('Hanoi')
@@ -18,7 +19,7 @@ function App() {
   const [weather5day, setWeather5day] = useState<any>(null)
   const [loadingWeather, setLoadingWeather] = useState<boolean>(true)
   const detailSectionRef = useRef<HTMLElement>(null)
-  
+
   const getWeather = async (city: string) => {
     try {
       const weather = await forecastWeather(city)
@@ -31,9 +32,9 @@ function App() {
       setLoadingWeather(false) // Đánh dấu đã tải xong thời tiết
     }
   }
-  
+
   useEffect(() => {
-    getWeather(city);
+    getWeather(city)
   }, [city])
 
   const renderDetail5day = () => {
@@ -59,6 +60,7 @@ function App() {
             <FivedayWeather weather5day={weather5day} getWeather={getWeather} />
             <section className='detail-5-day' ref={detailSectionRef}></section>
             <Details />
+            <WeatherDashboard city={city} />
           </div>
           <Footer />
         </div>
