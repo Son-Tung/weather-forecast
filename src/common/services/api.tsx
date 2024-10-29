@@ -12,7 +12,7 @@ export const forecastWeather = async (city: string): Promise<{ weatherData: any;
     const { lat, lon } = geoData[0]
 
     const weatherUrl = `${baseUrl}/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=vi`
-    const forecastUrl = `${baseUrl}/data/2.5/forecast?lat=${lat}&lon=${lon}&cnt=40&appid=${apiKey}&units=metric&lang=vi`
+    const forecastUrl = `${baseUrl}/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=vi`
 
     const [weatherResponse, forecastResponse] = await Promise.all([fetch(weatherUrl), fetch(forecastUrl)])
 
@@ -32,6 +32,6 @@ export const forecastWeather = async (city: string): Promise<{ weatherData: any;
     }
   } catch (error) {
     console.error('Error fetching weather data:', error)
-    throw error
+    return { weatherData: null, forecastData: null }
   }
 }

@@ -1,14 +1,16 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import { useEffect, useState } from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import Header from '../src/common/components/header.tsx'
-import Detail5day from './common/components/detail5day.tsx'
-import Details from './common/components/details.tsx'
-import FivedayWeather from './common/components/fivedayWeather.tsx'
+
 import Footer from './common/components/footer.tsx'
-import Main from './common/components/main.tsx'
+
 import { forecastWeather } from './common/services/api.tsx'
 import './common/styles/index.scss'
+import HoMe from './modules/dashboard/pages/Home.tsx'
+import Map from './modules/dashboard/pages/map.tsx'
+import Info from './modules/dashboard/pages/TinTuc.tsx'
+import Air from './modules/dashboard/pages/KhongKhi.tsx'
 
 function App() {
   const [city, setCity] = useState<string>('Hanoi')
@@ -70,14 +72,23 @@ function App() {
       <Router>
         <div className='App'>
           <Header city={city} setCity={setCity} setWeather={setWeather} />
-          <div className='content'>
-            <Main weather={weather} />
-            <FivedayWeather weather5day={weather5day} getWeather={getWeather} onItemSelected={onItemSelected} />
-            <section className='detail-5-day'>
-              {selectedWeather?.length && <Detail5day weather={weather} selectedWeather={selectedWeather} />}
-            </section>
-            <Details />
-          </div>
+          <Routes>
+            <Route
+              path='/'
+              element={
+                <HoMe
+                  weather={weather}
+                  getWeather={getWeather}
+                  weather5day={weather5day}
+                  onItemSelected={onItemSelected}
+                  selectedWeather={selectedWeather}
+                />
+              }
+            />
+            <Route path='/map' element={<Map />} />
+            <Route path='/news' element={<Info />} />
+            <Route path='/air-quality' element={<Air />} />
+          </Routes>
           <Footer />
         </div>
       </Router>

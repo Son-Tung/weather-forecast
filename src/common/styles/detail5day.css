@@ -26,11 +26,11 @@
   border-bottom: 2px solid black;
 }
 
-.summary-display,
+/* .summary-display,
 .every-hour-display,
 .more-detail-display {
   display: none;
-}
+} */
 
 .summary-display.active,
 .more-detail-display.active,
