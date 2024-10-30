@@ -58,8 +58,7 @@ function App() {
           <div className='content'>
             <Main weather={weather} />
             <FivedayWeather weather5day={weather5day} getWeather={getWeather} />
-            <section className='detail-5-day' ref={detailSectionRef}></section>
-            <Details />
+            <Detail5day weather={weather} weather5day={weather5day} />
             <WeatherDashboard city={city} />
           </div>
           <Footer />
