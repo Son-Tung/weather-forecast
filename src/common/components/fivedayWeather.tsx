@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react'
 import { weatherImages } from '../../assets/images/weatherImages'
-import '../styles/index.scss'
+import '../styles/FiveWeather.scss'
 const FivedayWeather: React.FC<{
   weather5day: any
   getWeather: (city: string) => Promise<void>
