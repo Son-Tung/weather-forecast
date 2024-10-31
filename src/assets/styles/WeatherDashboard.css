@@ -471,7 +471,7 @@ margin-top: 5px;
 }
 
 .North{
-  margin-top: -121px;
+  margin-top: -116px;
   margin-left: 1px;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.6);
@@ -479,20 +479,19 @@ margin-top: 5px;
 .South{
 
   margin-left: 100px;
-  margin-top: 27px;
+  margin-top: 33px;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.6);
 }
 .West{
-  margin-left: -98px;
-  margin-top: -21px;
+  margin-left: -97px;
+  margin-top: -15px;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.6);
 }
 .East{
-  
   margin-left: 0px;
-  margin-top: 28px;
+  margin-top: 32px;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.6);
 }
@@ -515,5 +514,22 @@ margin-top: 5px;
   .humid-details{
     text-align: left;
     margin-top: 40px;
+  }
+  
+  .dashboard-name{
+    color: #000;
+    font-size: 15px;
+    display: flex;
+    font-weight: 600;
+  }
+  .card-temperature{
+    margin-top: 6px;
+    font-size: 16px;
+    line-height: 22px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
   }
   
