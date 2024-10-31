@@ -2,19 +2,9 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import { useEffect, useState } from 'react'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import Header from '../src/common/components/header.tsx'
-<<<<<<< HEAD
-import Detail5day from './common/components/detail5day.tsx'
-import FivedayWeather from './common/components/fivedayWeather.tsx'
-import Footer from './common/components/footer.tsx'
-
-import { forecastWeather } from './common/services/api.tsx'
-import WeatherDashboard from './modules/dashboard/pages/WeatherDashboard.tsx'
-=======
 
 import Footer from './common/components/footer.tsx'
-
 import { forecastWeather } from './common/services/api.tsx'
->>>>>>> b796359a6710402672a4550d6ba5aafe30161ff3
 import './common/styles/index.scss'
 import HoMe from './modules/dashboard/pages/Home.tsx'
 import Map from './modules/dashboard/pages/map.tsx'
@@ -39,15 +29,6 @@ function App() {
     }
   }
 
-<<<<<<< HEAD
-=======
-  // const handleItemClick = (index: number) => {
-  //   setSelectedIndex(index);
-  // };
-
-  // const hourlyWeather = weather5day.list[selectedIndex];
-
->>>>>>> b796359a6710402672a4550d6ba5aafe30161ff3
   useEffect(() => {
     getWeather(city)
   }, [city])
@@ -94,10 +75,7 @@ function App() {
                   weather5day={weather5day}
                   onItemSelected={onItemSelected}
                   selectedWeather={selectedWeather}
-<<<<<<< HEAD
                   city={city}
-=======
->>>>>>> b796359a6710402672a4550d6ba5aafe30161ff3
                 />
               }
             />

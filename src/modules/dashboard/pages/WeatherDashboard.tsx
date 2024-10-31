@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import '../../../assets/styles/WeatherDashboard.css'
-import UVIcon from '../../../assets/images/svg/uv.svg'
-import Feellike from '../../../assets/images/svg/feellike.svg'
-import Temp from '../../../assets/images/svg/temp.svg'
-import Press from '../../../assets/images/svg/press.svg'
-import AQI from '../../../assets/images/svg/aqi.svg'
-import Wind from '../../../assets/images/svg/wind.svg'
+import UVIcon from '../../../assets/images/uv.svg'
+import Feellike from '../../../assets/images/feellike.svg'
+import Temp from '../../../assets/images/temp.svg'
+import Press from '../../../assets/images/press.svg'
+import AQI from '../../../assets/images/aqi.svg'
+import Wind from '../../../assets/images/wind.svg'
 import { http } from '../../../common/services/BaseService'
 interface WeatherDashboardProps {
   city: any
