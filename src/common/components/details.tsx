@@ -1,8 +1,8 @@
 import '../styles/details.css'
 import { useState } from 'react'
 import { Sun, MapPin, Thermometer, Droplet, Eye, Wind, Cloud } from 'lucide-react'
-import SunriseIcon from '../../assets/images/svg/sunrise.svg'
-import SunsetIcon from '../../assets/images/svg/sunset.svg'
+import SunriseIcon from '../../assets/images/sunrise.svg'
+import SunsetIcon from '../../assets/images/sunset.svg'
 
 interface WeatherData {
   coord: {
@@ -77,18 +77,6 @@ const Details: React.FC<{ selectedWeather: any[] }> = ({ selectedWeather }) => {
 
   return (
     <div className='details'>
-      {/* <div className='details-sidebar'>
-        <button className={activeTab === 'summary' ? 'active' : ''} onClick={() => setActiveTab('summary')}>
-          Summary
-        </button>
-        <button className={activeTab === 'hourly' ? 'active' : ''} onClick={() => setActiveTab('hourly')}>
-          Hourly
-        </button>
-        <button className={activeTab === 'details' ? 'active' : ''} onClick={() => setActiveTab('details')}>
-          More Details
-        </button>
-      </div> */}
-
       <div className='details-content'>
         {weatherData && (
           <div className='more-detail-display active'>

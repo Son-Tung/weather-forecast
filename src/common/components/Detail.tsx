@@ -1,3 +1,4 @@
+import { weatherImages } from '../../assets/images/weatherImages'
 import '../styles/detail.scss'
 // import React, { useState,  } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css'
@@ -12,15 +13,6 @@ function Detail({ weather }: any) {
   // const [city, setCity] = useState<string>('')
   // const [weather, setWeather] = useState<any>(null)
   // const [filteredCities, setFilteredCities] = useState<any[]>([])
-
-  const weatherImages: { [key: string]: string } = {
-    clear: SunnyImage,
-    rain: RainyImage,
-    clouds: CloudyImage,
-    mist: MistImage,
-    haze: MistImage
-    // thêm các tình trạng thời tiết khác nếu cần
-  }
 
   // Lọc thành phố theo đầu vào từ thanh tìm kiếm
   //  const handleCityChange = (input: string) => {
