@@ -1,35 +1,23 @@
 import React, { useState } from 'react'
-import WeatherLogo from '../../assets/images/svg/IMG.jpg'
+import WeatherLogo from '../../assets/images/IMG.png'
 import '../styles/header.scss'
 import { lstCities } from '../../assets/cities'
 import { forecastWeather } from '../services/api'
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import SunnyImage from '../../assets/images/Screenshot_15-10-2024_101422_assets.msn.com.jpeg' // ảnh trời nắng
-import RainyImage from '../../assets/images/Screenshot_15-10-2024_103233_assets.msn.com.jpeg' // ảnh trời mưa
-import CloudyImage from '../../assets/images/Screenshot_15-10-2024_10259_assets.msn.com.jpeg' // ảnh trời mây
-import MistImage from '../../assets/images/Screenshot 2024-10-18 093724.png' // ảnh trời sương mù
+import { Link } from 'react-router-dom'
 
 function Header({ city, setCity, setWeather }: any) {
   // const [city, setCity] = useState<string>('')
   // const [weather, setWeather] = useState<any>(null)
   const [showPopup, setShowPopup] = useState<boolean>(false)
   const [filteredCities, setFilteredCities] = useState<any[]>([])
-  const weatherImages: { [key: string]: string } = {
-    clear: SunnyImage,
-    rain: RainyImage,
-    clouds: CloudyImage,
-    mist: MistImage,
-    haze: MistImage
-    // thêm các tình trạng thời tiết khác nếu cần
-  }
 
-  // Lọc thành phố theo đầu vào từ thanh tìm kiếm
   const handleCityChange = (input: string) => {
     setCity(input)
     try {
       if (input.length > 0) {
         const filtered = lstCities.filter((city) => city.name.toLowerCase().includes(input.toLowerCase()))
-        // if(filtered?.length){
+
         setFilteredCities(filtered)
         // }
       } else {
@@ -42,7 +30,7 @@ function Header({ city, setCity, setWeather }: any) {
 
   const handleCityClick = (city: string) => {
     setCity('')
-    getWeather(city) // Gọi hàm để lấy thông tin thời tiết
+    getWeather(city)
   }
 
   const getWeather = async (scopeCity?: string) => {
@@ -59,11 +47,10 @@ function Header({ city, setCity, setWeather }: any) {
     setShowPopup(!showPopup)
   }
 
-  // Xử lý sự kiện nhấn phím Enter
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       if (filteredCities?.length) {
-        getWeather(filteredCities[0].name) // Gọi hàm tìm kiếm khi nhấn Enter
+        getWeather(filteredCities[0].name)
         setCity('')
       }
     }
@@ -107,16 +94,16 @@ function Header({ city, setCity, setWeather }: any) {
         <nav>
           <ul>
             <li>
-              <a href='#'>Home</a>
+              <Link to='/'>Home</Link>
             </li>
             <li>
-              <a href='#'>Map</a>
+              <Link to='/map'>Map</Link>
             </li>
             <li>
-              <a href='#'>Tin tức</a>
+              <Link to='/news'>Tin tức</Link>
             </li>
             <li>
-              <a href='#'>Không khí</a>
+              <Link to='/air-quality'>Không khí</Link>
             </li>
           </ul>
           <a className='menu-icon' onClick={togglePopup}>

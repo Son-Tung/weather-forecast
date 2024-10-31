@@ -32,6 +32,6 @@ export const forecastWeather = async (city: string): Promise<{ weatherData: any;
     }
   } catch (error) {
     console.error('Error fetching weather data:', error)
-    throw error
+    return { weatherData: null, forecastData: null }
   }
 }

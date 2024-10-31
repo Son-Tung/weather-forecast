@@ -1,69 +1,9 @@
+import { weatherImages } from '../../assets/images/weatherImages'
 import '../styles/detail.scss'
-// import React, { useState,  } from 'react';
+
 import '@fortawesome/fontawesome-free/css/all.min.css'
-// import { fetchWeather } from '../services/api'
-import SunnyImage from '../../assets/images/Screenshot_15-10-2024_101422_assets.msn.com.jpeg' // ảnh trời nắng
-import RainyImage from '../../assets/images/Screenshot_15-10-2024_103233_assets.msn.com.jpeg' // ảnh trời mưa
-import CloudyImage from '../../assets/images/Screenshot_15-10-2024_10259_assets.msn.com.jpeg' // ảnh trời mây
-import MistImage from '../../assets/images/Screenshot 2024-10-18 093724.png' // ảnh trời sương mù
-// import { lstCities } from '../../assets/cities'
 
 function Detail({ weather }: any) {
-  // const [city, setCity] = useState<string>('')
-  // const [weather, setWeather] = useState<any>(null)
-  // const [filteredCities, setFilteredCities] = useState<any[]>([])
-
-  const weatherImages: { [key: string]: string } = {
-    clear: SunnyImage,
-    rain: RainyImage,
-    clouds: CloudyImage,
-    mist: MistImage,
-    haze: MistImage
-    // thêm các tình trạng thời tiết khác nếu cần
-  }
-
-  // Lọc thành phố theo đầu vào từ thanh tìm kiếm
-  //  const handleCityChange = (input: string) => {
-  //   setCity(input)
-  //   try {
-  //     if (input.length > 0) {
-  //       const filtered = lstCities.filter((city) => city.name.toLowerCase().includes(input.toLowerCase()))
-  //       // if(filtered?.length){
-  //         setFilteredCities(filtered)
-  //       // }
-  //     } else {
-  //       setFilteredCities([])
-  //     }
-  //   } catch (e) {
-  //     console.log(e)
-  //   }
-  // }
-
-  // const handleCityClick = (city: string) => {
-  //   setCity('')
-  //   getWeather(city) // Gọi hàm để lấy thông tin thời tiết
-  // }
-
-  // const getWeather = async (scopeCity?: string) => {
-  //   try {
-  //     const data = await fetchWeather(scopeCity || city)
-  //     setWeather(data)
-  //     setFilteredCities([])
-  //   } catch (error) {
-  //     console.error('Error:', error)
-  //   }
-  // }
-
-  //  // Xử lý sự kiện nhấn phím Enter
-  //  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (e.key === 'Enter') {
-  //     if (filteredCities?.length) {
-  //       getWeather(filteredCities[0].name) // Gọi hàm tìm kiếm khi nhấn Enter
-  //       setCity('')
-  //     }
-  //   }
-  // }
-
   return (
     <div className='App'>
       {/* Phần nội dung chính */}
