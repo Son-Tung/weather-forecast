@@ -5,36 +5,27 @@ import Details from './details'
 
 interface Detail5dayProps {
   weather: any
-  weather5day: any
+  selectedWeather: any[]
 }
 
-const Detail5day: React.FC<Detail5dayProps> = ({ weather, weather5day }) => {
+const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather }) => {
   const contentRef = useRef<HTMLDivElement | null>(null)
   const [containerWidth, setContainerWidth] = useState(0)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [slidesToShow, setSlidesToShow] = useState(0)
-  const [activeTab, setActiveTab] = useState(0)
+  const [activeTab, setActiveTab] = useState('summary')
 
-  // useEffect(() => {
-  //   handleButtonClick('summary')
-  //   window.addEventListener('resize', updateSlidesToShow) // Thêm event listener
-  //   return () => {
-  //     window.removeEventListener('resize', updateSlidesToShow) // Bỏ đăng ký khi component unmount
-  //   }
-  // }, [])
+  console.log('Detail5day', selectedWeather)
 
   useEffect(() => {
-    let dateNow: Date = new Date() // chinh thoi gian goc tai day
-    let weather5dayFiltered = weather5day // Lưu trữ dữ liệu 5-day forecast trước khi lọc
-
-    // Xóa các mốc thời gian trước thời gian hiện tại
-    while (dateNow > new Date(weather5dayFiltered?.list[0]?.dt_txt)) {
-      weather5dayFiltered?.list?.shift()
+    if (activeTab === 'hourly') {
+      updateSlidesToShow()
+      window.addEventListener('resize', updateSlidesToShow) // Thêm event listener
+      return () => {
+        window.removeEventListener('resize', updateSlidesToShow) // Bỏ đăng ký khi component unmount
+      }
     }
-
-    console.log('weather5dayFiltered:', weather5dayFiltered)
-    updateSlidesToShow()
-  }, [weather5day]) // Chạy lại khi data5day thay đổi
+  }, [activeTab])
 
   useEffect(() => {
     const leftButton = document.querySelector<HTMLElement>('.every-hour-display-button-left')
@@ -90,15 +81,15 @@ const Detail5day: React.FC<Detail5dayProps> = ({ weather, weather5day }) => {
           let columnCount = Math.floor((width + 4) / 118)
           let tempWidth = 118 * columnCount - 4
           let reponsiveRate = width / tempWidth
-  
+
           let columnGap = 4 * reponsiveRate
           let columnWidth = 114 * reponsiveRate
-  
+
           gridContainer.style.gridTemplateColumns = `repeat(9, ${columnWidth}px)`
           gridContainer.style.columnGap = `${columnGap}px`
           calculatedNumColumn = columnCount
         }
-  
+
         if (calculatedNumColumn !== slidesToShow) {
           setSlidesToShow(calculatedNumColumn)
           console.log('slidesToShow: ', calculatedNumColumn)
@@ -133,33 +124,8 @@ const Detail5day: React.FC<Detail5dayProps> = ({ weather, weather5day }) => {
     })
   }
 
-  function handleButtonClick(display: number) {
-    // Xóa lớp 'active' khỏi tất cả các phần tử
-    // document
-    //   .querySelectorAll(
-    //     '.summary-button, .every-hour-button, .more-detail-button, .summary-display, .every-hour-display, .more-detail-display'
-    //   )
-    //   .forEach((el) => {
-    //     el.classList.remove('active')
-    //   })
-
-    // // Thêm lớp 'active' cho phần tử được chọn
-    // switch (display) {
-    //   case 'summary':
-    //     document.querySelector('.summary-button')?.classList.add('active')
-    //     document.querySelector('.summary-display')?.classList.add('active')
-    //     return
-    //   case 'hourly':
-    //     document.querySelector('.every-hour-button')?.classList.add('active')
-    //     document.querySelector('.every-hour-display')?.classList.add('active')
-    //     return
-    //   case 'detail':
-    //     document.querySelector('.more-detail-button')?.classList.add('active')
-    //     document.querySelector('.more-detail-display')?.classList.add('active')
-    //     return
-    //   default:
-    //     return
-    // }
+  function handleButtonClick(display: string) {
+    console.log('display', display)
     setActiveTab(display)
   }
 
@@ -167,16 +133,16 @@ const Detail5day: React.FC<Detail5dayProps> = ({ weather, weather5day }) => {
     switch (iconCode) {
       case '01d':
       case '01n':
-        return 'src/assets/images/svg/sunny.svg'
+        return 'src/assets/images/sunny.svg'
       case '02d':
       case '02n':
       case '03d':
       case '03n':
       case '04n':
       case '04d':
-        return 'src/assets/images/svg/cloud.svg'
+        return 'src/assets/images/cloud.svg'
       default:
-        return 'src/assets/images/svg/rain.svg'
+        return 'src/assets/images/rain.svg'
     }
   }
 
@@ -201,8 +167,6 @@ const Detail5day: React.FC<Detail5dayProps> = ({ weather, weather5day }) => {
     const month = months[date.getMonth()]
     const day = date.getDate()
     const hour = date.getHours()
-
-    // Kiểm tra nếu giờ là 0 (nửa đêm)
     if (hour === 0) {
       return `${month} ${day}`
     } else {
@@ -213,75 +177,49 @@ const Detail5day: React.FC<Detail5dayProps> = ({ weather, weather5day }) => {
   return (
     <>
       <div className='detail-5-day-sidebar'>
-        <button className={`${activeTab === 0 ? 'active' : ''} summary-button`} onClick={() => handleButtonClick(0)}>
+        <button className='summary-button' onClick={() => handleButtonClick('summary')}>
           Summary
         </button>
-        <button className={`${activeTab === 1 ? 'active' : ''} every-hour-button`} onClick={() => handleButtonClick(1)}>
+        <button className='every-hour-button' onClick={() => handleButtonClick('hourly')}>
           Hourly
         </button>
-        <button className={`${activeTab === 2 ? 'active' : ''} more-detail-button`} onClick={() => handleButtonClick(2)}>
+        <button className='more-detail-button' onClick={() => handleButtonClick('detail')}>
           More details
         </button>
       </div>
 
       <div className='detail-5-day-content' ref={contentRef}>
-        {activeTab === 0 && <div className='summary-display'></div>}
-        {activeTab === 1 && (
-          <div className='active every-hour-display'>
+        {activeTab === 'summary' && <div className='summary-display'></div>}
+
+        {activeTab === 'hourly' && (
+          <div className='every-hour-display'>
             <div
               className='every-hour-display-container'
               style={{ transform: `translateX(-${(currentSlide * 100) / slidesToShow}%)` }}
             >
-              <div className='column-hour'>
-                <div className='weather'>
-                  <div className='day'>Today</div>
-                  <img className='weather-icon' src={convertLinkImg(weather?.weather[0]?.icon)} alt='weather-icon' />
-
-                  <div className='temperature'>{weather?.main?.temp}°</div>
-                  <div className='weather-status'>{weather?.weather[0]?.main}</div>
-
-                  <div className='bottom-card'>
-                    <svg width='10' height='10' viewBox='0 0 9 12' fill='black'>
-                      <path d='M7.91602 6.83203C8.02539 7.05469 8.10742 7.28516 8.16211 7.52344C8.2207 7.76172 8.25 8.00391 8.25 8.25C8.25 8.59375 8.20508 8.92578 8.11523 9.24609C8.02539 9.56641 7.89844 9.86523 7.73438 10.1426C7.57422 10.4199 7.37891 10.6738 7.14844 10.9043C6.92188 11.1309 6.66992 11.3262 6.39258 11.4902C6.11523 11.6504 5.81641 11.7754 5.49609 11.8652C5.17578 11.9551 4.84375 12 4.5 12C4.15625 12 3.82422 11.9551 3.50391 11.8652C3.18359 11.7754 2.88477 11.6504 2.60742 11.4902C2.33008 11.3262 2.07617 11.1309 1.8457 10.9043C1.61914 10.6738 1.42383 10.4199 1.25977 10.1426C1.09961 9.86523 0.974609 9.56641 0.884766 9.24609C0.794922 8.92578 0.75 8.59375 0.75 8.25C0.75 8.00391 0.777344 7.76172 0.832031 7.52344C0.890625 7.28516 0.974609 7.05469 1.08398 6.83203L4.5 0L7.91602 6.83203Z'></path>
-                    </svg>{' '}
-                    <span className='humidity-percent'>{weather?.main?.humidity}%</span>
-                    <div>
-                      <span className='speed-wind'>{convertSpeed(weather?.wind?.speed)} km/h</span>
-                      <svg width='7' height='10' viewBox='0 0 10 14' style={{ transform: 'rotate(-40deg)' }}>
-                        <path d='M5 0L9.66895 14L5 9.33105L0.331055 14L5 0Z' fill='black'></path>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <div className='hour'>Now</div>
-              </div>
-
-              {Array.from({ length: 8 }).map((_, index) => (
+              {}
+              {selectedWeather?.map((item: any, index: number) => (
                 <div key={index} className='column-hour'>
                   <div className='weather'>
-                    <div className='day'>{getDate(weather5day?.list[index]?.dt_txt)}</div>
-                    <img
-                      className='weather-icon'
-                      src={convertLinkImg(weather5day?.list[index]?.weather[0]?.icon)}
-                      alt='weather-icon'
-                    />
-                    <div className='temperature'>{weather5day?.list[index]?.main?.temp}°</div>
-                    <div className='weather-status'>{weather5day?.list[index]?.weather[0]?.main}</div>
+                    <div className='day'>{getDate(item?.dt_txt)}</div>
+                    <img className='weather-icon' src={convertLinkImg(item?.weather[0]?.icon)} alt='weather-icon' />
+                    <div className='temperature'>{item?.main?.temp}°</div>
+                    <div className='weather-status'>{item?.weather[0]?.main}</div>
 
                     <div className='bottom-card'>
                       <svg width='10' height='10' viewBox='0 0 9 12' fill='black'>
                         <path d='M7.91602 6.83203C8.02539 7.05469 8.10742 7.28516 8.16211 7.52344C8.2207 7.76172 8.25 8.00391 8.25 8.25C8.25 8.59375 8.20508 8.92578 8.11523 9.24609C8.02539 9.56641 7.89844 9.86523 7.73438 10.1426C7.57422 10.4199 7.37891 10.6738 7.14844 10.9043C6.92188 11.1309 6.66992 11.3262 6.39258 11.4902C6.11523 11.6504 5.81641 11.7754 5.49609 11.8652C5.17578 11.9551 4.84375 12 4.5 12C4.15625 12 3.82422 11.9551 3.50391 11.8652C3.18359 11.7754 2.88477 11.6504 2.60742 11.4902C2.33008 11.3262 2.07617 11.1309 1.8457 10.9043C1.61914 10.6738 1.42383 10.4199 1.25977 10.1426C1.09961 9.86523 0.974609 9.56641 0.884766 9.24609C0.794922 8.92578 0.75 8.59375 0.75 8.25C0.75 8.00391 0.777344 7.76172 0.832031 7.52344C0.890625 7.28516 0.974609 7.05469 1.08398 6.83203L4.5 0L7.91602 6.83203Z'></path>
                       </svg>{' '}
-                      <span className='humidity-percent'>{weather5day?.list[index]?.main?.humidity}%</span>
+                      <span className='humidity-percent'>{item?.main?.humidity}%</span>
                       <div>
-                        <span className='speed-wind'>{convertSpeed(weather5day?.list[index]?.wind?.speed)} km/h</span>
+                        <span className='speed-wind'>{convertSpeed(item?.wind?.speed)} km/h</span>
                         <svg width='7' height='10' viewBox='0 0 10 14' style={{ transform: 'rotate(-40deg)' }}>
                           <path d='M5 0L9.66895 14L5 9.33105L0.331055 14L5 0Z' fill='black'></path>
                         </svg>
                       </div>
                     </div>
                   </div>
-                  <div className='hour'>{getHour(weather5day?.list[index]?.dt_txt)}</div>
+                  <div className='hour'>{getHour(item?.dt_txt)}</div>
                 </div>
               ))}
             </div>
@@ -311,11 +249,12 @@ const Detail5day: React.FC<Detail5dayProps> = ({ weather, weather5day }) => {
             </button>
           </div>
         )}
-        {
-          activeTab === 2 && (
-            <Details />
-          )
-        }
+
+        {activeTab === 'detail' && (
+          <div className='more-detail-display'>
+            <Details selectedWeather={selectedWeather} />
+          </div>
+        )}
       </div>
     </>
   )

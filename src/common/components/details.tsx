@@ -2,8 +2,8 @@ import '../styles/details.css';
 import { useState, useEffect } from 'react';
 import { forecastWeather } from '../services/api';
 import { Sun, MapPin, Thermometer, Droplet, Eye, Wind, Cloud } from 'lucide-react';
-import SunriseIcon from '../../assets/images/svg/sunrise.svg';
-import SunsetIcon from '../../assets/images/svg/sunset.svg';
+import SunriseIcon from '../../assets/images/sunrise.svg';
+import SunsetIcon from '../../assets/images/sunset.svg';
 
 interface WeatherData {
   coord: {

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import '../../../assets/styles/WeatherDashboard.css'
-import UVIcon from '../../../assets/images/svg/uv.svg'
-import Feellike from '../../../assets/images/svg/feellike.svg'
-import Temp from '../../../assets/images/svg/temp.svg'
-import Press from '../../../assets/images/svg/press.svg'
-import AQI from '../../../assets/images/svg/aqi.svg'
-import Wind from '../../../assets/images/svg/wind.svg'
+import UVIcon from '../../../assets/images/uv.svg'
+import Feellike from '../../../assets/images/feellike.svg'
+import Temp from '../../../assets/images/temp.svg'
+import Press from '../../../assets/images/press.svg'
+import AQI from '../../../assets/images/aqi.svg'
+import Wind from '../../../assets/images/wind.svg'
 import { http } from '../../../common/services/BaseService'
 interface WeatherDashboardProps {
   city: any
@@ -43,8 +43,8 @@ const WeatherDashboard: React.FC<WeatherDashboardProps> = ({ city }) => {
     <>
       {!loading ? (
         <div className='dashboard'>
-          <div className='card temperature'>
-            <h3>Temperature</h3>
+          <div className='card-temperature'>
+          <span className='dashboard-name'>Temperature</span>
             <div className='temp-dsc'>
               <img src={Temp}></img>
               <span className='temper'>{Math.ceil(weatherDashboard?.current?.temp_c)}°</span>
@@ -58,7 +58,7 @@ const WeatherDashboard: React.FC<WeatherDashboardProps> = ({ city }) => {
             </div>
           </div>
           <div className='card feelslike'>
-            <h3>Feel Like</h3>
+            <span  className='dashboard-name'>FeelLike</span>
             <img src={Feellike} alt='Fl' className='fl-icon' />
             <div className='feellike-container'>
               <div>
@@ -80,7 +80,7 @@ const WeatherDashboard: React.FC<WeatherDashboardProps> = ({ city }) => {
           </div>
 
           <div className='card humidity'>
-            <h3>Humidity</h3>
+          <span className='dashboard-name'>Humidity</span>
             <div className='humid-content'>
               <div className='humid-content-img'>
                 <div className='humidLevelBar'>
@@ -125,7 +125,7 @@ const WeatherDashboard: React.FC<WeatherDashboardProps> = ({ city }) => {
             </div>
           </div>
           <div className='card wind'>
-            <h3>Wind</h3>
+          <span className='dashboard-name'>Wind</span>
             <div className='wind-content'>
               <div className='wind-content-img'>
                 <img src={Wind} alt='Wind Icon' className='wind-icon' />
@@ -165,7 +165,7 @@ const WeatherDashboard: React.FC<WeatherDashboardProps> = ({ city }) => {
             </div>
           </div>
           <div className='card pressure'>
-            <h3>Pressure</h3>
+          <span className='dashboard-name'>Pressure</span>
             <img src={Press}></img>
 
             <div className='press-content'>
@@ -186,7 +186,7 @@ const WeatherDashboard: React.FC<WeatherDashboardProps> = ({ city }) => {
             </div>
           </div>
           <div className='card visibility'>
-            <h3>Visibility</h3>
+          <span className='dashboard-name'>Visibility</span>
             <div className='visibilityLevelBarContainer'>
               <div className='visibilityLevelBar' style={{ width: '80px', backgroundColor: 'rgb(50, 130, 80)' }}></div>
               <div
@@ -218,7 +218,7 @@ const WeatherDashboard: React.FC<WeatherDashboardProps> = ({ city }) => {
             </div>
           </div>
           <div className='card aqi'>
-            <h3>AQI</h3>
+          <span className='dashboard-name'>AQI</span>
             <div className='aqi-content'>
               <img src={AQI} alt='AQI Icon' className='aqi-icon' />
               <p>{weatherDashboard?.current?.air_quality?.co}</p>
@@ -235,7 +235,7 @@ const WeatherDashboard: React.FC<WeatherDashboardProps> = ({ city }) => {
           </div>
 
           <div className='card uv'>
-            <h3>UV</h3>
+          <span className='dashboard-name'>UV</span>
             <div className='uv-content'>
               <img src={UVIcon} alt='UV Icon' className='uv-icon' />
               <p>{weatherDashboard?.current.uv}</p>
