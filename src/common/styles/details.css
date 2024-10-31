@@ -1,8 +1,7 @@
 .details {
-  width: 60%;
+  width: 100%;
   margin: 0 auto;
   background-color: #1a1b32;
-  border-radius: 16px;
   color: #ffffff;
 }
 
@@ -28,15 +27,20 @@
 }
 
 .details-content {
+  display: flex;
+  justify-content: space-between;
   padding: 20px;
 }
 
 .weather-info {
+  flex: 1;
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
+  margin: 0 10px; /* Thêm khoảng cách giữa hai phần */
 }
+
 
 h3 {
   font-size: 16px;
@@ -54,6 +58,7 @@ h3 {
   background-color: rgba(255, 255, 255, 0.03);
   border-radius: 10px;
   padding: 20px;
+
 }
 
 .info-header {
@@ -135,11 +140,12 @@ h3 {
 
 .weather-details {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, 1fr); /* Chia thành 3 cột bằng nhau */
   gap: 15px;
   background-color: rgba(255, 255, 255, 0.03);
-  padding: 20px;
+  padding: 45px;
   border-radius: 10px;
+  justify-items: center;
 }
 
 .weather-details div {
