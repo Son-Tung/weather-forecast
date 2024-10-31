@@ -1,7 +1,7 @@
-import RainyImage from './LightRainV3.svg'
-import CloudyImage from './MostlyCloudyDayV2.svg'
-import SunnyImage from './MostlySunnyDay.svg'
-import MistImage from './Haze.svg'
+import RainyImage from '../images/svg/rain.svg'
+import CloudyImage from '../images/svg/cloud.svg'
+import SunnyImage from '../images/svg/sunny.svg'
+import MistImage from '../images/svg/Haze.svg'
 
 export const weatherImages: { [key: string]: string } = {
   clear: SunnyImage,
