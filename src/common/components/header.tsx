@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import WeatherLogo from '../../assets/images/svg/IMG.jpg'
+import WeatherLogo from '../../assets/images/IMG.png'
 import '../styles/header.scss'
 import { lstCities } from '../../assets/cities'
 import { forecastWeather } from '../services/api'
