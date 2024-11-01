@@ -1,5 +1,5 @@
 import '../styles/hourly.css'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect} from 'react'
 
 interface HourlyProps {
   selectedWeather: any[]
@@ -113,16 +113,16 @@ const Hourly: React.FC<HourlyProps> = ({ selectedWeather, contentRef }) => {
     switch (iconCode) {
       case '01d':
       case '01n':
-        return 'src/assets/images/svg/sunny.svg'
+        return 'src/assets/images/sunny.svg'
       case '02d':
       case '02n':
       case '03d':
       case '03n':
       case '04n':
       case '04d':
-        return 'src/assets/images/svg/cloud.svg'
+        return 'src/assets/images/cloud.svg'
       default:
-        return 'src/assets/images/svg/rain.svg'
+        return 'src/assets/images/rain.svg'
     }
   }
 

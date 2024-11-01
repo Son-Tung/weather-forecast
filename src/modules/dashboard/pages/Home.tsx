@@ -6,7 +6,7 @@ import WeatherDashboard from './WeatherDashboard'
 const HoMe: React.FC<{
   weather: any
   weather5day: any
-  onItemSelected: (date: any, weather5day: any) => void
+  onItemSelected: (date: any, weather: any, weather5day: any) => void
   selectedWeather: any[]
   city: string
 }> = ({ weather, weather5day, onItemSelected, selectedWeather, city }) => {
@@ -14,7 +14,7 @@ const HoMe: React.FC<{
     <div className='content'>
       <Main weather={weather} />
       <FivedayWeather  weather={weather} weather5day={weather5day} onItemSelected={onItemSelected} />
-      <Detail5day selectedWeather={selectedWeather} weather={weather} />
+      <Detail5day selectedWeather={selectedWeather}   />
       <WeatherDashboard city={city} />
     </div>
   )
