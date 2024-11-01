@@ -15,7 +15,6 @@ function App() {
   const [weather, setWeather] = useState<any>(null)
   const [weather5day, setWeather5day] = useState<any>(null)
   const [selectedWeather, setSelectedWeather] = useState<any[]>([])
-  // const [selectedIndex, setSelectedIndex] = useState(0);
 
   const getWeather = async (city: string) => {
     try {
@@ -38,27 +37,45 @@ function App() {
     getWeather(city)
   }, [city])
 
-  const onItemSelected = (date: Date, weather5day: any) => {
-    try {
-      const startDate = new Date(date)
-      const endDate = new Date(date)
-      startDate.setHours(0, 0, 0)
-      endDate.setHours(23, 59, 59)
+  const getDateWithoutTime = (date: Date): Date => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+    return new Date(year, month, day);
+  };
 
+  const onItemSelected = (date: Date, weather: any, weather5day: any) => {
+    try {
+      const dateWithoutTime = getDateWithoutTime(date);
+      const dateNow = getDateWithoutTime(new Date());
+      const weatherFilter: any = []
+
+      let startDate;
+      let endDate;
+      if (dateWithoutTime.getTime() === dateNow.getTime()) {
+        console.log('equal day')
+        startDate = new Date()
+        endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 1);
+        weatherFilter.push(weather)
+      }
+
+      else {
+        console.log('not equal day')
+        startDate = new Date(date)
+        endDate = new Date(date)
+        startDate.setHours(0, 0, 0)
+        endDate.setHours(23, 59, 59)
+      }
+      
       const startTimestamp = startDate.getTime() / 1000
       const endTimestamp = endDate.getTime() / 1000
 
-      console.log('weather5day?.list', weather5day?.list)
-
-      const weatherFilter: any = []
-      weather5day?.list?.forEach((weather: any) => {
-        if (startTimestamp <= weather?.dt && weather?.dt <= endTimestamp) {
-          weatherFilter.push(weather)
+      weather5day?.list?.forEach((getWeather: any) => {
+        if (startTimestamp <= getWeather?.dt && getWeather?.dt <= endTimestamp) {
+          weatherFilter.push(getWeather)
         }
       })
-
-      console.log(weatherFilter)
-
       setSelectedWeather(weatherFilter)
     } catch (error) {
       console.log('onItemSelected', error)
@@ -72,9 +89,9 @@ function App() {
           <Header city={city} setCity={setCity} setWeather={setWeather} />
           <div className='content'>
             <Main weather={weather} />
-            <FivedayWeather weather5day={weather5day} getWeather={getWeather} onItemSelected={onItemSelected} />
+            <FivedayWeather weather={weather} weather5day={weather5day} onItemSelected={onItemSelected} />
             <section className='detail-5-day'>
-              {selectedWeather?.length && <Detail5day weather={weather} selectedWeather={selectedWeather} />}
+              {selectedWeather?.length && <Detail5day selectedWeather={selectedWeather} />}
             </section>
             <Details />
           </div>
