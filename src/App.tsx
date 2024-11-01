@@ -18,20 +18,13 @@ function App() {
 
   const getWeather = async (city: string) => {
     try {
-      const weather = await forecastWeather(city)
-      setWeather(weather.weatherData)
-      setWeather5day(weather.forecastData)
-      console.log('data', weather)
+      const totalWeather = await forecastWeather(city)
+      setWeather(totalWeather.weatherData)
+      setWeather5day(totalWeather.forecastData)
     } catch (error) {
       console.error('Error fetching weather data:', error)
     }
   }
-
-  // const handleItemClick = (index: number) => {
-  //   setSelectedIndex(index);
-  // };
-
-  // const hourlyWeather = weather5day.list[selectedIndex];
 
   useEffect(() => {
     getWeather(city)
@@ -53,7 +46,6 @@ function App() {
       let startDate;
       let endDate;
       if (dateWithoutTime.getTime() === dateNow.getTime()) {
-        console.log('equal day')
         startDate = new Date()
         endDate = new Date(startDate);
         endDate.setDate(startDate.getDate() + 1);
@@ -61,7 +53,6 @@ function App() {
       }
 
       else {
-        console.log('not equal day')
         startDate = new Date(date)
         endDate = new Date(date)
         startDate.setHours(0, 0, 0)

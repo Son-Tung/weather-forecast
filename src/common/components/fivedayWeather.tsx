@@ -1,6 +1,8 @@
 import React, { useEffect, useCallback } from 'react'
 import { weatherImages } from '../../assets/images/weatherImages'
 import '../styles/index.scss'
+
+
 const FivedayWeather: React.FC<{
   weather: any
   weather5day: any
@@ -64,7 +66,6 @@ const FivedayWeather: React.FC<{
         li.style.width = '350px'
         li.style.background = '#ffffff'
 
-        console.log('days[index]', days[index])
 
         onItemSelected(groupedByDay[days[index]]?.date, weather, weather5day)
       }
@@ -77,7 +78,6 @@ const FivedayWeather: React.FC<{
     return <p>Vui lòng tìm kiếm một địa điểm để hiển thị thông tin thời tiết.</p>
   }
 
-  console.log(days)
 
   return (
     <div className='fiveday'>
@@ -87,10 +87,8 @@ const FivedayWeather: React.FC<{
       </div>
       <ul className='five'>
         {days.slice(0, 5).map((day, index) => {
-          console.log('day', day)
 
           const dayData = groupedByDay[day]
-          console.log(dayData)
           return (
             <li key={index} aria-label={`Weather forecast for ${day}`}>
               <p>{day}</p>
