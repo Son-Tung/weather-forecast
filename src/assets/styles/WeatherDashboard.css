@@ -1,0 +1,535 @@
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 20px;
+  background-color: #f4f4f9;
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.card h3 {
+  margin-bottom: 10px;
+  font-size: 15px;
+  display: flex;
+}
+
+.card p {
+  margin: 5px 0;
+}
+
+.uv-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.uv-content p {
+  position: absolute;
+  width: 130px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 22px;
+  color: #1f0f04;
+}
+
+.uv-icon {
+  width: 100px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.uv-details {
+  text-align: left;
+  margin-top: 50px;
+}
+
+.uv-level {
+  font-size: 32px;
+  font-weight: bold;
+  color: black;
+}
+
+.uv-warning {
+  font-size: 15px;
+  color: #1f0f04;
+  font-weight: bold;
+  margin-left: 5px;
+  display: flex;
+}
+.uv-warning img {
+  margin-left: 6px;
+}
+.uv-description {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+
+.feellike-container {
+  /* padding: 20px; */
+  border-radius: 8px;
+  width: 300px;
+  font-family: Arial, sans-serif;
+  color: #333;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.feellike-container h1 {
+  font-size: 10px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.feellike-container h2 {
+  font-size: 10px;
+  color: #555;
+  margin-top: 10px;
+}
+
+.feellike-container-temp {
+  font-size: 36px;
+}
+
+.feellike-container-label {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+  margin-right: 10px;
+}
+.feelike-warning {
+  font-size: 15px;
+  color: #1f0f04;
+  font-weight: bold;
+  margin-left: 5px;
+  display: flex;
+}
+.feelike-warning img {
+  margin-left: 6px;
+}
+.feellike-description  {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+  text-align: left;
+}
+
+.temper{
+  position: absolute;
+  margin-left: -43px;
+  margin-top: 85px;
+  color: black;
+  font-size: 23px;
+}
+.temp-dsc{
+  position: relative;
+}
+.temp-warning {
+  font-size: 15px;
+  color: #1f0f04;
+  font-weight: bold;
+  margin-left: 5px;
+  display: flex;
+}
+.temp-warning img {
+  margin-left: 6px;
+}
+.temp-description {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+  text-align: left;
+}
+.visibilityLevelBarContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100px;
+}
+
+.visibilityLevelBar {
+  height: 15px;
+  margin: 5px 0;
+  border-radius: 8px;
+}
+
+
+
+.visibility-details{
+  text-align: left;
+}
+
+.visibility-warning{
+  font-size: 15px;
+  color: #1f0f04; /* High warning color */
+  font-weight: bold;
+  margin-left: 5px;
+  display: flex;
+
+}
+.visibility-warning img{
+  margin-left: 6px;
+}
+.visibility-description{
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+
+.press-details {
+  text-align: left;
+  margin-top: 35px;
+}
+
+.press-content{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+.presscurrent{
+  color: black;
+    font-size: 32px;
+    line-height: 42px;
+    font-weight: 600;
+}
+.pressmeme{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: 12px;
+  height: 42px;
+}
+.presstitle{
+    color: rgba(0, 0, 0, 0.6);
+}
+.presstime{
+  line-height: 16px;
+  color: rgba(0, 0, 0, 0.8);
+  font-weight: 600;
+}
+.press-warning {
+  font-size: 15px;
+  color: #1f0f04;
+  font-weight: bold;
+  margin-left: 5px;
+  display: flex;
+}
+.press-warning img {
+  margin-left: 6px;
+}
+.press-description {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+.humid-content{
+  display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 107px;
+    justify-content: space-between;
+}
+
+.humidLevelBar{
+  width: 10px;
+    background: rgba(0, 0, 0, 0.1);
+    height: 100%;
+    position: relative;
+    border-radius: 8px;
+}
+.humidPercent{
+width: 10px;
+background-color: #6994FA;
+float: left;
+position: absolute;
+bottom: 0;
+border-radius: 8px;
+height: 80%;
+}
+.humid-content-img{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 132px;
+  margin-top: 28px;
+}
+.humid-content-info{
+width: 100px;
+    height: 108px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -10px;
+}
+.hmintro{
+font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px;
+    width: 100px;
+    height: 32px;
+    color: #000
+}
+.humid-text{
+position: relative;
+z-index: 2;
+text-decoration: none;
+padding-bottom: 10px;
+font-size: 14px;
+
+margin-top: 5px;
+}
+.dewpoint{
+  font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px;
+    width: 100px;
+    height: 32px;
+    color: #000
+}
+.dewpoint-text{
+  position: relative;
+z-index: 2;
+text-decoration: none;
+padding-bottom: 10px;
+font-size: 14px;
+
+margin-top: 5px;
+}
+
+.humid-details{
+  text-align: left;
+  margin-top: 40px;
+}
+
+.humid-warning{
+  font-size: 15px;
+  color: #1f0f04; /* High warning color */
+  font-weight: bold;
+  margin-left: 5px;
+  display: flex;
+
+}
+.humid-warning img{
+  margin-left: 6px;
+}
+.humid-description{
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+
+.aqi-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.aqi-content p {
+  position: absolute;
+  width: 130px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 22px;
+  color: #1f0f04;
+}
+
+.aqi-icon {
+  width: 100px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.aqi-details {
+  text-align: left;
+  margin-top: 50px;
+}
+
+.aqi-level {
+  font-size: 32px;
+  font-weight: bold;
+  color: black;
+}
+
+.aqi-warning {
+  font-size: 15px;
+  color: #1f0f04;
+  font-weight: bold;
+  margin-left: 5px;
+  display: flex;
+ 
+}
+.aqi-warning img {
+  margin-left: 6px;
+}
+.aqi-description {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+.wind-content-info{
+  width: 110px;
+  }
+  .windintro{
+   
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wind-dsc{
+  color: #000;
+  text-align: left;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 42px;
+  letter-spacing: 0px;
+  max-width: 50px;
+  text-overflow: ellipsis;
+}
+.windinfo{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+  .wind-unit{
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .wind-text{
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0px;
+    color: rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 84px;
+}
+  
+.wind-title{
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0px;
+  color: var(--desc-color);
+  margin-bottom: 4px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+}
+
+.wind-content{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 107px;
+  justify-content: space-between;
+}
+.wind-dsc 
+{
+  color: #000;
+  font-size: 20px;
+}
+.mph-dsc{
+  color: #000;
+  font-size: 20px;
+
+}
+
+.wind-content-img{
+  width: 110px;
+    height: 110px;
+}
+.wind-icon{
+  width: 110;
+  height: 110;
+  fill: none;
+}
+
+.North{
+  margin-top: -116px;
+  margin-left: 1px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+}
+.South{
+
+  margin-left: 100px;
+  margin-top: 33px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+}
+.West{
+  margin-left: -97px;
+  margin-top: -15px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+}
+.East{
+  margin-left: 0px;
+  margin-top: 32px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+}
+.humid-warning{
+    font-size: 15px;
+    color: #1f0f04; 
+    font-weight: bold;
+    margin-left: 5px;
+    display: flex;
+  
+  }
+  .humid-warning img{
+    margin-left: 6px;
+  }
+  .humid-description{
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+  }  
+  .humid-details{
+    text-align: left;
+    margin-top: 40px;
+  }
+  
+  .dashboard-name{
+    color: #000;
+    font-size: 15px;
+    display: flex;
+    font-weight: 600;
+  }
+  .card-temperature{
+    margin-top: 6px;
+    font-size: 16px;
+    line-height: 22px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  

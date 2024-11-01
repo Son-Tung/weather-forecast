@@ -1,9 +1,8 @@
 import '../styles/details.css'
-import { useState, useEffect } from 'react'
-import { forecastWeather } from '../services/api'
+import { useState } from 'react'
 import { Sun, MapPin, Thermometer, Droplet, Eye, Wind, Cloud } from 'lucide-react'
-import SunriseIcon from '../../assets/images/svg/sunrise.svg'
-import SunsetIcon from '../../assets/images/svg/sunset.svg'
+import SunriseIcon from '../../assets/images/sunrise.svg'
+import SunsetIcon from '../../assets/images/sunset.svg'
 
 interface WeatherData {
   coord: {
@@ -52,23 +51,24 @@ interface WeatherData {
   uvIndex: number
 }
 
-const Details: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('details')
-  const [weatherData, setWeatherData] = useState<WeatherData | null>(null)
+const Details: React.FC<{ selectedWeather: any[] }> = ({ selectedWeather }) => {
+  // const [activeTab, setActiveTab] = useState('details')
+  const [weatherData] = useState<WeatherData | null>(null)
+  console.log('selected', selectedWeather)
 
-  useEffect(() => {
-    const getWeatherData = async () => {
-      try {
-        const weather = await forecastWeather('London')
-        console.log('Weather Data:', weather) // Check API data
-        setWeatherData(weather?.weatherData)
-      } catch (error) {
-        console.error('Error fetching weather data:', error)
-      }
-    }
+  // useEffect(() => {
+  //   const getWeatherData = async () => {
+  //     try {
+  //       const weather = await forecastWeather('London')
+  //       console.log('Weather Data:', weather) // Check API data
+  //       setWeatherData(weather?.weatherData)
+  //     } catch (error) {
+  //       console.error('Error fetching weather data:', error)
+  //     }
+  //   }
 
-    getWeatherData()
-  }, [])
+  //   getWeatherData()
+  // }, [])
 
   const formatTime = (timestamp: number) => {
     if (!timestamp) return 'N/A' // Check for null or undefined value
@@ -77,20 +77,8 @@ const Details: React.FC = () => {
 
   return (
     <div className='details'>
-      <div className='details-sidebar'>
-        <button className={activeTab === 'summary' ? 'active' : ''} onClick={() => setActiveTab('summary')}>
-          Summary
-        </button>
-        <button className={activeTab === 'hourly' ? 'active' : ''} onClick={() => setActiveTab('hourly')}>
-          Hourly
-        </button>
-        <button className={activeTab === 'details' ? 'active' : ''} onClick={() => setActiveTab('details')}>
-          More Details
-        </button>
-      </div>
-
       <div className='details-content'>
-        {activeTab === 'details' && weatherData && (
+        {weatherData && (
           <div className='more-detail-display active'>
             <div className='weather-info'>
               <h3>Sun Information</h3>

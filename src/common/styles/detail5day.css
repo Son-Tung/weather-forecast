@@ -1,14 +1,16 @@
 .detail-5-day-sidebar {
-  padding-left: 10px;
+  padding-left: 50px;
   display: grid;
   grid-template-columns: 73.4px 82.06px 104px;
   column-gap: 10px;
+ 
 }
 
 .detail-5-day-content {
-  height: 245px;
+  /* height: 245px; */
   border-top: 1px solid #e0e0e0;
   box-sizing: border-box;
+  padding: 10px 50px 10px 50px
 }
 
 .detail-5-day-sidebar button {
@@ -25,4 +27,9 @@
   border-bottom: 2px solid black;
 }
 
+/* .summary-display,
+.every-hour-display,
+.more-detail-display {
+  display: none;
+} */
 

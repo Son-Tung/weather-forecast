@@ -1,14 +1,19 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import { useEffect, useState } from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import Header from '../src/common/components/header.tsx'
-import Detail5day from './common/components/detail5day.tsx'
-import Details from './common/components/details.tsx'
-import FivedayWeather from './common/components/fivedayWeather.tsx'
+
 import Footer from './common/components/footer.tsx'
-import Main from './common/components/main.tsx'
 import { forecastWeather } from './common/services/api.tsx'
 import './common/styles/index.scss'
+import HoMe from './modules/dashboard/pages/Home.tsx'
+import Map from './modules/dashboard/pages/map.tsx'
+import Info from './modules/dashboard/pages/TinTuc.tsx'
+import Air from './modules/dashboard/pages/KhongKhi.tsx'
+import Main from './common/components/main.tsx'
+import FivedayWeather from './common/components/fivedayWeather.tsx'
+import Detail5day from './common/components/detail5day.tsx'
+import Details from './common/components/details.tsx'
 
 function App() {
   const [city, setCity] = useState<string>('Hanoi')
@@ -37,7 +42,7 @@ function App() {
     return new Date(year, month, day);
   };
 
-  const onItemSelected = (date: Date, weather: any, weather5day: any) => {
+  const onItemSelected = (date: Date, weather5day: any) => {
     try {
       const dateWithoutTime = getDateWithoutTime(date);
       const dateNow = getDateWithoutTime(new Date());
@@ -49,7 +54,7 @@ function App() {
         startDate = new Date()
         endDate = new Date(startDate);
         endDate.setDate(startDate.getDate() + 1);
-        weatherFilter.push(weather)
+        weatherFilter.push(weather5day)
       }
 
       else {
@@ -82,10 +87,27 @@ function App() {
             <Main weather={weather} />
             <FivedayWeather weather={weather} weather5day={weather5day} onItemSelected={onItemSelected} />
             <section className='detail-5-day'>
-              {selectedWeather?.length && <Detail5day selectedWeather={selectedWeather} />}
+              {selectedWeather?.length && <Detail5day selectedWeather={selectedWeather}  weather={weather}/>}
             </section>
-            <Details />
+            <Details selectedWeather={selectedWeather} />
           </div>
+          <Routes>
+            <Route
+              path='/'
+              element={
+                <HoMe
+                  weather={weather}
+                  weather5day={weather5day}
+                  onItemSelected={onItemSelected}
+                  selectedWeather={selectedWeather}
+                  city={city}
+                />
+              }
+            />
+            <Route path='/map' element={<Map />} />
+            <Route path='/news' element={<Info />} />
+            <Route path='/air-quality' element={<Air />} />
+          </Routes>
           <Footer />
         </div>
       </Router>
