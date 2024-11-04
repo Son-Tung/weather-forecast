@@ -2,10 +2,10 @@ import React, { useEffect, useCallback } from 'react'
 import { weatherImages } from '../../assets/images/weatherImages'
 import '../styles/FiveWeather.scss'
 const FivedayWeather: React.FC<{
+  weather: any
   weather5day: any
-  getWeather: (city: string) => Promise<void>
-  onItemSelected: (date: any, weather5day: any) => void
-}> = ({ weather5day, onItemSelected }) => {
+  onItemSelected: (date: any, weather: any, weather5day: any) => void
+}> = ({ weather, weather5day, onItemSelected }) => {
   const groupedByDay = weather5day?.list?.reduce((acc: any, curr: any) => {
     const date = new Date(curr.dt * 1000).toLocaleDateString('vi-VN', {
       weekday: 'long',
@@ -33,7 +33,7 @@ const FivedayWeather: React.FC<{
   const days = Object.keys(groupedByDay || {})
 
   const handleItemClick = useCallback(
-    (index: number, listItems: NodeListOf<HTMLLIElement>, days: any, groupedByDay: any, weather5day: any) => {
+    (index: number, listItems: NodeListOf<HTMLLIElement>, days: any, groupedByDay: any, weather: any, weather5day: any) => {
       listItems.forEach((item, idx) => {
         if (idx !== index) {
           item.classList.add('compact')
@@ -47,7 +47,7 @@ const FivedayWeather: React.FC<{
         }
       })
 
-      onItemSelected(groupedByDay[days[index]]?.date, weather5day)
+      onItemSelected(groupedByDay[days[index]]?.date, weather, weather5day)
     },
     []
   )
@@ -64,20 +64,18 @@ const FivedayWeather: React.FC<{
         li.style.width = '350px'
         li.style.background = '#ffffff'
 
-        console.log('days[index]', days[index])
 
-        onItemSelected(groupedByDay[days[index]]?.date, weather5day)
+        onItemSelected(groupedByDay[days[index]]?.date, weather, weather5day)
       }
 
-      li.addEventListener('click', () => handleItemClick(index, listItems, days, groupedByDay, weather5day))
+      li.addEventListener('click', () => handleItemClick(index, listItems, days, groupedByDay, weather, weather5day))
     })
-  }, [weather5day, handleItemClick])
+  }, [weather, weather5day, handleItemClick])
 
-  if (!weather5day || !weather5day?.list) {
+  if (!weather || !weather5day || !weather5day?.list) {
     return <p>Vui lòng tìm kiếm một địa điểm để hiển thị thông tin thời tiết.</p>
   }
 
-  console.log(days)
 
   return (
     <div className='fiveday'>
@@ -87,10 +85,8 @@ const FivedayWeather: React.FC<{
       </div>
       <ul className='five'>
         {days.slice(0, 5).map((day, index) => {
-          console.log('day', day)
 
           const dayData = groupedByDay[day]
-          console.log(dayData)
           return (
             <li key={index} aria-label={`Weather forecast for ${day}`}>
               <p>{day}</p>
