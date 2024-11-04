@@ -33,7 +33,7 @@ const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather }) => {
       <div className='detail-5-day-content' ref={contentRef}>
         {activeTab === 0 && <div className='summary-display'></div>}
         {activeTab === 1 && <Hourly selectedWeather = {selectedWeather} contentRef={contentRef} />}
-        {activeTab === 2 && <Details selectedWeather={selectedWeather} />}
+        {activeTab === 2 && <Details />}
       </div>
     </>
   )
