@@ -9,12 +9,7 @@ import HoMe from './modules/dashboard/pages/Home.tsx'
 import Map from './modules/dashboard/pages/map.tsx'
 import Info from './modules/dashboard/pages/TinTuc.tsx'
 import Air from './modules/dashboard/pages/KhongKhi.tsx'
-import Main from './common/components/main.tsx'
-import FivedayWeather from './common/components/fivedayWeather.tsx'
-import Detail5day from './common/components/detail5day.tsx'
-import Details from './common/components/details.tsx'
 import './common/styles/FiveWeather.scss'
-
 
 function App() {
   const [city, setCity] = useState<string>('Hanoi')
@@ -37,34 +32,32 @@ function App() {
   }, [city])
 
   const getDateWithoutTime = (date: Date): Date => {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const day = date.getDate();
-    return new Date(year, month, day);
-  };
+    const year = date.getFullYear()
+    const month = date.getMonth()
+    const day = date.getDate()
+    return new Date(year, month, day)
+  }
 
   const onItemSelected = (date: Date, weather: any, weather5day: any) => {
     try {
-      const dateWithoutTime = getDateWithoutTime(date);
-      const dateNow = getDateWithoutTime(new Date());
+      const dateWithoutTime = getDateWithoutTime(date)
+      const dateNow = getDateWithoutTime(new Date())
       const weatherFilter: any = []
 
-      let startDate;
-      let endDate;
+      let startDate
+      let endDate
       if (dateWithoutTime.getTime() === dateNow.getTime()) {
         startDate = new Date()
-        endDate = new Date(startDate);
-        endDate.setDate(startDate.getDate() + 1);
+        endDate = new Date(startDate)
+        endDate.setDate(startDate.getDate() + 1)
         weatherFilter.push(weather)
-      }
-
-      else {
+      } else {
         startDate = new Date(date)
         endDate = new Date(date)
         startDate.setHours(0, 0, 0)
         endDate.setHours(23, 59, 59)
       }
-      
+
       const startTimestamp = startDate.getTime() / 1000
       const endTimestamp = endDate.getTime() / 1000
 
@@ -74,7 +67,7 @@ function App() {
         }
       })
 
-      console.log('weatherFilter: ',weatherFilter)
+      console.log('weatherFilter: ', weatherFilter)
       setSelectedWeather(weatherFilter)
     } catch (error) {
       console.log('onItemSelected', error)
@@ -86,13 +79,6 @@ function App() {
       <Router>
         <div className='App'>
           <Header city={city} setCity={setCity} setWeather={setWeather} />
-          <div className='content'>
-            <Main weather={weather} />
-            <FivedayWeather weather={weather} weather5day={weather5day} onItemSelected={onItemSelected} />
-            <section className='detail-5-day'>
-              {selectedWeather?.length && <Detail5day selectedWeather={selectedWeather}/>}
-            </section>
-          </div>
           <Routes>
             <Route
               path='/'
