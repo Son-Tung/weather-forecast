@@ -21,13 +21,17 @@
   display: flex;
   overflow-x: auto;
   position: relative;
-  margin-left: 230px;
+ 
   flex-direction: column;
 }
 
 .five {
   display: flex;
   flex-wrap: nowrap;
+  margin-left: 0;
+  /* margin-block-start: 0; */
+  justify-content: center;
+  padding-inline-start: 0;
 }
 
 .five li {
@@ -44,6 +48,7 @@
   grid-template-columns: auto auto auto;
   gap: 0px;
   margin: 3px;
+  flex: 0 0 auto;
 }
 
 .five li p:nth-child(1) {
@@ -53,6 +58,7 @@
   font-size: 0.9em;
   font-weight: 600;
   font-family: Arial, Helvetica, sans-serif;
+  flex: 0 0 auto;
 }
 
 .five li p:nth-child(2) {
@@ -63,7 +69,7 @@
   font-weight: 600;
   font-family: Arial, Helvetica, sans-serif;
   left: 10px;
- 
+  flex: 0 0 auto;
 }
 
 .five li p:nth-child(3) {
@@ -76,6 +82,7 @@
   font-weight: 0;
   margin-left: 30px;
   font-family: Arial, Helvetica, sans-serif;
+  flex: 0 0 auto;
 }
 
 .five li img {
@@ -85,6 +92,7 @@
   position: relative;
   bottom: 25px;
   left: 20px;
+  flex: 0 0 auto;
 }
 
 .five li p:nth-child(5) {
@@ -93,8 +101,8 @@
   bottom: 10px;
   font-size: 0.9em;
   font-family: Arial, Helvetica, sans-serif;
- left: 10px;
-
+  left: 10px;
+  flex: 0 0 auto;
 }
 
 .five li p:nth-child(6) {
@@ -107,16 +115,19 @@
   font-weight: 0;
   margin-left: 30px;
   font-family: Arial, Helvetica, sans-serif;
+  flex: 0 0 auto;
 }
 
 .five li.compact p:nth-child(3),
 .five li.compact p:nth-child(6) {
   display: none;
 }
+
 .weather-image {
   width: 60px;
   height: 50px;
 }
+
 .scroll-button {
   background-color: #007bff;
   color: #ffffff;
@@ -150,9 +161,151 @@
   border: none;
   background-color: #ffffff;
   cursor: pointer;
-  margin-right: 355px;
+  margin-right: 200px;
 }
 h4 {
   position: relative;
-  left: 45px;
+  left: 200px;
+  flex: 0 0 auto;
+}
+
+
+@media screen and ( max-width:1700px){
+  .fivetitle button{margin-right: 90px;}
+  .fivetitle h4{
+    left: 100px;
+  }
+
+}
+@media screen and (max-width: 1500px){
+  .fiveday {
+    margin-left: 0;
+    padding: 0px;
+  }
+  .fivetitle button{margin-right: 130px;}
+
+  .five li {
+    grid-template-areas:
+      "time temp_max description"
+      "img temp_min humidity";
+    grid-template-columns: auto auto auto;
+    gap: 0px;
+    margin: 3px;
+  }
+
+  .five li p:nth-child(1),
+  .five li p:nth-child(2),
+  .five li p:nth-child(3),
+  .five li p:nth-child(5),
+  .five li p:nth-child(6) {
+    text-align: center;
+    flex: 0 0 auto;
+  }
+
+  .five li img {
+    margin: 0 auto;
+    display: block;
+  }
+}
+@media screen and (max-width: 1270px) {
+  .five li:nth-child(4) {
+    display: none;
+  }
+  .fiveday {
+    margin-left: 0;
+    padding: 0px;
+  }
+
+  .five li {
+    grid-template-areas:
+      "time temp_max description"
+      "img temp_min humidity";
+    grid-template-columns: auto auto auto;
+    gap: 0px;
+    margin: 3px;
+  }
+
+  .five li p:nth-child(1),
+  .five li p:nth-child(2),
+  .five li p:nth-child(3),
+  .five li p:nth-child(5),
+  .five li p:nth-child(6) {
+    text-align: center;
+    flex: 0 0 auto;
+  }
+
+  .five li img {
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+/* Ẩn thẻ li thứ 3 khi màn hình nhỏ hơn 1050px */
+@media screen and (max-width: 1050px) {
+  .five li:nth-child(3) {
+    display: none;
+    .fiveday {
+      margin-left: 0;
+      padding: 0px;
+    }
+  
+    .five li {
+      grid-template-areas:
+        "time temp_max description"
+        "img temp_min humidity";
+      grid-template-columns: auto auto auto;
+      gap: 0px;
+      margin: 3px;
+    }
+  
+    .five li p:nth-child(1),
+    .five li p:nth-child(2),
+    .five li p:nth-child(3),
+    .five li p:nth-child(5),
+    .five li p:nth-child(6) {
+      text-align: center;
+      flex: 0 0 auto;
+    }
+  
+    .five li img {
+      margin: 0 auto;
+      display: block;
+    }
+  }
+}
+
+/* Ẩn thẻ li thứ 2 khi màn hình nhỏ hơn 830px */
+@media screen and (max-width: 830px) {
+  .five li:nth-child(2) {
+    display: none;
+
+  }
+  .fiveday {
+    margin-left: 0;
+    padding: 0px;
+  }
+  .fivetitle button{margin-right: 0px;}
+
+  .five li {
+    grid-template-areas:
+      "time temp_max description"
+      "img temp_min humidity";
+    grid-template-columns: auto auto auto;
+    gap: 0px;
+    margin: 3px;
+  }
+
+  .five li p:nth-child(1),
+  .five li p:nth-child(2),
+  .five li p:nth-child(3),
+  .five li p:nth-child(5),
+  .five li p:nth-child(6) {
+    text-align: center;
+    flex: 0 0 auto;
+  }
+
+  .five li img {
+    margin: 0 auto;
+    display: block;
+  }
 }
