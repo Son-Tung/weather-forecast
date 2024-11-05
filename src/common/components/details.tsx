@@ -1,8 +1,9 @@
-import '../styles/details.css'
-import { useState } from 'react'
-import { Sun, MapPin, Thermometer, Droplet, Eye, Wind, Cloud } from 'lucide-react'
-import SunriseIcon from '../../assets/images/sunrise.svg'
-import SunsetIcon from '../../assets/images/sunset.svg'
+import '../styles/details.css';
+import { useState, useEffect } from 'react';
+import { forecastWeather } from '../services/api';
+import { Sun, MapPin, Thermometer, Droplet, Eye, Wind, Cloud } from 'lucide-react';
+import SunriseIcon from '../../assets/images/sunrise.svg';
+import SunsetIcon from '../../assets/images/sunset.svg';
 
 interface WeatherData {
   coord: {
@@ -51,24 +52,22 @@ interface WeatherData {
   uvIndex: number
 }
 
-const Details: React.FC<{ selectedWeather: any[] }> = ({ selectedWeather }) => {
-  // const [activeTab, setActiveTab] = useState('details')
-  const [weatherData] = useState<WeatherData | null>(null)
-  console.log('selected', selectedWeather)
+const Details: React.FC = () => {
+  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
 
-  // useEffect(() => {
-  //   const getWeatherData = async () => {
-  //     try {
-  //       const weather = await forecastWeather('London')
-  //       console.log('Weather Data:', weather) // Check API data
-  //       setWeatherData(weather?.weatherData)
-  //     } catch (error) {
-  //       console.error('Error fetching weather data:', error)
-  //     }
-  //   }
-
-  //   getWeatherData()
-  // }, [])
+  useEffect(() => {
+    const getWeatherData = async () => {
+      try {
+        const weather = await forecastWeather('London');
+        console.log('Weather Data:', weather); // Check API data
+        setWeatherData(weather?.weatherData);
+      } catch (error) {
+        console.error('Error fetching weather data:', error);
+      }
+    };
+  
+    getWeatherData();
+  }, []);
 
   const formatTime = (timestamp: number) => {
     if (!timestamp) return 'N/A' // Check for null or undefined value
@@ -76,39 +75,35 @@ const Details: React.FC<{ selectedWeather: any[] }> = ({ selectedWeather }) => {
   }
 
   return (
-    <div className='details'>
-      <div className='details-content'>
+    <div className="details">
+      <div className="details-content">
         {weatherData && (
-          <div className='more-detail-display active'>
-            <div className='weather-info'>
+          <>
+            <div className="weather-info">
               <h3>Sun Information</h3>
-              <div className='sun-moon-info'>
-                <div className='sun-info'>
-                  <div className='info-header'>
-                    <Sun className='weather-icon sun' />
-                    <div className='info-text'>
-                      <p>UV Index</p>
-                      <p className='uv-value'>
-                        {weatherData.uvIndex} - {getUVLevel(weatherData.uvIndex)}
-                      </p>
-                    </div>
+              <div className="sun-info">
+                <div className="info-header">
+                  <Sun className="weather-icon sun" />
+                  <div className="info-text">
+                    <p>UV Index</p>
+                    <p className="uv-value">{weatherData.uvIndex} - {getUVLevel(weatherData.uvIndex)}</p>
                   </div>
-                  <div className='path-container'>
-                    <div className='sun-path'>
-                      <div className='path-line'></div>
-                      <div className='sun-indicator'></div>
+                </div>
+                <div className="path-container">
+                  <div className="sun-path">
+                    <div className="path-line"></div>
+                    <div className="sun-indicator"></div>
+                  </div>
+                  <div className="time-labels">
+                    <div className="time-label sunrise">
+                      <p>Sunrise</p>
+                      <p className="time">{formatTime(weatherData.sys.sunrise)}</p>
+                      <img src={SunriseIcon} alt="Sunrise" className="sunrise-icon" />
                     </div>
-                    <div className='time-labels'>
-                      <div className='time-label sunrise'>
-                        <p>Sunrise</p>
-                        <p className='time'>{formatTime(weatherData.sys.sunrise)}</p>
-                        <img src={SunriseIcon} alt='Sunrise' className='sunrise-icon' />
-                      </div>
-                      <div className='time-label sunset'>
-                        <p>Sunset</p>
-                        <p className='time'>{formatTime(weatherData.sys.sunset)}</p>
-                        <img src={SunsetIcon} alt='Sunset' className='sunset-icon' />
-                      </div>
+                    <div className="time-label sunset">
+                      <p>Sunset</p>
+                      <p className="time">{formatTime(weatherData.sys.sunset)}</p>
+                      <img src={SunsetIcon} alt="Sunset" className="sunset-icon" />
                     </div>
                   </div>
                 </div>
@@ -162,7 +157,7 @@ const Details: React.FC<{ selectedWeather: any[] }> = ({ selectedWeather }) => {
                 </div>
               </div>
             </div>
-          </div>
+          </>
         )}
       </div>
     </div>

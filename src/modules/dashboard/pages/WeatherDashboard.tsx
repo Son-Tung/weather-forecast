@@ -43,7 +43,7 @@ const WeatherDashboard: React.FC<WeatherDashboardProps> = ({ city }) => {
     <>
       {!loading ? (
         <div className='dashboard'>
-          <div className='card-temperature'>
+          <div className='card card-temperature'>
           <span className='dashboard-name'>Temperature</span>
             <div className='temp-dsc'>
               <img src={Temp}></img>
