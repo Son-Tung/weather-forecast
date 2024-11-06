@@ -18,6 +18,8 @@
 }
 
 .fiveday {
+  width: 80%;
+  margin: 0 10%;
   display: flex;
   overflow-x: auto;
   position: relative;
@@ -27,10 +29,9 @@
 
 .five {
   display: flex;
+  position: relative;
+  overflow: hidden;
   flex-wrap: nowrap;
-  margin-left: 0;
-  /* margin-block-start: 0; */
-  justify-content: center;
   padding-inline-start: 0;
 }
 
@@ -161,28 +162,21 @@
   border: none;
   background-color: #ffffff;
   cursor: pointer;
-  margin-right: 200px;
 }
 h4 {
   position: relative;
-  left: 200px;
+
   flex: 0 0 auto;
 }
 
 
-@media screen and ( max-width:1700px){
-  .fivetitle button{margin-right: 90px;}
-  .fivetitle h4{
-    left: 100px;
-  }
 
-}
 @media screen and (max-width: 1500px){
   .fiveday {
     margin-left: 0;
     padding: 0px;
   }
-  .fivetitle button{margin-right: 130px;}
+
 
   .five li {
     grid-template-areas:
@@ -207,10 +201,9 @@ h4 {
     display: block;
   }
 }
-@media screen and (max-width: 1270px) {
-  .five li:nth-child(4) {
-    display: none;
-  }
+@media screen and (max-width: 1240px) {
+
+
   .fiveday {
     margin-left: 0;
     padding: 0px;
@@ -242,43 +235,41 @@ h4 {
 
 /* Ẩn thẻ li thứ 3 khi màn hình nhỏ hơn 1050px */
 @media screen and (max-width: 1050px) {
-  .five li:nth-child(3) {
-    display: none;
-    .fiveday {
-      margin-left: 0;
-      padding: 0px;
-    }
-  
-    .five li {
-      grid-template-areas:
-        "time temp_max description"
-        "img temp_min humidity";
-      grid-template-columns: auto auto auto;
-      gap: 0px;
-      margin: 3px;
-    }
-  
-    .five li p:nth-child(1),
-    .five li p:nth-child(2),
-    .five li p:nth-child(3),
-    .five li p:nth-child(5),
-    .five li p:nth-child(6) {
-      text-align: center;
-      flex: 0 0 auto;
-    }
-  
-    .five li img {
-      margin: 0 auto;
-      display: block;
-    }
+
+  .fiveday {
+    margin-left: 0;
+    padding: 0px;
+  }
+
+  .five li {
+    grid-template-areas:
+      "time temp_max description"
+      "img temp_min humidity";
+    grid-template-columns: auto auto auto;
+    gap: 0px;
+    margin: 3px;
+  }
+
+  .five li p:nth-child(1),
+  .five li p:nth-child(2),
+  .five li p:nth-child(3),
+  .five li p:nth-child(5),
+  .five li p:nth-child(6) {
+    text-align: center;
+    flex: 0 0 auto;
+  }
+
+  .five li img {
+    margin: 0 auto;
+    display: block;
   }
 }
 
 /* Ẩn thẻ li thứ 2 khi màn hình nhỏ hơn 830px */
 @media screen and (max-width: 830px) {
-  .five li:nth-child(2) {
-    display: none;
 
+  .fivetitle h4{
+    left: 0px;
   }
   .fiveday {
     margin-left: 0;

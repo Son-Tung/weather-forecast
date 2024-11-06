@@ -1,11 +1,165 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { weatherImages } from '../../assets/images/weatherImages'
 import '../styles/FiveWeather.scss'
-const FivedayWeather: React.FC<{
+
+interface FivedayWeatherProps {
   weather: any
   weather5day: any
   onItemSelected: (date: any, weather: any, weather5day: any) => void
-}> = ({ weather, weather5day, onItemSelected }) => {
+}
+
+const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, onItemSelected }) => {
+  const contentRef = useRef<HTMLDivElement | null>(null)
+  const [width, setWidth] = useState(0)
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [slidesToShow, setSlidesToShow] = useState(0)
+  const [activeTab, setActiveTab] = useState(0)
+  const [selectedButton, setSelectedButton] = useState<number[]>([300, 200, 200, 200, 200])
+
+  const updateElementAtIndex = (index: number) => {
+    setSelectedButton(() => {
+      const newState = [200, 200, 200, 200, 200] // Create a new array
+      newState[index] = 300 // Update the element at the specified index
+      return newState
+    })
+  }
+
+  // ${selectedButton[i]}
+
+  function getGridString() {
+    let gridString = ''
+    for (let i = 0; i < 5; i++) {
+      gridString += `${(selectedButton[i] / 1116) * 100}% `
+    }
+    return gridString
+  }
+
+  function getGridString2(buttonArray: Array<number>, reponsiveRate: number, columnCount: number) {
+    let gridString = ''
+    for (let i = 0; i < columnCount; i++) {
+      gridString += `${buttonArray[i] * reponsiveRate}px `
+    }
+    console.log(gridString)
+    return gridString
+  }
+
+  function getSameVariable(variable: any) {
+    return variable
+  }
+
+  function updateSlidesToShow() {
+    setCurrentSlide(0) // Reset về 0 để tránh gặp lỗi
+
+    if (contentRef.current) {
+      const gridContainer = document.querySelector('.five') as HTMLElement
+      gridContainer.style.display = 'grid'
+      let width = contentRef.current.clientWidth // Lấy chiều rộng của contentRef
+      setWidth(width)
+
+      let calculatedNumColumn
+      if (width >= 1116) {
+        gridContainer.style.gridTemplateColumns = `${getGridString()}`
+        gridContainer.style.columnGap = `${(4 / 1116) * 100}%` // Khoảng cách giữa các cột
+        calculatedNumColumn = 5
+      } else {
+        let widthCount = -4
+        let buttonArray = []
+        let slideStart = getSameVariable(currentSlide)
+        let slideNow = getSameVariable(slideStart)
+        let loopIncrease = true
+
+        while (widthCount + selectedButton[slideNow] + 4 <= width) {
+          if (slideNow == 6) {
+            slideNow = slideStart - 1
+            loopIncrease = false
+          }
+
+          if (slideNow == -1) {
+            break
+          }
+
+          widthCount += selectedButton[slideNow] + 4
+          if (loopIncrease) {
+            buttonArray.push(selectedButton[slideNow])
+            slideNow++
+          } else {
+            buttonArray.unshift(selectedButton[slideNow])
+            slideNow--
+          }
+        }
+
+        setCurrentSlide(slideNow)
+
+        let reponsiveRate = width / widthCount
+        let columnGap = 4 * reponsiveRate
+
+        gridContainer.style.gridTemplateColumns = `${getGridString2(selectedButton, reponsiveRate, selectedButton.length)}`
+        gridContainer.style.columnGap = `${columnGap}px`
+        calculatedNumColumn = buttonArray.length
+      }
+
+      if (calculatedNumColumn !== slidesToShow) {
+        setSlidesToShow(calculatedNumColumn)
+        console.log('slidesToShow: ', calculatedNumColumn)
+      }
+    }
+  }
+
+  function nextSlide() {
+    setCurrentSlide(function (prevSlide) {
+      let slideCount = prevSlide + slidesToShow
+      if (slideCount > 5 - slidesToShow) {
+        console.log('currentSlide:', 5 - slidesToShow)
+        return 5 - slidesToShow
+      } else {
+        console.log('currentSlide:', slideCount)
+        return slideCount
+      }
+    })
+  }
+
+  function prevSlide() {
+    setCurrentSlide(function (prevSlide) {
+      let slideCount = prevSlide - slidesToShow
+      if (slideCount < 0) {
+        console.log('currentSlide:', 0)
+        return 0
+      } else {
+        console.log('currentSlide:', slideCount)
+        return slideCount
+      }
+    })
+  }
+  useEffect(() => {
+    updateSlidesToShow()
+    window.addEventListener('resize', updateSlidesToShow) // Thêm event listener
+    return () => {
+      window.removeEventListener('resize', updateSlidesToShow) // Bỏ đăng ký khi component unmount
+    }
+  }, [updateSlidesToShow, nextSlide, prevSlide])
+
+  useEffect(() => {
+    const leftButton = document.querySelector<HTMLElement>('.every-hour-display-button-left')
+    const rightButton = document.querySelector<HTMLElement>('.every-hour-display-button-right')
+
+    const updateButtonDisplay = (leftDisplay: string, rightDisplay: string) => {
+      if (leftButton) leftButton.style.display = leftDisplay
+      if (rightButton) rightButton.style.display = rightDisplay
+    }
+
+    if (width >= 118 * 5 - 4) {
+      updateButtonDisplay('none', 'none')
+    } else {
+      if (currentSlide === 0) {
+        updateButtonDisplay('none', 'block')
+      } else if (currentSlide === 5 - slidesToShow) {
+        updateButtonDisplay('block', 'none')
+      } else {
+        updateButtonDisplay('block', 'block')
+      }
+    }
+  }, [currentSlide, slidesToShow, width]) // Theo dõi sự thay đổi của currentSlide và slidesToShow
+
   const groupedByDay = weather5day?.list?.reduce((acc: any, curr: any) => {
     const date = new Date(curr.dt * 1000).toLocaleDateString('vi-VN', {
       weekday: 'long',
@@ -33,19 +187,27 @@ const FivedayWeather: React.FC<{
   const days = Object.keys(groupedByDay || {})
 
   const handleItemClick = useCallback(
-    (index: number, listItems: NodeListOf<HTMLLIElement>, days: any, groupedByDay: any, weather: any, weather5day: any) => {
+    (
+      index: number,
+      listItems: NodeListOf<HTMLLIElement>,
+      days: any,
+      groupedByDay: any,
+      weather: any,
+      weather5day: any
+    ) => {
       listItems.forEach((item, idx) => {
         if (idx !== index) {
           item.classList.add('compact')
-          item.style.width = '220px'
           item.style.background = 'rgb(239 242 247)'
           item.style.color = '#000000'
         } else {
           item.classList.remove('compact')
-          item.style.width = '350px'
-          item.style.background = '#ffffff'
+          // item.style.background = '#ffffff'
         }
+        item.style.width = '100%'
       })
+      setActiveTab(index)
+      updateElementAtIndex(index)
 
       onItemSelected(groupedByDay[days[index]]?.date, weather, weather5day)
     },
@@ -57,17 +219,14 @@ const FivedayWeather: React.FC<{
     listItems.forEach((li, index) => {
       if (index !== 0) {
         li.classList.add('compact')
-        li.style.width = '220px'
         li.style.background = 'rgb(239 242 247)'
         li.style.color = '#000000'
       } else {
-        li.style.width = '350px'
         li.style.background = '#ffffff'
-
 
         onItemSelected(groupedByDay[days[index]]?.date, weather, weather5day)
       }
-
+      li.style.width = '100%'
       li.addEventListener('click', () => handleItemClick(index, listItems, days, groupedByDay, weather, weather5day))
     })
   }, [weather, weather5day, handleItemClick])
@@ -76,16 +235,14 @@ const FivedayWeather: React.FC<{
     return <p>Vui lòng tìm kiếm một địa điểm để hiển thị thông tin thời tiết.</p>
   }
 
-
   return (
-    <div className='fiveday'>
+    <div className='fiveday' ref={contentRef}>
       <div className='fivetitle'>
         <h4>Dự báo 5 ngày tới</h4>
         <button>XEM THEO THÁNG</button>
       </div>
       <ul className='five'>
         {days.slice(0, 5).map((day, index) => {
-
           const dayData = groupedByDay[day]
           return (
             <li key={index} aria-label={`Weather forecast for ${day}`}>
@@ -106,4 +263,5 @@ const FivedayWeather: React.FC<{
     </div>
   )
 }
+
 export default FivedayWeather

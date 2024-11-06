@@ -10,6 +10,7 @@ import Map from './modules/dashboard/pages/map.tsx'
 import Info from './modules/dashboard/pages/TinTuc.tsx'
 import Air from './modules/dashboard/pages/KhongKhi.tsx'
 import './common/styles/FiveWeather.scss'
+import Details from './common/components/details.tsx'
 
 function App() {
   const [city, setCity] = useState<string>('Hanoi')
