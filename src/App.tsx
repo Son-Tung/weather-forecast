@@ -23,6 +23,7 @@ function App() {
       const totalWeather = await forecastWeather(city)
       setWeather(totalWeather.weatherData)
       setWeather5day(totalWeather.forecastData)
+      console.log(totalWeather.forecastData)
     } catch (error) {
       console.error('Error fetching weather data:', error)
     }
@@ -41,26 +42,29 @@ function App() {
 
   const onItemSelected = (date: Date, weather: any, weather5day: any) => {
     try {
-      const dateWithoutTime = getDateWithoutTime(date)
-      const dateNow = getDateWithoutTime(new Date())
-      const weatherFilter: any = []
+      let dateNow: Date = getDateWithoutTime(new Date());
+      let dateSelected: Date = getDateWithoutTime(date);
+      let weatherFilter: any = [];
+      let startTime: Date;
+      let endTime: Date;
 
-      let startDate
-      let endDate
-      if (dateWithoutTime.getTime() === dateNow.getTime()) {
-        startDate = new Date()
-        endDate = new Date(startDate)
-        endDate.setDate(startDate.getDate() + 1)
-        weatherFilter.push(weather)
-      } else {
-        startDate = new Date(date)
-        endDate = new Date(date)
-        startDate.setHours(0, 0, 0)
-        endDate.setHours(23, 59, 59)
+
+      
+      if (dateSelected.getTime() === dateNow.getTime()) {
+        startTime = new Date()
+        startTime.setHours(startTime.getHours() - startTime.getHours() % 3 + 3, 0 , 0);
+        weatherFilter.push(weather);
       }
 
-      const startTimestamp = startDate.getTime() / 1000
-      const endTimestamp = endDate.getTime() / 1000
+      else {
+        startTime = getDateWithoutTime(date);
+      }
+
+      endTime = new Date(startTime);
+      endTime.setDate(endTime.getDate() + 1);
+      
+      const startTimestamp = startTime.getTime() / 1000
+      const endTimestamp = endTime.getTime() / 1000
 
       weather5day?.list?.forEach((getWeather: any) => {
         if (startTimestamp <= getWeather?.dt && getWeather?.dt <= endTimestamp) {
@@ -68,8 +72,7 @@ function App() {
         }
       })
 
-      console.log('weatherFilter: ', weatherFilter)
-      setSelectedWeather(weatherFilter)
+      setSelectedWeather(weatherFilter);
     } catch (error) {
       console.log('onItemSelected', error)
     }
@@ -96,7 +99,7 @@ function App() {
             <Route path='/map' element={<Map />} />
             <Route path='/news' element={<Info />} />
             <Route path='/air-quality' element={<Air />} />
-            <Route path='/details' element={<Details />} /> {/* Added Details route */}
+            <Route path='/details' element={<Details />} /> 
           </Routes>
           <Footer />
         </div>
