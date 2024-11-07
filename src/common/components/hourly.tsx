@@ -126,8 +126,8 @@ const Hourly: React.FC<HourlyProps> = ({ selectedWeather, contentRef }) => {
     return Math.round(speed * 36) / 10
   }
 
-  function getHour(dateString: string) {
-    const date = new Date(dateString)
+  function getHour(epoch: number) {
+    const date = new Date(epoch * 1000)
     const hours = date.getHours() // Đảm bảo có 2 chữ số
 
     if (hours <= 12) {
@@ -137,15 +137,15 @@ const Hourly: React.FC<HourlyProps> = ({ selectedWeather, contentRef }) => {
     }
   }
 
-  function getDate(dateString: string) {
+  function getDate(epoch: number) {
+    const date = new Date(epoch * 1000);
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    const date = new Date(dateString)
     const month = months[date.getMonth()]
     const day = date.getDate()
     const hour = date.getHours()
 
     // Kiểm tra nếu giờ là 0 (nửa đêm)
-    if (hour === 0) {
+    if (hour === 1) {
       return `${month} ${day}`
     } else {
       return ''
@@ -192,7 +192,7 @@ const Hourly: React.FC<HourlyProps> = ({ selectedWeather, contentRef }) => {
           {selectedWeather?.slice(-8).map((item: any, index: number) => (
             <div key={index} className='column-hour'>
               <div className='weather'>
-                <div className='day'>{getDate(item?.dt_txt)}</div>
+                <div className='day'>{getDate(item?.dt)}</div>
                 <img className='weather-icon' src={convertLinkImg(item?.weather[0]?.icon)} alt='weather-icon' />
                 <div className='temperature'>{item?.main?.temp}°</div>
                 <div className='weather-status'>{item?.weather[0]?.main}</div>
@@ -210,7 +210,7 @@ const Hourly: React.FC<HourlyProps> = ({ selectedWeather, contentRef }) => {
                   </div>
                 </div>
               </div>
-              <div className='hour'>{getHour(item?.dt_txt)}</div>
+              <div className='hour'>{getHour(item?.dt)}</div>
             </div>
           ))}
         </div>
