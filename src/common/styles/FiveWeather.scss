@@ -18,16 +18,48 @@
 }
 
 .fiveday {
+  width: 80%;
+  margin: 0 10%;
   display: flex;
-  overflow-x: auto;
+
   position: relative;
-  margin-left: 230px;
+ 
   flex-direction: column;
 }
 
+.five-container {
+  position: relative;
+  overflow: hidden;
+}
+
 .five {
-  display: flex;
-  flex-wrap: nowrap;
+  padding-inline-start: 0;
+  transition: transform 0.5s ease;
+}
+
+.five-day-button-left, .five-day-button-right {
+  width: 16px;
+  height: 32px;
+  background: white;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.14), 0px 0px 2px 0px rgba(0, 0, 0, 0.12);
+  position: absolute;
+  top: 70.585px;
+}
+
+.five-day-button-left {
+  left: 0;
+}
+
+.five-day-button-right {
+  right: 0;
 }
 
 .five li {
@@ -44,6 +76,7 @@
   grid-template-columns: auto auto auto;
   gap: 0px;
   margin: 3px;
+  flex: 0 0 auto;
 }
 
 .five li p:nth-child(1) {
@@ -53,6 +86,7 @@
   font-size: 0.9em;
   font-weight: 600;
   font-family: Arial, Helvetica, sans-serif;
+  flex: 0 0 auto;
 }
 
 .five li p:nth-child(2) {
@@ -63,7 +97,7 @@
   font-weight: 600;
   font-family: Arial, Helvetica, sans-serif;
   left: 10px;
- 
+  flex: 0 0 auto;
 }
 
 .five li p:nth-child(3) {
@@ -76,6 +110,7 @@
   font-weight: 0;
   margin-left: 30px;
   font-family: Arial, Helvetica, sans-serif;
+  flex: 0 0 auto;
 }
 
 .five li img {
@@ -85,6 +120,7 @@
   position: relative;
   bottom: 25px;
   left: 20px;
+  flex: 0 0 auto;
 }
 
 .five li p:nth-child(5) {
@@ -93,8 +129,8 @@
   bottom: 10px;
   font-size: 0.9em;
   font-family: Arial, Helvetica, sans-serif;
- left: 10px;
-
+  left: 10px;
+  flex: 0 0 auto;
 }
 
 .five li p:nth-child(6) {
@@ -107,16 +143,19 @@
   font-weight: 0;
   margin-left: 30px;
   font-family: Arial, Helvetica, sans-serif;
+  flex: 0 0 auto;
 }
 
 .five li.compact p:nth-child(3),
 .five li.compact p:nth-child(6) {
   display: none;
 }
+
 .weather-image {
   width: 60px;
   height: 50px;
 }
+
 .scroll-button {
   background-color: #007bff;
   color: #ffffff;
@@ -150,9 +189,141 @@
   border: none;
   background-color: #ffffff;
   cursor: pointer;
-  margin-right: 355px;
 }
 h4 {
   position: relative;
-  left: 45px;
+
+  flex: 0 0 auto;
+}
+
+
+
+@media screen and (max-width: 1500px){
+  .fiveday {
+    margin-left: 0;
+    padding: 0px;
+  }
+
+
+  .five li {
+    grid-template-areas:
+      "time temp_max description"
+      "img temp_min humidity";
+    grid-template-columns: auto auto auto;
+    gap: 0px;
+    margin: 3px;
+  }
+
+  .five li p:nth-child(1),
+  .five li p:nth-child(2),
+  .five li p:nth-child(3),
+  .five li p:nth-child(5),
+  .five li p:nth-child(6) {
+    text-align: center;
+    flex: 0 0 auto;
+  }
+
+  .five li img {
+    margin: 0 auto;
+    display: block;
+  }
+}
+@media screen and (max-width: 1240px) {
+
+
+  .fiveday {
+    margin-left: 0;
+    padding: 0px;
+  }
+
+  .five li {
+    grid-template-areas:
+      "time temp_max description"
+      "img temp_min humidity";
+    grid-template-columns: auto auto auto;
+    gap: 0px;
+    margin: 3px;
+  }
+
+  .five li p:nth-child(1),
+  .five li p:nth-child(2),
+  .five li p:nth-child(3),
+  .five li p:nth-child(5),
+  .five li p:nth-child(6) {
+    text-align: center;
+    flex: 0 0 auto;
+  }
+
+  .five li img {
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+/* Ẩn thẻ li thứ 3 khi màn hình nhỏ hơn 1050px */
+@media screen and (max-width: 1050px) {
+
+  .fiveday {
+    margin-left: 0;
+    padding: 0px;
+  }
+
+  .five li {
+    grid-template-areas:
+      "time temp_max description"
+      "img temp_min humidity";
+    grid-template-columns: auto auto auto;
+    gap: 0px;
+    margin: 3px;
+  }
+
+  .five li p:nth-child(1),
+  .five li p:nth-child(2),
+  .five li p:nth-child(3),
+  .five li p:nth-child(5),
+  .five li p:nth-child(6) {
+    text-align: center;
+    flex: 0 0 auto;
+  }
+
+  .five li img {
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+/* Ẩn thẻ li thứ 2 khi màn hình nhỏ hơn 830px */
+@media screen and (max-width: 830px) {
+
+  .fivetitle h4{
+    left: 0px;
+  }
+  .fiveday {
+    margin-left: 0;
+    padding: 0px;
+  }
+  .fivetitle button{margin-right: 0px;}
+
+  .five li {
+    grid-template-areas:
+      "time temp_max description"
+      "img temp_min humidity";
+    grid-template-columns: auto auto auto;
+    gap: 0px;
+    margin: 3px;
+  }
+
+  .five li p:nth-child(1),
+  .five li p:nth-child(2),
+  .five li p:nth-child(3),
+  .five li p:nth-child(5),
+  .five li p:nth-child(6) {
+    text-align: center;
+    flex: 0 0 auto;
+  }
+
+  .five li img {
+    margin: 0 auto;
+    display: block;
+  }
 }
