@@ -13,6 +13,7 @@ import './common/styles/FiveWeather.scss'
 import Details from './common/components/details.tsx'
 
 function App() {
+  // khai báo sate và refs
   const [city, setCity] = useState<string>('Hanoi')
   const [weather, setWeather] = useState<any>(null)
   const [weather5day, setWeather5day] = useState<any>(null)
@@ -29,10 +30,6 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    getWeather(city)
-  }, [city])
-
   const getDateWithoutTime = (date: Date): Date => {
     const year = date.getFullYear()
     const month = date.getMonth()
@@ -42,27 +39,23 @@ function App() {
 
   const onItemSelected = (date: Date, weather: any, weather5day: any) => {
     try {
-      let dateNow: Date = getDateWithoutTime(new Date());
-      let dateSelected: Date = getDateWithoutTime(date);
-      let weatherFilter: any = [];
-      let startTime: Date;
-      let endTime: Date;
+      let dateNow: Date = getDateWithoutTime(new Date())
+      let dateSelected: Date = getDateWithoutTime(date)
+      let weatherFilter: any = []
+      let startTime: Date
+      let endTime: Date
 
-
-      
       if (dateSelected.getTime() === dateNow.getTime()) {
         startTime = new Date()
-        startTime.setHours(startTime.getHours() - startTime.getHours() % 3 + 3, 0 , 0);
-        weatherFilter.push(weather);
+        startTime.setHours(startTime.getHours() - (startTime.getHours() % 3) + 3, 0, 0)
+        weatherFilter.push(weather)
+      } else {
+        startTime = getDateWithoutTime(date)
       }
 
-      else {
-        startTime = getDateWithoutTime(date);
-      }
+      endTime = new Date(startTime)
+      endTime.setDate(endTime.getDate() + 1)
 
-      endTime = new Date(startTime);
-      endTime.setDate(endTime.getDate() + 1);
-      
       const startTimestamp = startTime.getTime() / 1000
       const endTimestamp = endTime.getTime() / 1000
 
@@ -72,7 +65,7 @@ function App() {
         }
       })
 
-      setSelectedWeather(weatherFilter);
+      setSelectedWeather(weatherFilter)
     } catch (error) {
       console.log('onItemSelected', error)
     }
@@ -99,7 +92,7 @@ function App() {
             <Route path='/map' element={<Map />} />
             <Route path='/news' element={<Info />} />
             <Route path='/air-quality' element={<Air />} />
-            <Route path='/details' element={<Details />} /> 
+            <Route path='/details' element={<Details />} />
           </Routes>
           <Footer />
         </div>

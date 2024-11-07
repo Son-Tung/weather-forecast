@@ -1,25 +1,21 @@
-import React, { useState } from 'react'
-import WeatherLogo from '../../assets/images/IMG.png'
+import React, { useEffect, useState } from 'react'
+import WeatherLogo from '../../assets/images/svg/IMG.jpg'
 import '../styles/header.scss'
 import { lstCities } from '../../assets/cities'
 import { forecastWeather } from '../services/api'
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import { Link } from 'react-router-dom'
 
 function Header({ city, setCity, setWeather }: any) {
-  // const [city, setCity] = useState<string>('')
-  // const [weather, setWeather] = useState<any>(null)
-  const [showPopup, setShowPopup] = useState<boolean>(false)
+  // định nghĩa component Header với 3 props: city:tên thành phố hiện tại, setcity: hàm để cập nhật tên thành phố, setweather: hàm để cập nhật dữ liệu thời thiết
   const [filteredCities, setFilteredCities] = useState<any[]>([])
 
   const handleCityChange = (input: string) => {
-    setCity(input)
+    //hàm xử lí khi người dùng nhập tên thành phố
+    setCity(input) // cập nhật city với giá trị người dùng nhập
     try {
       if (input.length > 0) {
-        const filtered = lstCities.filter((city) => city.name.toLowerCase().includes(input.toLowerCase()))
-
+        const filtered = lstCities.filter((city) => city.name.toLowerCase().includes(input.toLowerCase())) //tìm các thành phố từ 1stcities khớp với input và lưu vào filteredcities
         setFilteredCities(filtered)
-        // }
       } else {
         setFilteredCities([])
       }
@@ -29,22 +25,20 @@ function Header({ city, setCity, setWeather }: any) {
   }
 
   const handleCityClick = (city: string) => {
-    setCity('')
-    getWeather(city)
+    // hàm để chọn một thành phố từ danh sách gợi ý
+    setCity('') // xoá giá trị hiện tại trong ô tìm kiếm
+    getWeather(city) // Gọi hàm để lấy thông tin thời tiết cho thành phố đã chọn
   }
 
   const getWeather = async (scopeCity?: string) => {
+    // hàm lấy dữ liệu thời tiết từ API
     try {
       const data = await forecastWeather(scopeCity || city)
-      setWeather(data)
-      setFilteredCities([])
+      setWeather(data) // cập nhật dữ liệu thời tiết
+      setFilteredCities([]) // xoá danh sách gợi ý thành phố
     } catch (error) {
       console.error('Error:', error)
     }
-  }
-
-  const togglePopup = () => {
-    setShowPopup(!showPopup)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -56,14 +50,39 @@ function Header({ city, setCity, setWeather }: any) {
     }
   }
 
+  // Khởi tạo giá trị thành phố là "Hanoi" khi component được mount
+  useEffect(() => {
+    const initialCity = 'Hanoi'
+    setCity('') // Cập nhật tên thành phố
+    getWeather(initialCity) // Gọi hàm để lấy dữ liệu thời tiết
+  }, []) // Chỉ chạy một lần khi component mount
+
   return (
-    <div className='App'>
+    <>
       {/* Header Section */}
       <header className='App-header'>
-        <div>
-          <div className='logo-title'>
-            <img src={WeatherLogo} alt='Weather Logo' />
-            <h1>Weather Forecast</h1>
+        <div className='App-header-body'>
+          <div className='header-content'>
+            <div className='header-logo'>
+              <img src={WeatherLogo} alt='Weather Logo' />
+              <h1>Weather Forecast</h1>
+            </div>
+            <nav>
+              <ul>
+                <li>
+                  <a href='#'>Home</a>
+                </li>
+                <li>
+                  <a href='#'>Map</a>
+                </li>
+                <li>
+                  <a href='#'>Tin tức</a>
+                </li>
+                <li>
+                  <a href='#'>Không khí</a>
+                </li>
+              </ul>
+            </nav>
           </div>
           {/* Search bar */}
           <div className='search-container'>
@@ -87,42 +106,12 @@ function Header({ city, setCity, setWeather }: any) {
                   ))}
                 </div>
               )}
-              {filteredCities?.length === 0 && city?.length > 0 && <div>No data</div>}
+              {filteredCities?.length === 0 && city?.length > 0 && <div></div>}
             </div>
           </div>
         </div>
-        <nav>
-          <ul>
-            <li>
-              <Link to='/'>Home</Link>
-            </li>
-            <li>
-              <Link to='/map'>Map</Link>
-            </li>
-            <li>
-              <Link to='/news'>Tin tức</Link>
-            </li>
-            <li>
-              <Link to='/air-quality'>Không khí</Link>
-            </li>
-          </ul>
-          <a className='menu-icon' onClick={togglePopup}>
-            <i className='fas fa-bell bell-icon'></i>
-          </a>
-        </nav>
       </header>
-
-      {/* Pop-up thông báo */}
-      {showPopup && (
-        <div className='popup'>
-          <div className='popup-content'>
-            <h3>Thông báo</h3>
-            <p>Đây là thông báo của bạn.</p>
-            <button onClick={togglePopup}>Đóng</button>
-          </div>
-        </div>
-      )}
-    </div>
+    </>
   )
 }
 
