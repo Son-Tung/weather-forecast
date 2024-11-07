@@ -36,13 +36,22 @@
   padding: 20px;
 }
 
-.weather-info {
+.weather-info-left {
   flex: 1;
   background-color: #ffffff; /* Màu nền trắng */
   border-radius: 10px;
-  padding: 20px;
+  padding: 30px;
   margin-bottom: 20px;
   margin: 0 10px; /* Thêm khoảng cách giữa hai phần */
+}
+
+.weather-info-right {
+  background-color: #ffffff; /* Màu nền trắng */
+  border-radius: 10px;
+  padding: 40px;
+  margin-bottom: 20px;
+  margin: 0 10px; /* Thêm khoảng cách giữa hai phần */
+  flex: 3
 }
 
 h3 {
@@ -123,7 +132,6 @@ h3 {
   width: 100%;
   height: 100%;
   border-top: 2px dashed rgba(51, 51, 51, 0.2);
-  border-radius: 50%;
   transform: translateY(-20px);
 }
 
@@ -152,7 +160,6 @@ h3 {
   background-color: #f9f9f9; /* Màu nền sáng hơn */
   padding: 45px;
   border-radius: 10px;
- 
 }
 
 .weather-details div {
@@ -234,4 +241,33 @@ img.sunrise-icon, img.sunset-icon {
   border: 2px solid #ffd700; /* Màu viền vàng */
   border-radius: 50%; /* Bo tròn viền */
   padding: 2px; /* Khoảng cách giữa viền và hình ảnh */
+}
+
+/* Media Queries cho Responsive Design */
+
+/* Dưới 1440px: Sun và Detail mỗi cái 1 hàng */
+@media (max-width: 1439px) {
+  .details-content {
+    flex-direction: column;
+  }
+
+  .weather-info-left,
+  .weather-info-right {
+    margin: 10px 0; /* Đảm bảo khoảng cách giữa các phần */
+  }
+}
+
+/* Từ 1440px trở lên: Sun và Detail trên cùng 1 hàng, tỷ lệ 1:4 */
+@media (min-width: 1440px) {
+  .details-content {
+    flex-direction: row;
+  }
+
+  .weather-info-left {
+    flex: 1;
+  }
+
+  .weather-info-right {
+    flex: 4;
+  }
 }

@@ -14,7 +14,7 @@ const HoMe: React.FC<{
     <div className='content'>
       <Main weather={weather} />
       <FivedayWeather  weather={weather} weather5day={weather5day} onItemSelected={onItemSelected} />
-      <Detail5day selectedWeather={selectedWeather}   />
+      <Detail5day selectedWeather={selectedWeather} weather={weather}  />
       <WeatherDashboard city={city} />
     </div>
   )

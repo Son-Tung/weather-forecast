@@ -183,7 +183,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   }, {})
 
   const days = Object.keys(groupedByDay || {})
-
+  console.log('weather5day === ', groupedByDay)
   const handleItemClick = useCallback(
     (
       index: number,
