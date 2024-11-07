@@ -21,18 +21,45 @@
   width: 80%;
   margin: 0 10%;
   display: flex;
-  overflow-x: auto;
+
   position: relative;
  
   flex-direction: column;
 }
 
-.five {
-  display: flex;
+.five-container {
   position: relative;
   overflow: hidden;
-  flex-wrap: nowrap;
+}
+
+.five {
   padding-inline-start: 0;
+  transition: transform 0.5s ease;
+}
+
+.five-day-button-left, .five-day-button-right {
+  width: 16px;
+  height: 32px;
+  background: white;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.14), 0px 0px 2px 0px rgba(0, 0, 0, 0.12);
+  position: absolute;
+  top: 70.585px;
+}
+
+.five-day-button-left {
+  left: 0;
+}
+
+.five-day-button-right {
+  right: 0;
 }
 
 .five li {
