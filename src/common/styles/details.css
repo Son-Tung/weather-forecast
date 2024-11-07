@@ -152,7 +152,11 @@ h3 {
   background-color: #f9f9f9; /* Màu nền sáng hơn */
   padding: 45px;
   border-radius: 10px;
+<<<<<<< HEAD
  
+=======
+  justify-items: center;
+>>>>>>> 98045107cbb7510bb113060d3d7c1142012daecd
 }
 
 .weather-details div {
