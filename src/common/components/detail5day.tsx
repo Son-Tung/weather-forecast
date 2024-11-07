@@ -6,9 +6,10 @@ import React, { useState, useRef } from 'react'
 
 interface Detail5dayProps {
   selectedWeather: any[]
+  weather : any
 }
 
-const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather }) => {
+const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather,weather }) => {
   const contentRef = useRef<HTMLDivElement | null>(null)
   const [activeTab, setActiveTab] = useState(0)
   
@@ -33,7 +34,7 @@ const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather }) => {
       <div className='detail-5-day-content' ref={contentRef}>
         {activeTab === 0 && <div className='summary-display'></div>}
         {activeTab === 1 && <Hourly selectedWeather = {selectedWeather} contentRef={contentRef} />}
-        {activeTab === 2 && <Details />}
+        {activeTab === 2 && <Details selectedWeather={selectedWeather} weather={weather} />}
       </div>
     </>
   )
