@@ -95,6 +95,7 @@ function App() {
             <Route path='/map' element={<Map />} />
             <Route path='/news' element={<Info />} />
             <Route path='/air-quality' element={<Air />} />
+            <Route path='/details' element={<Details />} /> {/* Added Details route */}
           </Routes>
           <Footer />
         </div>
