@@ -19,17 +19,6 @@ function App() {
   const [weather5day, setWeather5day] = useState<any>(null)
   const [selectedWeather, setSelectedWeather] = useState<any[]>([])
 
-  const getWeather = async (city: string) => {
-    try {
-      const totalWeather = await forecastWeather(city)
-      setWeather(totalWeather.weatherData)
-      setWeather5day(totalWeather.forecastData)
-      console.log(totalWeather.forecastData)
-    } catch (error) {
-      console.error('Error fetching weather data:', error)
-    }
-  }
-
   const getDateWithoutTime = (date: Date): Date => {
     const year = date.getFullYear()
     const month = date.getMonth()
@@ -75,7 +64,7 @@ function App() {
     <>
       <Router>
         <div className='App'>
-          <Header city={city} setCity={setCity} setWeather={setWeather} />
+          <Header setCity={setCity} setWeather={setWeather} setWeather5day={setWeather5day}/>
           <Routes>
             <Route
               path='/'
