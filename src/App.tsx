@@ -1,10 +1,8 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import Header from '../src/common/components/header.tsx'
-
 import Footer from './common/components/footer.tsx'
-import { forecastWeather } from './common/services/api.tsx'
 import HoMe from './modules/dashboard/pages/Home.tsx'
 import Map from './modules/dashboard/pages/map.tsx'
 import Info from './modules/dashboard/pages/TinTuc.tsx'
@@ -19,16 +17,14 @@ function App() {
   const [weather5day, setWeather5day] = useState<any>(null)
   const [selectedWeather, setSelectedWeather] = useState<any[]>([])
 
-  const getWeather = async (city: string) => {
-    try {
-      const totalWeather = await forecastWeather(city)
-      setWeather(totalWeather.weatherData)
-      setWeather5day(totalWeather.forecastData)
-      console.log(totalWeather.forecastData)
-    } catch (error) {
-      console.error('Error fetching weather data:', error)
-    }
-  }
+  // const getWeather5Day = async (city: string) => {
+  //   try {
+  //     const totalWeather = await forecastWeather(city)
+  //     setWeather(totalWeather.weatherData)
+  //   } catch (error) {
+  //     console.error('Error fetching weather data:', error)
+  //   }
+  // }
 
   const getDateWithoutTime = (date: Date): Date => {
     const year = date.getFullYear()
@@ -66,16 +62,14 @@ function App() {
       })
 
       setSelectedWeather(weatherFilter)
-    } catch (error) {
-      console.log('onItemSelected', error)
-    }
+    } catch (error) {}
   }
 
   return (
     <>
       <Router>
         <div className='App'>
-          <Header city={city} setCity={setCity} setWeather={setWeather} />
+          <Header city={city} setCity={setCity} setWeather={setWeather} setWeather5day={setWeather5day} />
           <Routes>
             <Route
               path='/'
@@ -92,7 +86,8 @@ function App() {
             <Route path='/map' element={<Map />} />
             <Route path='/news' element={<Info />} />
             <Route path='/air-quality' element={<Air />} />
-            <Route path='/details' element={<Details selectedWeather={selectedWeather} weather={weather} />} /> {/* Added Details route */}
+            <Route path='/details' element={<Details selectedWeather={selectedWeather} weather={weather} />} />{' '}
+            {/* Added Details route */}
           </Routes>
           <Footer />
         </div>

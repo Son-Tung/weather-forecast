@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import WeatherLogo from '../../assets/images/svg/IMG.jpg'
+import WeatherLogo from '../../assets/images/IMG.png'
 import '../styles/header.scss'
 import { lstCities } from '../../assets/cities'
 import { forecastWeather } from '../services/api'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
-function Header({ city, setCity, setWeather }: any) {
+function Header({ city, setCity, setWeather, setWeather5day }: any) {
   // định nghĩa component Header với 3 props: city:tên thành phố hiện tại, setcity: hàm để cập nhật tên thành phố, setweather: hàm để cập nhật dữ liệu thời thiết
   const [filteredCities, setFilteredCities] = useState<any[]>([])
 
@@ -34,7 +34,8 @@ function Header({ city, setCity, setWeather }: any) {
     // hàm lấy dữ liệu thời tiết từ API
     try {
       const data = await forecastWeather(scopeCity || city)
-      setWeather(data) // cập nhật dữ liệu thời tiết
+      setWeather(data.weatherData)
+      setWeather5day(data.forecastData) // cập nhật dữ liệu thời tiết
       setFilteredCities([]) // xoá danh sách gợi ý thành phố
     } catch (error) {
       console.error('Error:', error)
@@ -44,7 +45,7 @@ function Header({ city, setCity, setWeather }: any) {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       if (filteredCities?.length) {
-        getWeather(filteredCities[0].name)
+        getWeather(filteredCities[0]?.name)
         setCity('')
       }
     }

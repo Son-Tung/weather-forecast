@@ -61,7 +61,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
       if (calculatedNumColumn !== slidesToShow) {
         setSlidesToShow(calculatedNumColumn)
       }
-      console.log('slidesToShow: ', calculatedNumColumn)
+
       settranslateX(getTranslateX(selectedButton, currentSlide, responsiveRate))
     }
   }
@@ -70,10 +70,8 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
     setCurrentSlide(function (prevSlide) {
       let slideCount = prevSlide + slidesToShow
       if (slideCount > 5 - slidesToShow) {
-        console.log('currentSlide:', 5 - slidesToShow)
         return 5 - slidesToShow
       } else {
-        console.log('currentSlide:', slideCount)
         return slideCount
       }
     })
@@ -83,10 +81,8 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
     setCurrentSlide(function (prevSlide) {
       let slideCount = prevSlide - slidesToShow
       if (slideCount < 0) {
-        console.log('currentSlide:', 0)
         return 0
       } else {
-        console.log('currentSlide:', slideCount)
         return slideCount
       }
     })
@@ -121,16 +117,14 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   }
 
   const getTranslateX = (selectedButton: any, currentSlide: number, reponsiveRate: number) => {
-    console.log(selectedButton, currentSlide, reponsiveRate)
     let translateX = -4
     if (currentSlide == 0) {
-      console.log(0)
       return 0
     } else {
       for (let i = 0; i < currentSlide; i++) {
         translateX += selectedButton[i] + 4
       }
-      console.log(translateX)
+
       translateX *= reponsiveRate
       return translateX
     }
@@ -183,7 +177,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   }, {})
 
   const days = Object.keys(groupedByDay || {})
-  console.log('weather5day === ', groupedByDay)
+
   const handleItemClick = useCallback(
     (
       index: number,
@@ -219,6 +213,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
         li.style.background = 'rgb(239 242 247)'
         li.style.color = '#000000'
       } else {
+        li.classList.remove('compact')
         li.style.background = '#ffffff'
 
         onItemSelected(groupedByDay[days[index]]?.date, weather, weather5day)

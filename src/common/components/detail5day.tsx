@@ -6,13 +6,13 @@ import React, { useState, useRef } from 'react'
 
 interface Detail5dayProps {
   selectedWeather: any[]
-  weather : any
+  weather: any
 }
 
-const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather,weather }) => {
+const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather, weather }) => {
   const contentRef = useRef<HTMLDivElement | null>(null)
   const [activeTab, setActiveTab] = useState(0)
-  
+
   function handleButtonClick(display: number) {
     setActiveTab(display)
   }
@@ -26,14 +26,17 @@ const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather,weather }) => {
         <button className={`${activeTab === 1 ? 'active' : ''} every-hour-button`} onClick={() => handleButtonClick(1)}>
           Hourly
         </button>
-        <button className={`${activeTab === 2 ? 'active' : ''} more-detail-button`} onClick={() => handleButtonClick(2)}>
+        <button
+          className={`${activeTab === 2 ? 'active' : ''} more-detail-button`}
+          onClick={() => handleButtonClick(2)}
+        >
           More details
         </button>
       </div>
 
       <div className='detail-5-day-content' ref={contentRef}>
         {activeTab === 0 && <div className='summary-display'></div>}
-        {activeTab === 1 && <Hourly selectedWeather = {selectedWeather} contentRef={contentRef} />}
+        {activeTab === 1 && <Hourly selectedWeather={selectedWeather} contentRef={contentRef} />}
         {activeTab === 2 && <Details selectedWeather={selectedWeather} weather={weather} />}
       </div>
     </>
