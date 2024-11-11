@@ -1,6 +1,6 @@
 import '../styles/details.css';
 import { useState, useEffect } from 'react';
-import { Sun, MapPin, Thermometer, Droplet, Eye, Wind, Cloud } from 'lucide-react';
+import { FaSun, FaMapPin, FaThermometerHalf, FaEye, FaWind, FaCloud, FaTachometerAlt, FaWater, FaMountain, FaClock, FaTint } from 'react-icons/fa';
 import SunriseIcon from '../../assets/images/sunrise.svg';
 import SunsetIcon from '../../assets/images/sunset.svg';
 import { forecastWeather } from '../services/api';
@@ -88,7 +88,7 @@ const Details = ({ selectedWeather, weather }: DetailsProps) => {
               <h3>Sun Information</h3>
               <div className="sun-info">
                 <div className="info-header">
-                  <Sun className="weather-icon sun" />
+                  <FaSun className="weather-icon sun" />
                   <div className="info-text">
                     <p>UV Index</p>
                     <p className="uv-value">{selectedWeather[0].uvIndex} - {getUVLevel(selectedWeather[0].uvIndex)}</p>
@@ -118,47 +118,49 @@ const Details = ({ selectedWeather, weather }: DetailsProps) => {
               <h3>Detailed Information</h3>
               <div className='weather-details'>
                 <div>
-                  <MapPin className='weather-icon' /> <strong>Location:</strong> {selectedWeather[0].name},{' '}
+                  <FaMapPin className='weather-icon' style={{ color: 'black' }} /> <strong>Location:</strong> {selectedWeather[0].name},{' '}
                   {selectedWeather[0].sys.country}
                 </div>
                 <div>
-                  <MapPin className='weather-icon' /> <strong>Timezone:</strong> {weather.timezone / 3600} UTC
+                  <FaClock className='weather-icon' style={{ color: 'gray' }} /> <strong>Timezone:</strong> {weather.timezone / 3600} UTC
                 </div>
                 <div>
-                  <Thermometer className='weather-icon' /> <strong>Temperature:</strong> {selectedWeather[0].main.temp}°C
+                  <FaThermometerHalf className='weather-icon' style={{ color: 'red' }} /> <strong>Temperature:</strong> {selectedWeather[0].main.temp}°C
                 </div>
                 <div>
-                  <Thermometer className='weather-icon' /> <strong>Feels Like:</strong> {selectedWeather[0].main.feels_like}°C
+                  <FaThermometerHalf className='weather-icon' style={{ color: 'red' }} /> <strong>Feels Like:</strong> {selectedWeather[0].main.feels_like}°C
                 </div>
                 <div>
-                  <Thermometer className='weather-icon' /> <strong>Min Temperature:</strong> {selectedWeather[0].main.temp_min}°C
+                  <FaThermometerHalf className='weather-icon' style={{ color: 'red' }} /> <strong>Min Temperature:</strong> {selectedWeather[0].main.temp_min}°C
                 </div>
                 <div>
-                  <Thermometer className='weather-icon' /> <strong>Max Temperature:</strong> {selectedWeather[0].main.temp_max}°C
+                  <FaThermometerHalf className='weather-icon' style={{ color: 'red' }} /> <strong>Max Temperature:</strong> {selectedWeather[0].main.temp_max}°C
                 </div>
                 <div>
-                  <Droplet className='weather-icon' /> <strong>Pressure:</strong> {selectedWeather[0].main.pressure} hPa
+                  <FaTachometerAlt className='weather-icon' style={{ color: 'darkgray' }} /> <strong>Pressure:</strong> {selectedWeather[0].main.pressure} hPa
                 </div>
                 <div>
-                  <Droplet className='weather-icon' /> <strong>Sea Level Pressure:</strong> {selectedWeather[0].main.sea_level} hPa
+                  <FaWater className='weather-icon' style={{ color: 'blue' }} /> <strong>Sea Level Pressure:</strong> {selectedWeather[0].main.sea_level} hPa
                 </div>
                 <div>
-                  <Droplet className='weather-icon' /> <strong>Ground Level Pressure:</strong> {selectedWeather[0].main.grnd_level} hPa
+                  <FaMountain className='weather-icon' style={{ color: 'brown' }} /> <strong>Ground Level Pressure:</strong> {selectedWeather[0].main.grnd_level} hPa
+                </div>
+                <div className='icon-group'>
+                <FaTint className='weather-icon' style={{ color: 'blue' }} />
+                <FaThermometerHalf className='weather-icon' style={{ color: 'red' }} />
+                  <strong>Humidity:</strong> {selectedWeather[0].main.humidity}%
                 </div>
                 <div>
-                  <Droplet className='weather-icon' /> <strong>Humidity:</strong> {selectedWeather[0].main.humidity}%
+                  <FaEye className='weather-icon' style={{ color: 'green' }} /> <strong>Visibility:</strong> {selectedWeather[0].visibility} m
                 </div>
                 <div>
-                  <Eye className='weather-icon' /> <strong>Visibility:</strong> {selectedWeather[0].visibility} m
+                  <FaWind className='weather-icon' style={{ color: 'lightblue' }} /> <strong>Wind Speed:</strong> {selectedWeather[0].wind.speed} m/s
                 </div>
                 <div>
-                  <Wind className='weather-icon' /> <strong>Wind Speed:</strong> {selectedWeather[0].wind.speed} m/s
+                  <FaWind className='weather-icon' style={{ color: 'lightblue' }} /> <strong>Wind Direction:</strong> {selectedWeather[0].wind.deg}°
                 </div>
                 <div>
-                  <Wind className='weather-icon' /> <strong>Wind Direction:</strong> {selectedWeather[0].wind.deg}°
-                </div>
-                <div>
-                  <Cloud className='weather-icon' /> <strong>Clouds:</strong> {selectedWeather[0].clouds.all}%
+                  <FaCloud className='weather-icon' style={{ color: 'gray' }} /> <strong>Clouds:</strong> {selectedWeather[0].clouds.all}%
                 </div>
                 <div>
                   <strong>Last Updated:</strong> {new Date(selectedWeather[0].dt * 1000).toLocaleString()}
