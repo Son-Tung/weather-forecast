@@ -17,15 +17,6 @@ function App() {
   const [weather5day, setWeather5day] = useState<any>(null)
   const [selectedWeather, setSelectedWeather] = useState<any[]>([])
 
-  // const getWeather5Day = async (city: string) => {
-  //   try {
-  //     const totalWeather = await forecastWeather(city)
-  //     setWeather(totalWeather.weatherData)
-  //   } catch (error) {
-  //     console.error('Error fetching weather data:', error)
-  //   }
-  // }
-
   const getDateWithoutTime = (date: Date): Date => {
     const year = date.getFullYear()
     const month = date.getMonth()

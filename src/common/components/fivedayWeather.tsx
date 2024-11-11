@@ -28,46 +28,48 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   function updateSlidesToShow() {
     if (contentRef.current) {
       const gridContainer = document.querySelector('.five') as HTMLElement
-      gridContainer.style.display = 'grid'
-      let width = contentRef.current.clientWidth // Lấy chiều rộng của contentRef
-      setWidth(width)
+      if (gridContainer) {
+        gridContainer.style.display = 'grid'
+        let width = contentRef.current.clientWidth
+        setWidth(width)
 
-      let calculatedNumColumn
-      if (width >= 1116) {
-        gridContainer.style.gridTemplateColumns = `${getGridString()}`
-        gridContainer.style.columnGap = `${(4 / 1116) * 100}%` // Khoảng cách giữa các cột
-        calculatedNumColumn = 5
-      } else {
-        let widthCount = -4
-        let buttonArray = []
-        let slideStart = getSameVariable(currentSlide)
-        let slideNow = getSameVariable(slideStart)
+        let calculatedNumColumn
+        if (width >= 1116) {
+          gridContainer.style.gridTemplateColumns = `${getGridString()}`
+          gridContainer.style.columnGap = `${(4 / 1116) * 100}%`
+          calculatedNumColumn = 5
+        } else {
+          let widthCount = -4
+          let buttonArray = []
+          let slideStart = getSameVariable(currentSlide)
+          let slideNow = getSameVariable(slideStart)
 
-        while (widthCount + selectedButton[slideNow] + 4 <= width) {
-          widthCount += selectedButton[slideNow] + 4
-          buttonArray.push(selectedButton[slideNow])
-          slideNow++
+          while (widthCount + selectedButton[slideNow] + 4 <= width) {
+            widthCount += selectedButton[slideNow] + 4
+            buttonArray.push(selectedButton[slideNow])
+            slideNow++
+          }
+
+          let responsiveRate = width / widthCount
+          setResponsiveRate(responsiveRate)
+          let columnGap = 4 * responsiveRate
+
+          gridContainer.style.gridTemplateColumns = `${getGridString2(selectedButton, responsiveRate, selectedButton.length)}`
+          gridContainer.style.columnGap = `${columnGap}px`
+          calculatedNumColumn = buttonArray.length
         }
 
-        let reponsiveRate = width / widthCount
-        setResponsiveRate(reponsiveRate)
-        let columnGap = 4 * reponsiveRate
+        if (calculatedNumColumn !== slidesToShow) {
+          setSlidesToShow(calculatedNumColumn)
+        }
 
-        gridContainer.style.gridTemplateColumns = `${getGridString2(selectedButton, reponsiveRate, selectedButton.length)}`
-        gridContainer.style.columnGap = `${columnGap}px`
-        calculatedNumColumn = buttonArray.length
+        settranslateX(getTranslateX(selectedButton, currentSlide, responsiveRate))
       }
-
-      if (calculatedNumColumn !== slidesToShow) {
-        setSlidesToShow(calculatedNumColumn)
-      }
-
-      settranslateX(getTranslateX(selectedButton, currentSlide, responsiveRate))
     }
   }
 
   function nextSlide() {
-    setCurrentSlide(function (prevSlide) {
+    setCurrentSlide((prevSlide) => {
       let slideCount = prevSlide + slidesToShow
       if (slideCount > 5 - slidesToShow) {
         return 5 - slidesToShow
@@ -78,7 +80,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   }
 
   function prevSlide() {
-    setCurrentSlide(function (prevSlide) {
+    setCurrentSlide((prevSlide) => {
       let slideCount = prevSlide - slidesToShow
       if (slideCount < 0) {
         return 0
@@ -87,7 +89,6 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
       }
     })
   }
-
   const updateElementAtIndex = (index: number) => {
     setSelectedButton(() => {
       const newState = [200, 200, 200, 200, 200] // Create a new array
