@@ -1,11 +1,10 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import Header from '../src/common/components/header.tsx'
 
 import Footer from './common/components/footer.tsx'
-import { forecastWeather } from './common/services/api.tsx'
-import HoMe from './modules/dashboard/pages/Home.tsx'
+import Home from './modules/dashboard/pages/Home.tsx'
 import Map from './modules/dashboard/pages/map.tsx'
 import Info from './modules/dashboard/pages/TinTuc.tsx'
 import Air from './modules/dashboard/pages/KhongKhi.tsx'
@@ -18,17 +17,6 @@ function App() {
   const [weather, setWeather] = useState<any>(null)
   const [weather5day, setWeather5day] = useState<any>(null)
   const [selectedWeather, setSelectedWeather] = useState<any[]>([])
-
-  const getWeather = async (city: string) => {
-    try {
-      const totalWeather = await forecastWeather(city)
-      setWeather(totalWeather.weatherData)
-      setWeather5day(totalWeather.forecastData)
-      console.log(totalWeather.forecastData)
-    } catch (error) {
-      console.error('Error fetching weather data:', error)
-    }
-  }
 
   const getDateWithoutTime = (date: Date): Date => {
     const year = date.getFullYear()
@@ -75,12 +63,12 @@ function App() {
     <>
       <Router>
         <div className='App'>
-          <Header city={city} setCity={setCity} setWeather={setWeather} />
+          <Header setCity={setCity} setWeather={setWeather} setWeather5day={setWeather5day}/>
           <Routes>
             <Route
               path='/'
               element={
-                <HoMe
+                <Home
                   weather={weather}
                   weather5day={weather5day}
                   onItemSelected={onItemSelected}

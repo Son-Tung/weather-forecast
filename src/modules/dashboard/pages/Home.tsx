@@ -3,7 +3,7 @@ import FivedayWeather from '../../../common/components/fivedayWeather'
 import Main from '../../../common/components/main'
 import WeatherDashboard from './WeatherDashboard'
 
-const HoMe: React.FC<{
+const Home: React.FC<{
   weather: any
   weather5day: any
   onItemSelected: (date: any, weather: any, weather5day: any) => void
@@ -19,4 +19,4 @@ const HoMe: React.FC<{
     </div>
   )
 }
-export default HoMe
+export default Home

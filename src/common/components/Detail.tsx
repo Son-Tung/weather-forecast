@@ -1,4 +1,3 @@
-import { weatherImages } from '../../assets/images/weatherImages'
 import '../styles/detail.scss'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import SunnyImage from '../../assets/images/Screenshot_15-10-2024_101422_assets.msn.com.jpeg' // ảnh trời nắng
@@ -25,27 +24,27 @@ function Detail({ weather }: any) {
           <div className='weather-info'>
             <div className='weather-header'>
               <img
-                src={weatherImages[weather?.weatherData?.weather?.[0]?.main.toLowerCase()]} // Lấy ảnh dựa trên tình trạng thời tiết
-                alt={weather?.weatherData?.weather?.[0]?.description}
+                src={weatherImages[weather?.weather?.[0]?.main.toLowerCase()]} // Lấy ảnh dựa trên tình trạng thời tiết
+                alt={weather?.weather?.[0]?.description}
                 className='weather-image'
               />
               <div className='temperature-details'>
-                <h1>{weather?.weatherData?.main?.temp}°C</h1>
+                <h1>{weather?.main?.temp}°C</h1>
                 <p className='weather-description'>
-                  {weather?.weatherData?.weather?.[0]?.description.charAt(0).toUpperCase() +
-                    weather?.weatherData?.weather?.[0]?.description?.slice(1)}
+                  {weather?.weather?.[0]?.description.charAt(0).toUpperCase() +
+                    weather?.weather?.[0]?.description?.slice(1)}
                 </p>
 
-                <p className='feels-like'>Cảm giác thực tế: {weather?.weatherData?.main?.feels_like}°C</p>
+                <p className='feels-like'>Cảm giác thực tế: {weather?.main?.feels_like}°C</p>
               </div>
             </div>
             <div className='additional-info'>
-              <p>Độ ẩm: {weather?.weatherData?.main?.humidity}%</p>
-              <p>Tầm nhìn: {weather?.weatherData?.visibility / 1000} km</p>
-              <p>Áp suất: {weather?.weatherData?.main?.pressure} mb</p>
-              <p>Tốc độ gió: {weather?.weatherData?.wind?.speed} km/h</p>
-              <p>Bình minh: {new Date(weather?.weatherData?.sys?.sunrise * 1000).toLocaleTimeString()}</p>
-              <p>Hoàng hôn: {new Date(weather?.weatherData?.sys?.sunset * 1000).toLocaleTimeString()}</p>
+              <p>Độ ẩm: {weather?.main?.humidity}%</p>
+              <p>Tầm nhìn: {weather?.visibility / 1000} km</p>
+              <p>Áp suất: {weather?.main?.pressure} mb</p>
+              <p>Tốc độ gió: {weather?.wind?.speed} km/h</p>
+              <p>Bình minh: {new Date(weather?.sys?.sunrise * 1000).toLocaleTimeString()}</p>
+              <p>Hoàng hôn: {new Date(weather?.sys?.sunset * 1000).toLocaleTimeString()}</p>
             </div>
           </div>
         ) : (

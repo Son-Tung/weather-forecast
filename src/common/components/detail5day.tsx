@@ -1,6 +1,8 @@
 import '../styles/detail5day.css'
-import Details from './details.tsx'
+import Summary from './summary.tsx'
 import Hourly from './hourly.tsx'
+import Details from './details.tsx'
+
 
 import React, { useState, useRef } from 'react'
 
@@ -32,7 +34,7 @@ const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather,weather }) => {
       </div>
 
       <div className='detail-5-day-content' ref={contentRef}>
-        {activeTab === 0 && <div className='summary-display'></div>}
+        {activeTab === 0 && <Summary />}
         {activeTab === 1 && <Hourly selectedWeather = {selectedWeather} contentRef={contentRef} />}
         {activeTab === 2 && <Details selectedWeather={selectedWeather} weather={weather} />}
       </div>

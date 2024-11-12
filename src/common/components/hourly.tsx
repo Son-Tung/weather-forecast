@@ -11,16 +11,20 @@ const Hourly: React.FC<HourlyProps> = ({ selectedWeather, contentRef }) => {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [slidesToShow, setSlidesToShow] = useState(0)
   const [numColumn, setNumColumn] = useState(0)
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
-    updateSlidesToShow()
-    window.addEventListener('resize', updateSlidesToShow) // Thêm event listener
-    return () => {
-      window.removeEventListener('resize', updateSlidesToShow) // Bỏ đăng ký khi component unmount
-    }
-  }, [])
+    function handleResize() {
+      setWindowWidth(window.innerWidth);
+    };
 
-  function updateSlidesToShow() {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
     setCurrentSlide(0) // Reset về 0 để tránh gặp lỗi
     let numColumn = selectedWeather.length
     setNumColumn(numColumn)
@@ -55,7 +59,7 @@ const Hourly: React.FC<HourlyProps> = ({ selectedWeather, contentRef }) => {
         console.log('slidesToShow: ', calculatedNumColumn)
       }
     }
-  }
+  }, [windowWidth])
 
   useEffect(() => {
     const leftButton = document.querySelector<HTMLElement>('.every-hour-display-button-left')
