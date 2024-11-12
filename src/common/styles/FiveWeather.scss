@@ -23,13 +23,14 @@
   display: flex;
 
   position: relative;
- 
+
   flex-direction: column;
 }
 
 .five-container {
   position: relative;
   overflow: hidden;
+  padding: 0px 0px 20px 0px;
 }
 
 .five {
@@ -37,7 +38,8 @@
   transition: transform 0.5s ease;
 }
 
-.five-day-button-left, .five-day-button-right {
+.five-day-button-left,
+.five-day-button-right {
   width: 16px;
   height: 32px;
   background: white;
@@ -49,9 +51,11 @@
   justify-content: center;
   align-items: center;
   border-radius: 4px;
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.14), 0px 0px 2px 0px rgba(0, 0, 0, 0.12);
+  box-shadow:
+    0px 2px 4px 0px rgba(0, 0, 0, 0.14),
+    0px 0px 2px 0px rgba(0, 0, 0, 0.12);
   position: absolute;
-  top: 70.585px;
+  top: 50px;
 }
 
 .five-day-button-left {
@@ -71,8 +75,8 @@
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
   display: grid;
   grid-template-areas:
-      "time temp_max description"
-      "img temp_min humidity";
+    'time temp_max description'
+    'img temp_min humidity';
   grid-template-columns: auto auto auto;
   gap: 0px;
   margin: 3px;
@@ -152,8 +156,10 @@
 }
 
 .weather-image {
-  width: 60px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  margin-right: 14px;
 }
 
 .scroll-button {
@@ -171,21 +177,22 @@
 }
 
 .five li {
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .five li.compact {
   width: 200px;
 }
-.fivetitle{
+.fivetitle {
   display: flex;
   justify-content: space-between;
   font-family: Arial, Helvetica, sans-serif;
-  position: relative;
+  // position: relative;
   margin-top: 30px;
-  top: 20px;
+  margin-bottom: 40px;
+  // top: 20px;
 }
-.fivetitle button{
+.fivetitle button {
   border: none;
   background-color: #ffffff;
   cursor: pointer;
@@ -196,5 +203,78 @@ h4 {
   flex: 0 0 auto;
 }
 
+.five-content {
+  display: flex;
+  transform: scale(1.1);
+  margin-left: 70px;
+  .five-item {
+    background-color: #fff;
+    padding: 12px 37px 18px 28px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    // display: grid;
+    // grid-template-areas:
+    //   'time temp_max description'
+    //   'img temp_min humidity';
+    // grid-template-columns: auto auto auto;
+    gap: 0px;
+    margin: 3px;
+    // flex: 0 0 200px;
+    width: 200px;
 
+    .current-time {
+      margin-bottom: 4px;
+    }
 
+    .current-description {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .right {
+      display: none;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      padding-left: 6px;
+
+      .temp-info {
+        font-size: 18px;
+        line-height: 24px;
+        opacity: 0.8;
+
+        & p:first-child {
+          margin-bottom: 6px;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .five-item.activeCard {
+    width: 300px;
+    padding: 12px 24px 18px 24px;
+
+    .right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+
+      & p:first-child {
+        margin-bottom: 12px;
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+      & p:last-child {
+        font-size: 12px;
+        line-height: 16px;
+      }
+    }
+  }
+}

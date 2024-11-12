@@ -1,5 +1,7 @@
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 /* Văn bản chung cho responsive */
@@ -89,7 +91,7 @@
 
   .header-content {
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
     width: 100%;
     align-items: center;
 
@@ -206,7 +208,7 @@
     width: 100%; /* Đảm bảo nav rộng 100% */
   }
 
- .App-header nav ul {
+  .App-header nav ul {
     flex-direction: row; /* Đặt các mục trong menu theo chiều ngang */
     margin-right: 0; /* Đặt lại margin phải */
     justify-content: center;
@@ -224,4 +226,3 @@
     display: none;
   }
 }
-
