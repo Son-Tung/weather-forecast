@@ -1,5 +1,5 @@
 import '../styles/detail5day.css'
-import Details from './details.tsx'
+import Details from './moredetails.tsx'
 import Hourly from './hourly.tsx'
 
 import React, { useState, useRef } from 'react'

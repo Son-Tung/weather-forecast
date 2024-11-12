@@ -1,4 +1,4 @@
-import '../styles/details.css';
+import '../styles/moredetails.css';
 import { useState, useEffect } from 'react';
 import { FaSun, FaMapPin, FaThermometerHalf, FaEye, FaWind, FaCloud, FaTachometerAlt, FaWater, FaMountain, FaClock, FaTint } from 'react-icons/fa';
 import SunriseIcon from '../../assets/images/sunrise.svg';
