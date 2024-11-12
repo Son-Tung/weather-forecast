@@ -121,16 +121,13 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   }
 
   const getTranslateX = (selectedButton: any, currentSlide: number, reponsiveRate: number) => {
-    console.log(selectedButton, currentSlide, reponsiveRate)
     let translateX = -4
     if (currentSlide == 0) {
-      console.log(0)
       return 0
     } else {
       for (let i = 0; i < currentSlide; i++) {
         translateX += selectedButton[i] + 4
       }
-      console.log(translateX)
       translateX *= reponsiveRate
       return translateX
     }
@@ -183,7 +180,6 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   }, {})
 
   const days = Object.keys(groupedByDay || {})
-  console.log('weather5day === ', groupedByDay)
   const handleItemClick = useCallback(
     (
       index: number,
@@ -210,7 +206,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
     },
     []
   )
-
+  
   useEffect(() => {
     const listItems = document.querySelectorAll<HTMLLIElement>('.five li')
     listItems.forEach((li, index) => {

@@ -1,11 +1,10 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import Header from '../src/common/components/header.tsx'
 
 import Footer from './common/components/footer.tsx'
-import { forecastWeather } from './common/services/api.tsx'
-import HoMe from './modules/dashboard/pages/Home.tsx'
+import Home from './modules/dashboard/pages/Home.tsx'
 import Map from './modules/dashboard/pages/map.tsx'
 import Info from './modules/dashboard/pages/TinTuc.tsx'
 import Air from './modules/dashboard/pages/KhongKhi.tsx'
@@ -69,7 +68,7 @@ function App() {
             <Route
               path='/'
               element={
-                <HoMe
+                <Home
                   weather={weather}
                   weather5day={weather5day}
                   onItemSelected={onItemSelected}
