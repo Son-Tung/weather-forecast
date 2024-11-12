@@ -56,7 +56,6 @@ const Hourly: React.FC<HourlyProps> = ({ selectedWeather, contentRef }) => {
 
       if (calculatedNumColumn !== slidesToShow) {
         setSlidesToShow(calculatedNumColumn)
-        console.log('slidesToShow: ', calculatedNumColumn)
       }
     }
   }, [windowWidth])

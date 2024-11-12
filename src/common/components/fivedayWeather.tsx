@@ -61,7 +61,6 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
       if (calculatedNumColumn !== slidesToShow) {
         setSlidesToShow(calculatedNumColumn)
       }
-      console.log('slidesToShow: ', calculatedNumColumn)
       settranslateX(getTranslateX(selectedButton, currentSlide, responsiveRate))
     }
   }
