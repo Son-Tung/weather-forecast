@@ -30,7 +30,7 @@
 .five-container {
   position: relative;
   overflow: hidden;
-  padding: 0px 0px 20px 0px;
+  padding: 20px 0px 20px 0px;
 }
 
 .five {
@@ -83,78 +83,6 @@
   flex: 0 0 auto;
 }
 
-.five li p:nth-child(1) {
-  grid-area: time;
-  position: absolute;
-  margin-bottom: 20px;
-  font-size: 0.9em;
-  font-weight: 600;
-  font-family: Arial, Helvetica, sans-serif;
-  flex: 0 0 auto;
-}
-
-.five li p:nth-child(2) {
-  grid-area: temp_max;
-  position: relative;
-  margin-top: 40px;
-  font-size: 0.9em;
-  font-weight: 600;
-  font-family: Arial, Helvetica, sans-serif;
-  left: 10px;
-  flex: 0 0 auto;
-}
-
-.five li p:nth-child(3) {
-  grid-area: description;
-  position: relative;
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 40px;
-  font-size: 0.8em;
-  font-weight: 0;
-  margin-left: 30px;
-  font-family: Arial, Helvetica, sans-serif;
-  flex: 0 0 auto;
-}
-
-.five li img {
-  grid-area: img;
-  width: 40px;
-  height: auto;
-  position: relative;
-  bottom: 25px;
-  left: 20px;
-  flex: 0 0 auto;
-}
-
-.five li p:nth-child(5) {
-  grid-area: temp_min;
-  position: relative;
-  bottom: 10px;
-  font-size: 0.9em;
-  font-family: Arial, Helvetica, sans-serif;
-  left: 10px;
-  flex: 0 0 auto;
-}
-
-.five li p:nth-child(6) {
-  grid-area: humidity;
-  position: relative;
-  display: flex;
-  justify-content: flex-end;
-  bottom: 10px;
-  font-size: 0.8em;
-  font-weight: 0;
-  margin-left: 30px;
-  font-family: Arial, Helvetica, sans-serif;
-  flex: 0 0 auto;
-}
-
-.five li.compact p:nth-child(3),
-.five li.compact p:nth-child(6) {
-  display: none;
-}
-
 .weather-image {
   width: 40px;
   height: 40px;
@@ -180,9 +108,6 @@
   cursor: pointer;
 }
 
-.five li.compact {
-  width: 200px;
-}
 .fivetitle {
   display: flex;
   justify-content: space-between;
@@ -206,7 +131,7 @@ h4 {
 .five-content {
   display: flex;
   transform: scale(1.1);
-  margin-left: 70px;
+
   .five-item {
     background-color: #fff;
     padding: 12px 37px 18px 28px;
@@ -221,8 +146,10 @@ h4 {
     // grid-template-columns: auto auto auto;
     gap: 0px;
     margin: 3px;
-    // flex: 0 0 200px;
-    width: 200px;
+    width: 100%;
+    flex: 0 0 auto;
+    background: 'rgb(239 242 247)';
+    color: '#000000';
 
     .current-time {
       margin-bottom: 4px;
@@ -230,7 +157,6 @@ h4 {
 
     .current-description {
       display: flex;
-      justify-content: space-between;
       width: 100%;
     }
 
@@ -257,8 +183,15 @@ h4 {
   }
 
   .five-item.activeCard {
-    width: 300px;
+    width: 100%;
     padding: 12px 24px 18px 24px;
+    flex: 0 0 auto;
+    background: '#ffffff';
+    .current-description {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
 
     .right {
       display: flex;
