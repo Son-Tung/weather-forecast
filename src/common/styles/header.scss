@@ -2,31 +2,43 @@
   box-sizing: border-box;
 }
 
+body {
+  margin: 0
+}
 /* Văn bản chung cho responsive */
 .responsive-text {
   font-size: 1em;
 }
-
+.main-content {
+  padding-top: 100px; // Thêm khoảng cách tương ứng với chiều cao của header
+}
 /* Header */
 .App-header {
-  background-color: #fff;
+  background-image: url('../../assets/images/—Pngtree—cumulonimbus\ capillatus\ incus\ in\ the_15539280.png'); // Thay đổi đường dẫn đến bức ảnh của bạn
+  background-size: cover; // Đảm bảo bức ảnh phủ kín toàn bộ header
+  background-position:bottom; // Căn giữa bức ảnh
   padding: 20px 50px;
-  display: flex;
-  justify-content: space-between;
+  display: flex;  
   align-items: center;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   top: 0;
   width: 100%;
-  z-index: 98;
+  justify-content: center;
+  position: sticky; // Đặt header cố định
+  top: 0; // Đảm bảo header nằm ở trên cùng
+  left: 0; // Đảm bảo header nằm ở bên trái
+  right: 0; // Đảm bảo header mở rộng hết chiều ngang
+  z-index: 99;
 
   &-body {
     width: 100%;
   }
 
   img {
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 120px;
+    max-height: 120px;
     margin-bottom: 20px;
+    margin-left: -10px;
   }
 
   h1 {
@@ -34,58 +46,12 @@
     margin: 0;
     display: flex;
     align-items: center;
-    margin-left: 0px;
+    margin-left: 10px;
     width: 350px;
+    color: #ffffff;
   }
 
-  nav {
-    display: block;
-  }
-
-  ul {
-    display: flex;
-    list-style: none;
-    margin-left: 20px;
-    margin-right: 350px;
-    padding: 0;
-
-    li {
-      max-height: 50px;
-      margin-right: 48px;
-
-      &:last-child {
-        margin-right: 0;
-      }
-
-      a {
-        color: rgb(0, 0, 0);
-        text-decoration: none;
-        font-size: 1.8em;
-        white-space: nowrap;
-        position: relative;
-        transition: color 0.3s ease;
-
-        &::after {
-          content: '';
-          position: absolute;
-          width: 0;
-          height: 2px;
-          bottom: -5px;
-          left: 0;
-          background-color: #4e9afb;
-          transition: width 0.3s ease;
-        }
-
-        &:hover {
-          color: #4e9afb;
-
-          &::after {
-            width: 100%;
-          }
-        }
-      }
-    }
-  }
+ 
 
   .header-content {
     display: flex;
@@ -98,21 +64,77 @@
     }
   }
 }
+/* Search Container in Header */
+.search-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 0px;
+  margin-left: 0px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex; // Sử dụng flex để căn chỉnh các phần tử
+
+  input {
+    padding: 8px 10px; // Giảm padding bên phải để có chỗ cho nút
+    width: 400px;
+    border-radius: 20px;
+    border: 1px solid #ccc; // Thêm border cho input
+
+    &:focus + .search-icon {
+      display: none;
+    }
+
+    &:focus + .search-icon + .close-icon {
+      display: block;
+    }
+  }
+
+  button {
+    padding: 9px 12px;
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #000000;
+    cursor: pointer;
+    border-radius: 20px;
+    margin-left: -69px; // Điều chỉnh vị trí của nút
+    z-index: 1; // Đảm bảo nút nằm trên input
+
+    &:hover {
+      background-color: #70b4f9;
+      color: rgb(255, 255, 255);
+      border-color: #5eaeff;
+      transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+    }
+  }
+
+  .search-icon {
+    position: absolute;
+    right: 78px; // Điều chỉnh vị trí của biểu tượng tìm kiếm
+    top: 10px;
+    color: #000000;
+  }
+}
 
 .App-header .city-suggestions {
   list-style-type: none; /* Loại bỏ dấu đầu dòng */
   padding: 0; /* Loại bỏ padding mặc định */
   margin: 5px 0 0 0; /* Loại bỏ margin mặc định */
   border: 1px solid #ccc; /* Đường viền cho danh sách */
-  border-radius: 4px; /* Bo góc cho danh sách */
+  border-radius: 20px; /* Bo góc cho danh sách */
   background-color: white; /* Màu nền trắng */
-  position: absolute; /* Đảm bảo danh sách gợi ý hiển thị dưới ô tìm kiếm */
-  width: 100%; /* Đảm bảo danh sách rộng bằng với ô input */
+  position:absolute; /* Đảm bảo danh sách gợi ý hiển thị dưới ô tìm kiếm */
+  width: 98%; /* Đảm bảo danh sách rộng bằng với ô input */
   display: block;
   height: min-content;
   max-height: 300px;
   overflow-y: auto;
   overflow-x: hidden;
+  margin-top: 34px;
+  z-index: 2;
 
   div {
     margin-left: 35px;
@@ -128,57 +150,8 @@
   }
 }
 
-/* Search Container in Header */
-.search-container {
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 1px;
-  margin-left: 12px;
-}
-
-.input-wrapper {
-  position: relative;
-  display: inline-block;
-
-  input {
-    padding: 8px 30px 8px 10px;
-    width: 330px;
-
-    &:focus + .search-icon {
-      display: none;
-    }
-
-    &:focus + .search-icon + .close-icon {
-      display: block;
-    }
-  }
-
-  button {
-    padding: 9px 12px;
-    background-color: #ffffff;
-    color: #4e9afb;
-    border: 1px solid #868686;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #4e76f2;
-      color: white;
-      border-color: #4e76f2;
-      transition:
-        background-color 0.3s ease,
-        color 0.3s ease;
-    }
-  }
-
-  .search-icon {
-    position: absolute;
-    right: 85px;
-    top: 10px;
-    color: #4e9afb;
-  }
-}
 /* Media Queries */
-@media (max-width: 1020px) {
+@media (max-width: 1098px) {
   .App-header {
     flex-direction: column; /* Chuyển hướng thành cột trên màn hình nhỏ */
     padding: 10px 20px; /* Giảm padding */
@@ -197,25 +170,11 @@
     }
 
     h1 {
-      display: none;
+      justify-content: center;
     }
   }
 
-  nav {
-    margin-top: 10px; /* Thêm khoảng cách trên cho nav */
-    width: 100%; /* Đảm bảo nav rộng 100% */
-  }
-
- .App-header nav ul {
-    flex-direction: row; /* Đặt các mục trong menu theo chiều ngang */
-    margin-right: 0; /* Đặt lại margin phải */
-    justify-content: center;
-  }
-
-  li {
-    margin-left: 0; /* Đặt lại margin trái */
-    margin-bottom: 10px; /* Thêm khoảng cách dưới mỗi mục */
-  }
+  
   .search-container {
     align-items: center;
     justify-content: center;
@@ -225,3 +184,12 @@
   }
 }
 
+@media (max-width: 1098px){
+  .App-header{
+    .header-content{
+      h1{
+        display: none;
+      }
+    }
+  }
+}

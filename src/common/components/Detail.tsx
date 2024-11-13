@@ -1,9 +1,9 @@
 import '../styles/detail.scss'
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import SunnyImage from '../../assets/images/Screenshot_15-10-2024_101422_assets.msn.com.jpeg' // ảnh trời nắng
-import RainyImage from '../../assets/images/Screenshot_15-10-2024_103233_assets.msn.com.jpeg' // ảnh trời mưa
-import CloudyImage from '../../assets/images/Screenshot_15-10-2024_10259_assets.msn.com.jpeg' // ảnh trời mây
-import MistImage from '../../assets/images/Screenshot 2024-10-18 093724.png' // ảnh trời sương mù
+import SunnyImage from '../../assets/images/pngegg (1).png' // ảnh trời nắng
+import RainyImage from '../../assets/images/pngegg (2).png' // ảnh trời mưa
+import CloudyImage from '../../assets/images/pngegg (3).png' // ảnh trời mây
+import MistImage from '../../assets/images/pngegg (4).png' // ảnh trời sương mù
 
 function Detail({ weather }: any) {
   const weatherImages: { [key: string]: string } = {
@@ -35,16 +35,16 @@ function Detail({ weather }: any) {
                     weather?.weather?.[0]?.description?.slice(1)}
                 </p>
 
-                <p className='feels-like'>Cảm giác thực tế: {weather?.main?.feels_like}°C</p>
+                <p className='feels-like'>Feels like: {weather?.main?.feels_like}°C</p>
               </div>
             </div>
             <div className='additional-info'>
-              <p>Độ ẩm: {weather?.main?.humidity}%</p>
-              <p>Tầm nhìn: {weather?.visibility / 1000} km</p>
-              <p>Áp suất: {weather?.main?.pressure} mb</p>
-              <p>Tốc độ gió: {weather?.wind?.speed} km/h</p>
-              <p>Bình minh: {new Date(weather?.sys?.sunrise * 1000).toLocaleTimeString()}</p>
-              <p>Hoàng hôn: {new Date(weather?.sys?.sunset * 1000).toLocaleTimeString()}</p>
+              <p>Humidity: {weather?.main?.humidity}%</p>
+              <p>Vision: {weather?.visibility / 1000} km</p>
+              <p>Pressure: {weather?.main?.pressure} mb</p>
+              <p>Wind speed: {weather?.wind?.speed} km/h</p>
+              <p>Sunrise: {new Date(weather?.sys?.sunrise * 1000).toLocaleTimeString()}</p>
+              <p>Sunset: {new Date(weather?.sys?.sunset * 1000).toLocaleTimeString()}</p>
             </div>
           </div>
         ) : (
