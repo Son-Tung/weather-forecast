@@ -63,7 +63,7 @@ function App() {
     <>
       <Router>
         <div className='App'>
-          <Header setCity={setCity} setWeather={setWeather} setWeather5day={setWeather5day}/>
+          <Header city={city} setCity={setCity} setWeather={setWeather} setWeather5day={setWeather5day} />
           <Routes>
             <Route
               path='/'
