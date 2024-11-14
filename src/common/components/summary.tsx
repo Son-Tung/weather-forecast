@@ -1,53 +1,88 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Chart, TooltipItem } from 'chart.js';
+
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-
 interface SummaryProps {
-  selectedWeather: any[]
-  weather: any
-  weather5day: any
+  selectedWeather: any[];
+  weather: any;
+  weather5day: any;
 }
 
 interface DataState {
-  labels: number[];
+  labels: string[];
   datasets: {
-    label: string;
-    backgroundColor: string;
+    label: 'Temperature';
     borderColor: string;
     borderWidth: number;
-    hoverBackgroundColor: string;
-    hoverBorderColor: string;
     data: number[];
+    pointRadius: number;
   }[];
 }
 
-const Summary: React.FC<SummaryProps> = ({selectedWeather, weather, weather5day}) => {
+const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day }) => {
   const [data, setData] = useState<DataState>({
     labels: [],
     datasets: [
       {
         label: 'Temperature',
-        backgroundColor: 'rgba(75,192,192,0.2)',
-        borderColor: 'rgba(75,192,192,1)',
+        borderColor: 'rgba(181,181,181,255)',
         borderWidth: 1,
-        hoverBackgroundColor: 'rgba(75,192,192,0.4)',
-        hoverBorderColor: 'rgba(75,192,192,1)',
         data: [],
+        pointRadius: 0,
       },
     ],
   });
 
-  const [options, setOptions] = useState({
-    responsive: true,
+  const customPlugin = {
+    id: 'customDataLabels',
+    afterDatasetsDraw: (chart: Chart) => {
+      const ctx = chart.ctx;
+      chart.data.datasets.forEach((dataset, i) => {
+        const meta = chart.getDatasetMeta(i);
+        meta.data.forEach((point: any, index: number) => {
+          const value = dataset.data[index] as number;
+          ctx.save();
+          ctx.font = '12px Arial';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'bottom';
+          ctx.fillStyle = 'black';
+          ctx.fillText(`${value}°`, point.x, point.y - 8);
+          ctx.restore();
+        });
+      });
+    },
+  };
+
+  const [options] = useState({
+    responsive: false,
+    scales: { 
+      x: { 
+        grid: { 
+          display: false, // Hide x-axis grid lines 
+        }, 
+      }, 
+      y: { 
+        grid: { 
+          display: false, // Hide y-axis grid lines 
+        },
+        display: false, // Hide y-axis
+      },
+    },
     plugins: {
       legend: {
-        position: 'top' as const,
+        display: false,
       },
-      title: {
-        display: true,
-        text: 'Chart.js Line Chart',
+      title: { 
+        display: false, // Hide title 
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context: TooltipItem<'line'>) {
+            return `${context.dataset.label}: ${context.raw}°`;
+          },
+        },
       },
     },
   });
@@ -56,7 +91,7 @@ const Summary: React.FC<SummaryProps> = ({selectedWeather, weather, weather5day}
     console.log('selectedWeather: ', selectedWeather);
     console.log('weather: ', weather);
     console.log('weather5day: ', weather5day);
-    
+
     let bigArray = [];
     bigArray.push(weather);
     for (let i = 0; i < 40; i++) {
@@ -73,36 +108,38 @@ const Summary: React.FC<SummaryProps> = ({selectedWeather, weather, weather5day}
     for (let i = 0; i < bigArray.length; i++) {
       temperatureArray.push(bigArray[i]?.main?.temp);
       humidityArray.push(bigArray[i]?.main?.humidity);
-      hourArray.push(new Date(bigArray[i]?.dt * 1000).getHours());
+      hourArray.push(`${new Date(bigArray[i]?.dt * 1000).getHours().toString()}:00`);
     }
     console.log('temperatureArray: ', temperatureArray);
-    console.log('hourArray: ', hourArray)
+    console.log('hourArray: ', hourArray);
 
     setData({
       labels: hourArray,
       datasets: [
         {
-          label: 'My First dataset',
-          backgroundColor: 'rgba(75,192,192,0.2)',
-          borderColor: 'rgba(75,192,192,1)',
+          label: 'Temperature',
+          borderColor: 'rgba(181,181,181,255)',
           borderWidth: 1,
-          hoverBackgroundColor: 'rgba(75,192,192,0.4)',
-          hoverBorderColor: 'rgba(75,192,192,1)',
           data: temperatureArray,
+          pointRadius: 0
         },
-      ]
+      ],
     });
   }, [selectedWeather, weather, weather5day]);
 
-  
-
   return (
-    <>
-      <div className='summary-display'>
-        {data != null && options != null&& <Line data={data} options={options} />}
-      </div>
-    </>
-  )
-}
+    <div className='summary-display' >
+      {data != null && options != null && 
+        <Line 
+          data={data} 
+          options={options} 
+          plugins={[customPlugin]}
+          width={1500} // Set width here 
+          height={400} // Set height
+        />
+      }
+    </div>
+  );
+};
 
-export default Summary
+export default Summary;
