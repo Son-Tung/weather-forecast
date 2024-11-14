@@ -1,7 +1,7 @@
 const apiKey = import.meta.env.OPENWEATHER_API_KEY || '4f2141f03c148886930241854489683e'
 const baseUrl = 'https://api.openweathermap.org'
 
-export const forecastWeather = async (city: string): Promise<{ weatherData: any; forecastData: any }> => {
+export const forecastWeather = async (city: string): Promise<{ weatherData: any; forecastData: any, geoData: any }> => {
   try {
     const geoUrl = `${baseUrl}/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`
     const geoResponse = await fetch(geoUrl)
@@ -28,10 +28,11 @@ export const forecastWeather = async (city: string): Promise<{ weatherData: any;
 
     return {
       weatherData,
-      forecastData
+      forecastData,
+      geoData
     }
   } catch (error) {
     console.error('Error fetching weather data:', error)
-    return { weatherData: null, forecastData: null }
+    return { weatherData: null, forecastData: null, geoData: null }
   }
 }
