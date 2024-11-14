@@ -23,6 +23,7 @@ body {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   top: 0;
   width: 100%;
+  font-family: 'Arial', 'Calibri', sans-serif;
   justify-content: center;
   position: sticky; // Đặt header cố định
   top: 0; // Đảm bảo header nằm ở trên cùng
@@ -138,14 +139,16 @@ body {
 
   div {
     margin-left: 35px;
-    max-width: 200px;
+    max-width: none;
+    width: 100%;
     font-size: 1.2em;
     margin-top: 15px;
     margin-bottom: 20px;
     cursor: pointer; /* Con trỏ chuột thay đổi khi hover */
 
     &:hover {
-      background-color: #f0f0f0; /* Đổi màu nền khi hover */
+      background-color: #dadada; /* Đổi màu nền khi hover */
+      
     }
   }
 }

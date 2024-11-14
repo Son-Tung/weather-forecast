@@ -17,6 +17,7 @@ function App() {
   const [weather, setWeather] = useState<any>(null)
   const [weather5day, setWeather5day] = useState<any>(null)
   const [selectedWeather, setSelectedWeather] = useState<any[]>([])
+  const [geoData, setGeoData] = useState(null)
 
   const getDateWithoutTime = (date: Date): Date => {
     const year = date.getFullYear()
@@ -63,7 +64,7 @@ function App() {
     <>
       <Router>
         <div className='App'>
-          <Header city={city} setCity={setCity} setWeather={setWeather} setWeather5day={setWeather5day} />
+          <Header city={city} setCity={setCity} setWeather={setWeather} setWeather5day={setWeather5day} setGeoData={setGeoData} />
           <Routes>
             <Route
               path='/'
@@ -74,6 +75,7 @@ function App() {
                   onItemSelected={onItemSelected}
                   selectedWeather={selectedWeather}
                   city={city}
+                  geoData={geoData}
                 />
               }
             />

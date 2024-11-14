@@ -9,10 +9,11 @@ const Home: React.FC<{
   onItemSelected: (date: any, weather: any, weather5day: any) => void
   selectedWeather: any[]
   city: string
-}> = ({ weather, weather5day, onItemSelected, selectedWeather, city }) => {
+  geoData: any
+}> = ({ weather, weather5day, onItemSelected, selectedWeather, city, geoData }) => {
   return (
     <div className='content'>
-      <Main weather={weather} />
+      <Main weather={weather} geoData={geoData} />
       <FivedayWeather  weather={weather} weather5day={weather5day} onItemSelected={onItemSelected} />
       <Detail5day selectedWeather={selectedWeather} weather={weather}  />
       <WeatherDashboard city={city} />

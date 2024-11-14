@@ -4,15 +4,17 @@ import SunnyImage from '../../assets/images/pngegg (1).png' // ảnh trời nắ
 import RainyImage from '../../assets/images/pngegg (2).png' // ảnh trời mưa
 import CloudyImage from '../../assets/images/pngegg (3).png' // ảnh trời mây
 import MistImage from '../../assets/images/pngegg (4).png' // ảnh trời sương mù
+import BigRain from '../../assets/images/muatovcl.png' // ảnh trời mưa to
 
-function Detail({ weather }: any) {
+function Detail({ weather, geoData }: any) {
   const weatherImages: { [key: string]: string } = {
     clear: SunnyImage,
     rain: RainyImage,
     clouds: CloudyImage,
     mist: MistImage,
     haze: MistImage,
-    frost: MistImage
+    frost: MistImage,
+    Thunderstorm_with_rain: BigRain
     // thêm các tình trạng thời tiết khác nếu cần
   }
   
@@ -30,6 +32,8 @@ function Detail({ weather }: any) {
               />
               <div className='temperature-details'>
                 <h1>{weather?.main?.temp}°C</h1>
+                <h2><i className="fas fa-map-marker-alt"></i> {/* Icon vị trí */}
+                  {geoData?.[0]?.name}</h2> {/* Hiển thị tên thành phố ở đây */}
                 <p className='weather-description'>
                   {weather?.weather?.[0]?.description.charAt(0).toUpperCase() +
                     weather?.weather?.[0]?.description?.slice(1)}
