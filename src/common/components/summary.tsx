@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Chart, TooltipItem } from 'chart.js';
 
@@ -22,6 +22,10 @@ interface DataState {
 }
 
 const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day }) => {
+  const contentRef = useRef<HTMLDivElement | null>(null)
+  const [width, setWidth] = useState(window.innerWidth);
+
+
   const [data, setData] = useState<DataState>({
     labels: [],
     datasets: [
@@ -92,6 +96,10 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
     console.log('weather: ', weather);
     console.log('weather5day: ', weather5day);
 
+    if (contentRef.current) {
+      setWidth(contentRef.current.offsetWidth);
+    }
+
     let bigArray = [];
     bigArray.push(weather);
     for (let i = 0; i < 40; i++) {
@@ -128,14 +136,14 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
   }, [selectedWeather, weather, weather5day]);
 
   return (
-    <div className='summary-display' >
+    <div className='summary-display' ref={contentRef}>
       {data != null && options != null && 
         <Line 
           data={data} 
           options={options} 
           plugins={[customPlugin]}
-          width={1500} // Set width here 
-          height={400} // Set height
+          width={width} // Set width here 
+          height={600} // Set height
         />
       }
     </div>
