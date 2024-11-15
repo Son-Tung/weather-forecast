@@ -3,22 +3,15 @@ import Summary from './summary.tsx'
 import Hourly from './hourly.tsx'
 import Details from './details.tsx'
 
-
 import React, { useState, useRef } from 'react'
 
 interface Detail5dayProps {
   selectedWeather: any[]
   weather: any
-<<<<<<< HEAD
-}
-
-const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather, weather }) => {
-=======
   weather5day: any
 }
 
 const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather, weather, weather5day }) => {
->>>>>>> develop
   const contentRef = useRef<HTMLDivElement | null>(null)
   const [activeTab, setActiveTab] = useState(0)
 
@@ -44,15 +37,11 @@ const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather, weather, weath
       </div>
 
       <div className='detail-5-day-content' ref={contentRef}>
-<<<<<<< HEAD
-        {activeTab === 0 && <div className='summary-display'></div>}
+        {activeTab === 0 && selectedWeather.length != 0 && weather != null && weather5day != null && (
+          <Summary selectedWeather={selectedWeather} weather={weather} weather5day={weather5day} />
+        )}
         {activeTab === 1 && <Hourly selectedWeather={selectedWeather} contentRef={contentRef} />}
         {activeTab === 2 && <Details selectedWeather={selectedWeather} weather={weather} />}
-=======
-        {activeTab === 0 && selectedWeather.length != 0 && weather!= null && weather5day!= null && <Summary selectedWeather = {selectedWeather} weather={weather} weather5day={weather5day} />}
-        {activeTab === 1 && <Hourly  selectedWeather = {selectedWeather} contentRef={contentRef} />}
-        {activeTab === 2 && <Details selectedWeather = {selectedWeather} weather={weather} />}
->>>>>>> develop
       </div>
     </>
   )

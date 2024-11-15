@@ -3,11 +3,7 @@ import { useState } from 'react'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import Header from '../src/common/components/header.tsx'
 import Footer from './common/components/footer.tsx'
-<<<<<<< HEAD
-import HoMe from './modules/dashboard/pages/Home.tsx'
-=======
 import Home from './modules/dashboard/pages/Home.tsx'
->>>>>>> develop
 import Map from './modules/dashboard/pages/map.tsx'
 import Info from './modules/dashboard/pages/TinTuc.tsx'
 import Air from './modules/dashboard/pages/KhongKhi.tsx'
@@ -20,10 +16,7 @@ function App() {
   const [weather, setWeather] = useState<any>(null)
   const [weather5day, setWeather5day] = useState<any>(null)
   const [selectedWeather, setSelectedWeather] = useState<any[]>([])
-<<<<<<< HEAD
-=======
   const [geoData, setGeoData] = useState(null)
->>>>>>> develop
 
   const getDateWithoutTime = (date: Date): Date => {
     const year = date.getFullYear()
@@ -68,11 +61,13 @@ function App() {
     <>
       <Router>
         <div className='App'>
-<<<<<<< HEAD
-          <Header city={city} setCity={setCity} setWeather={setWeather} setWeather5day={setWeather5day} />
-=======
-          <Header city={city} setCity={setCity} setWeather={setWeather} setWeather5day={setWeather5day} setGeoData={setGeoData} />
->>>>>>> develop
+          <Header
+            city={city}
+            setCity={setCity}
+            setWeather={setWeather}
+            setWeather5day={setWeather5day}
+            setGeoData={setGeoData}
+          />
           <Routes>
             <Route
               path='/'

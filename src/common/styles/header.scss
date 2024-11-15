@@ -5,7 +5,7 @@
 }
 
 body {
-  margin: 0
+  margin: 0;
 }
 /* Văn bản chung cho responsive */
 .responsive-text {
@@ -18,9 +18,9 @@ body {
 .App-header {
   background-image: url('../../assets/images/—Pngtree—cumulonimbus\ capillatus\ incus\ in\ the_15539280.png'); // Thay đổi đường dẫn đến bức ảnh của bạn
   background-size: cover; // Đảm bảo bức ảnh phủ kín toàn bộ header
-  background-position:bottom; // Căn giữa bức ảnh
+  background-position: bottom; // Căn giữa bức ảnh
   padding: 20px 50px;
-  display: flex;  
+  display: flex;
   align-items: center;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   top: 0;
@@ -53,8 +53,6 @@ body {
     width: 350px;
     color: #ffffff;
   }
-
- 
 
   .header-content {
     display: flex;
@@ -129,7 +127,7 @@ body {
   border: 1px solid #ccc; /* Đường viền cho danh sách */
   border-radius: 20px; /* Bo góc cho danh sách */
   background-color: white; /* Màu nền trắng */
-  position:absolute; /* Đảm bảo danh sách gợi ý hiển thị dưới ô tìm kiếm */
+  position: absolute; /* Đảm bảo danh sách gợi ý hiển thị dưới ô tìm kiếm */
   width: 98%; /* Đảm bảo danh sách rộng bằng với ô input */
   display: block;
   height: min-content;
@@ -150,7 +148,6 @@ body {
 
     &:hover {
       background-color: #dadada; /* Đổi màu nền khi hover */
-      
     }
   }
 }
@@ -179,25 +176,6 @@ body {
     }
   }
 
-<<<<<<< HEAD
-  nav {
-    margin-top: 10px; /* Thêm khoảng cách trên cho nav */
-    width: 100%; /* Đảm bảo nav rộng 100% */
-  }
-
-  .App-header nav ul {
-    flex-direction: row; /* Đặt các mục trong menu theo chiều ngang */
-    margin-right: 0; /* Đặt lại margin phải */
-    justify-content: center;
-  }
-
-  li {
-    margin-left: 0; /* Đặt lại margin trái */
-    margin-bottom: 10px; /* Thêm khoảng cách dưới mỗi mục */
-  }
-=======
-  
->>>>>>> develop
   .search-container {
     align-items: center;
     justify-content: center;
@@ -206,16 +184,13 @@ body {
     display: none;
   }
 }
-<<<<<<< HEAD
-=======
 
-@media (max-width: 1098px){
-  .App-header{
-    .header-content{
-      h1{
+@media (max-width: 1098px) {
+  .App-header {
+    .header-content {
+      h1 {
         display: none;
       }
     }
   }
 }
->>>>>>> develop

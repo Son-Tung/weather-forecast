@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from 'react'
-<<<<<<< HEAD
-import WeatherLogo from '../../assets/images/IMG.png'
-=======
 import WeatherLogo from '../../assets/images/pngegg.png'
->>>>>>> develop
 import '../styles/header.scss'
 import { lstCities } from '../../assets/cities'
 import { forecastWeather } from '../services/api'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
-<<<<<<< HEAD
-function Header({ city, setCity, setWeather, setWeather5day }: any) {
-=======
 function Header({ city, setCity, setWeather, setWeather5day, setGeoData }: any) {
->>>>>>> develop
   // định nghĩa component Header với 3 props: city:tên thành phố hiện tại, setcity: hàm để cập nhật tên thành phố, setweather: hàm để cập nhật dữ liệu thời thiết
   const [filteredCities, setFilteredCities] = useState<any[]>([])
   const [tempInput, setTempInput] = useState<string>('')
@@ -33,37 +25,11 @@ function Header({ city, setCity, setWeather, setWeather5day, setGeoData }: any) 
     }
   }
 
-<<<<<<< HEAD
-  const handleCityClick = (city: string) => {
-    // hàm để chọn một thành phố từ danh sách gợi ý
-    setCity('') // xoá giá trị hiện tại trong ô tìm kiếm
-    getWeather(city) // Gọi hàm để lấy thông tin thời tiết cho thành phố đã chọn
-  }
-
-  const getWeather = async (scopeCity?: string) => {
-    // hàm lấy dữ liệu thời tiết từ API
-    try {
-      const data = await forecastWeather(scopeCity || city)
-      setWeather(data.weatherData)
-      setWeather5day(data.forecastData) // cập nhật dữ liệu thời tiết
-      setFilteredCities([]) // xoá danh sách gợi ý thành phố
-    } catch (error) {
-      console.error('Error:', error)
-    }
-  }
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      if (filteredCities?.length) {
-        getWeather(filteredCities[0]?.name)
-        setCity('')
-=======
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       if (filteredCities?.length) {
         getWeather(filteredCities[0].name)
         setTempInput('')
->>>>>>> develop
       }
     }
   }
@@ -110,48 +76,6 @@ function Header({ city, setCity, setWeather, setWeather5day, setGeoData }: any) 
               <img src={WeatherLogo} alt='Weather Logo' />
               <h1>Weather Forecast</h1>
             </div>
-<<<<<<< HEAD
-            <nav>
-              <ul>
-                <li>
-                  <a href='#'>Trang chủ</a>
-                </li>
-                <li>
-                  <a href='#'>Bản Đồ</a>
-                </li>
-                <li>
-                  <a href='#'>Tin tức</a>
-                </li>
-                <li>
-                  <a href='#'>Không khí</a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-          {/* Search bar */}
-          <div className='search-container'>
-            <div className='input-wrapper'>
-              <input
-                type='text'
-                value={city}
-                onChange={(e) => handleCityChange(e.target.value)}
-                onKeyDown={handleKeyDown} // Thêm sự kiện onKeyDown
-                placeholder='Enter city name'
-              />
-              <button onClick={() => getWeather()}>Search</button>
-              <i className='fas fa-search search-icon'></i>
-              {/* Hiển thị danh sách các thành phố gợi ý */}
-              {filteredCities?.length > 0 && (
-                <div className='city-suggestions'>
-                  {filteredCities?.map((city) => (
-                    <div key={city.geonameid} onClick={() => handleCityClick(city.name)}>
-                      {city.name + ' (' + city.country + ')'}
-                    </div>
-                  ))}
-                </div>
-              )}
-              {filteredCities?.length === 0 && city?.length > 0 && <div></div>}
-=======
             {/* Search bar */}
             <div className='search-container'>
               <div className='input-wrapper'>
@@ -176,7 +100,6 @@ function Header({ city, setCity, setWeather, setWeather5day, setGeoData }: any) 
                 )}
                 {filteredCities?.length === 0 && tempInput?.length > 0 && <div></div>}
               </div>
->>>>>>> develop
             </div>
           </div>
         </div>
