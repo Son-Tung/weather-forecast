@@ -92,10 +92,6 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
   });
 
   useEffect(() => {
-    console.log('selectedWeather: ', selectedWeather);
-    console.log('weather: ', weather);
-    console.log('weather5day: ', weather5day);
-
     if (contentRef.current) {
       setWidth(contentRef.current.offsetWidth);
     }
@@ -107,7 +103,6 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
         bigArray.push(weather5day?.list[i]);
       }
     }
-    console.log('bigArray: ', bigArray);
 
     let temperatureArray = [];
     let humidityArray = [];
@@ -118,8 +113,6 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
       humidityArray.push(bigArray[i]?.main?.humidity);
       hourArray.push(`${new Date(bigArray[i]?.dt * 1000).getHours().toString()}:00`);
     }
-    console.log('temperatureArray: ', temperatureArray);
-    console.log('hourArray: ', hourArray);
 
     setData({
       labels: hourArray,
