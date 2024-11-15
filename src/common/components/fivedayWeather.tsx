@@ -215,6 +215,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
       div.addEventListener('click', () => handleItemClick(index, listItems, days, groupedByDay, weather, weather5day))
       div.style.width = '100%'
       div.style.transform = 'scale(1)'
+      onItemSelected(groupedByDay[days[index]]?.date, weather, weather5day)
     })
 
     setRunEffect(true)
