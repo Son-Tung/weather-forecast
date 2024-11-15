@@ -1,6 +1,6 @@
 import '../styles/moredetails.css';
 import { useState, useEffect } from 'react';
-import { FaSun, FaMapPin, FaThermometerHalf, FaEye, FaWind, FaCloud, FaTachometerAlt, FaWater, FaMountain, FaClock, FaTint } from 'react-icons/fa';
+import { FaMapPin, FaThermometerHalf, FaEye, FaWind, FaCloud, FaTachometerAlt, FaWater, FaMountain, FaClock, FaTint, FaMapMarkerAlt } from 'react-icons/fa';
 import SunriseIcon from '../../assets/images/sunrise.svg';
 import SunsetIcon from '../../assets/images/sunset.svg';
 import { forecastWeather } from '../services/api';
@@ -43,9 +43,12 @@ interface WeatherData {
     sunrise: number
     sunset: number
   }
+  coord: {
+    lat: number // Vĩ độ
+    lon: number // Kinh độ
+  }
   name: string
   cod: number
-  uvIndex: number // Chỉ số UV
 }
 
 const Details = ({ selectedWeather, weather }: DetailsProps) => {
@@ -71,15 +74,6 @@ const Details = ({ selectedWeather, weather }: DetailsProps) => {
     return new Date(timestamp * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
-  const getUVLevel = (uvIndex: number) => {
-    console.log('UV Index:', uvIndex); // Log giá trị UV
-    if (uvIndex >= 0 && uvIndex <= 2) return 'Low';
-    if (uvIndex >= 3 && uvIndex <= 5) return 'Moderate';
-    if (uvIndex >= 6 && uvIndex <= 7) return 'High';
-    if (uvIndex >= 8 && uvIndex <= 10) return 'Very High';
-    return 'Extreme';
-  };
-
   return (
     <div className="details">
       <div className="details-content">
@@ -89,10 +83,10 @@ const Details = ({ selectedWeather, weather }: DetailsProps) => {
               <h3>Sun Information</h3>
               <div className="sun-info">
                 <div className="info-header">
-                  <FaSun className="weather-icon sun" />
+                  <FaMapMarkerAlt className="weather-icon sun" />
                   <div className="info-text">
-                    <p>UV Index</p>
-                    <p className="uv-value">{selectedWeather[0].uvIndex} - {getUVLevel(selectedWeather[0].uvIndex)}</p>
+                    <p>Lat and Lon</p>
+                    <p className="lat-lon-value">{weather.coord.lat}, {weather.coord.lon}</p>
                   </div>
                 </div>
                 <div className="path-container">
