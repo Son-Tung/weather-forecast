@@ -15,35 +15,34 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   const [slidesToShow, setSlidesToShow] = useState(0)
   const [selectedButton, setSelectedButton] = useState<number[]>([300, 200, 200, 200, 200])
   const [translateX, settranslateX] = useState(0)
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
   useEffect(() => {
     function handleResize() {
-      setWindowWidth(window.innerWidth);
-    };
+      setWindowWidth(window.innerWidth)
+    }
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize)
     return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
 
   useEffect(() => {
-    setCurrentSlide(0);
-  }, [windowWidth]);
-
+    setCurrentSlide(0)
+  }, [windowWidth])
 
   useEffect(() => {
     if (contentRef.current) {
       const gridContainer = document.querySelector('.five') as HTMLElement
       gridContainer.style.display = 'grid'
-      let width = contentRef.current.clientWidth 
+      let width = contentRef.current.clientWidth
       setWidth(width)
 
       let calculatedNumColumn
       if (width >= 1116) {
         gridContainer.style.gridTemplateColumns = `${getGridString()}`
-        gridContainer.style.columnGap = `${(4 / 1116) * 100}%` // Khoảng cách giữa các cột
+        gridContainer.style.columnGap = `${(4 / 1116) * 100}%`
         calculatedNumColumn = 5
       } else {
         let widthCount = -4
@@ -72,16 +71,15 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
             translateX += selectedButton[i] + 4
           }
           translateX *= responsiveRate
-          settranslateX(translateX) 
+          settranslateX(translateX)
         }
       }
 
       if (calculatedNumColumn !== slidesToShow) {
         setSlidesToShow(calculatedNumColumn)
       }
-
     }
-  }, [windowWidth, selectedButton, contentRef.current, currentSlide]);
+  }, [windowWidth, selectedButton, contentRef.current, currentSlide])
 
   function nextSlide() {
     setCurrentSlide(function (prevSlide) {
@@ -152,7 +150,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
         updateButtonDisplay('block', 'block')
       }
     }
-  }, [currentSlide, slidesToShow, width]) 
+  }, [currentSlide, slidesToShow, width])
 
   const groupedByDay = weather5day?.list?.reduce((acc: any, curr: any) => {
     const date = new Date(curr.dt * 1000).toLocaleDateString('vi-VN', {
@@ -188,7 +186,8 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
       groupedByDay: any,
       weather: any,
       weather5day: any
-    ) => {//
+    ) => {
+      //
       listItems.forEach((item, idx) => {
         if (idx !== index) {
           item.classList.add('compact')
@@ -203,7 +202,9 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
       updateElementAtIndex(index)
 
       onItemSelected(groupedByDay[days[index]]?.date, weather, weather5day)
-    }, [])
+    },
+    []
+  )
   //
   useEffect(() => {
     const listItems = document.querySelectorAll<HTMLLIElement>('.five li')

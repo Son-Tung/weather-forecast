@@ -16,6 +16,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   const [selectedButton, setSelectedButton] = useState<number[]>([300, 200, 200, 200, 200])
   const [translateX, settranslateX] = useState(0)
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const [runEffect, setRunEffect] = useState(false)
   //
   const [itemSelectedIdx, setItemSelectedIdx] = useState(0)
   const listItems = document.querySelectorAll<HTMLLIElement>('.five-content')
@@ -37,6 +38,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
 
   useEffect(() => {
     if (contentRef.current) {
+      console.log('run slide')
       const gridContainer = document.querySelector('.five-content') as HTMLElement // five
       gridContainer.style.display = 'grid'
       let width = contentRef.current.clientWidth
@@ -82,7 +84,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
         setSlidesToShow(calculatedNumColumn)
       }
     }
-  }, [windowWidth, selectedButton, contentRef.current, currentSlide])
+  }, [windowWidth, selectedButton, contentRef.current, currentSlide, runEffect])
 
   function nextSlide() {
     setCurrentSlide(function (prevSlide) {
@@ -204,17 +206,19 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   )
   //
   useEffect(() => {
+    // Thiết lập trạng thái ban đầu
+    setItemSelectedIdx(0)
+    updateElementAtIndex(0)
+
+    // Gắn kết sự kiện click cho các item
     listItems.forEach((div, index) => {
       div.addEventListener('click', () => handleItemClick(index, listItems, days, groupedByDay, weather, weather5day))
-      updateElementAtIndex(0)
       div.style.width = '100%'
       div.style.transform = 'scale(1)'
     })
-  }, [weather, weather5day, handleItemClick])
 
-  if (!weather || !weather5day || !weather5day?.list) {
-    return <p>Vui lòng tìm kiếm một địa điểm để hiển thị thông tin thời tiết.</p>
-  }
+    setRunEffect(true)
+  }, [weather, weather5day, handleItemClick])
 
   return (
     <div className='fiveday' ref={contentRef}>
