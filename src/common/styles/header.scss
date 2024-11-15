@@ -1,9 +1,11 @@
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0
+  margin: 0;
 }
 /* Văn bản chung cho responsive */
 .responsive-text {
@@ -16,9 +18,9 @@ body {
 .App-header {
   background-image: url('../../assets/images/—Pngtree—cumulonimbus\ capillatus\ incus\ in\ the_15539280.png'); // Thay đổi đường dẫn đến bức ảnh của bạn
   background-size: cover; // Đảm bảo bức ảnh phủ kín toàn bộ header
-  background-position:bottom; // Căn giữa bức ảnh
+  background-position: bottom; // Căn giữa bức ảnh
   padding: 20px 50px;
-  display: flex;  
+  display: flex;
   align-items: center;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   top: 0;
@@ -52,11 +54,9 @@ body {
     color: #ffffff;
   }
 
- 
-
   .header-content {
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
     width: 100%;
     align-items: center;
 
@@ -127,7 +127,7 @@ body {
   border: 1px solid #ccc; /* Đường viền cho danh sách */
   border-radius: 20px; /* Bo góc cho danh sách */
   background-color: white; /* Màu nền trắng */
-  position:absolute; /* Đảm bảo danh sách gợi ý hiển thị dưới ô tìm kiếm */
+  position: absolute; /* Đảm bảo danh sách gợi ý hiển thị dưới ô tìm kiếm */
   width: 98%; /* Đảm bảo danh sách rộng bằng với ô input */
   display: block;
   height: min-content;
@@ -148,7 +148,6 @@ body {
 
     &:hover {
       background-color: #dadada; /* Đổi màu nền khi hover */
-      
     }
   }
 }
@@ -177,7 +176,6 @@ body {
     }
   }
 
-  
   .search-container {
     align-items: center;
     justify-content: center;
@@ -187,10 +185,10 @@ body {
   }
 }
 
-@media (max-width: 1098px){
-  .App-header{
-    .header-content{
-      h1{
+@media (max-width: 1098px) {
+  .App-header {
+    .header-content {
+      h1 {
         display: none;
       }
     }
