@@ -49,7 +49,7 @@ interface WeatherData {
 }
 
 const Details = ({ selectedWeather, weather }: DetailsProps) => {
-  console.log('selectedWeather === ', selectedWeather[1])
+  console.log('selectedWeather === ', selectedWeather.slice(0, 5));
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
 
   useEffect(() => {
@@ -72,6 +72,7 @@ const Details = ({ selectedWeather, weather }: DetailsProps) => {
   };
 
   const getUVLevel = (uvIndex: number) => {
+    console.log('UV Index:', uvIndex); // Log giá trị UV
     if (uvIndex >= 0 && uvIndex <= 2) return 'Low';
     if (uvIndex >= 3 && uvIndex <= 5) return 'Moderate';
     if (uvIndex >= 6 && uvIndex <= 7) return 'High';
@@ -102,12 +103,12 @@ const Details = ({ selectedWeather, weather }: DetailsProps) => {
                   <div className="time-labels">
                     <div className="time-label sunrise">
                       <p>Sunrise</p>
-                      <p className="time">{formatTime(selectedWeather[0].sys.sunrise)}</p>
+                      <p className="time">{formatTime(weather.sys.sunrise)}</p>
                       <img src={SunriseIcon} alt="Sunrise" className="sunrise-icon" />
                     </div>
                     <div className="time-label sunset">
                       <p>Sunset</p>
-                      <p className="time">{formatTime(selectedWeather[0].sys.sunset)}</p>
+                      <p className="time">{formatTime(weather.sys.sunset)}</p>
                       <img src={SunsetIcon} alt="Sunset" className="sunset-icon" />
                     </div>
                   </div>
@@ -118,7 +119,7 @@ const Details = ({ selectedWeather, weather }: DetailsProps) => {
               <h3>Detailed Information</h3>
               <div className='weather-details'>
                 <div>
-                  <FaMapPin className='weather-icon' style={{ color: 'black' }} /> <strong>Location:</strong> {selectedWeather[0].name},{' '}
+                  <FaMapPin className='weather-icon' style={{ color: 'black' }} /> <strong>Location:</strong> {weather.name},{' '}
                   {selectedWeather[0].sys.country}
                 </div>
                 <div>
