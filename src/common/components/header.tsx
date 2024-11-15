@@ -71,10 +71,10 @@ function Header({ city, setCity, setWeather, setWeather5day }: any) {
             <nav>
               <ul>
                 <li>
-                  <a href='#'>Home</a>
+                  <a href='#'>Trang chủ</a>
                 </li>
                 <li>
-                  <a href='#'>Map</a>
+                  <a href='#'>Bản Đồ</a>
                 </li>
                 <li>
                   <a href='#'>Tin tức</a>

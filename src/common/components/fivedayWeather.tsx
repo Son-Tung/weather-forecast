@@ -17,6 +17,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   const [responsiveRate, setResponsiveRate] = useState(1)
   const [translateX, settranslateX] = useState(0)
   const [itemSelectedIdx, setItemSelectedIdx] = useState(0)
+
   const listItems = document.querySelectorAll<HTMLLIElement>('.five-content')
 
   useEffect(() => {
@@ -26,11 +27,6 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
       window.removeEventListener('resize', updateSlidesToShow) // Bỏ đăng ký khi component unmount
     }
   }, [updateSlidesToShow])
-
-  // useEffect(() => {
-  //   setCurrentSlide(0)
-  //   updateSlidesToShow()
-  // }, [])
 
   const updateButtonDisplay = (leftDisplay: string, rightDisplay: string) => {
     const leftButton = document.querySelector<HTMLElement>('.five-day-button-left')
@@ -43,15 +39,16 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
     if (contentRef.current) {
       const gridContainer = document.querySelector('.five-content') as HTMLElement
       gridContainer.style.display = 'grid'
-      let width = contentRef.current.clientWidth // Lấy chiều rộng của contentRef
+      let width = contentRef.current.clientWidth
       setWidth(width)
 
       let calculatedNumColumn
       if (width >= 1116) {
         gridContainer.style.gridTemplateColumns = `${getGridString()}`
-        gridContainer.style.columnGap = `${(4 / 1116) * 100}%` // Khoảng cách giữa các cột
+        gridContainer.style.columnGap = `${(4 / 1116) * 100}%`
         calculatedNumColumn = 5
-        updateButtonDisplay('none', 'block')
+        updateButtonDisplay('none', 'none')
+        setCurrentSlide(0)
       } else {
         let widthCount = -4
         let buttonArray = []
@@ -80,7 +77,6 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
       settranslateX(getTranslateX(selectedButton, currentSlide, responsiveRate))
     }
   }
-
   function nextSlide() {
     setCurrentSlide(function (prevSlide) {
       let slideCount = prevSlide + slidesToShow
@@ -239,7 +235,6 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
         <h4>Dự báo 5 ngày tới</h4>
         <button>XEM THEO THÁNG</button>
       </div>
-
       <div className='five-container'>
         <div className='five-content' style={{ transform: `translateX(-${translateX}px)` }}>
           {days.slice(0, 5).map((day, index) => {
