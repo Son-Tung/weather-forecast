@@ -26,7 +26,10 @@ const WeatherDashboard: React.FC<WeatherDashboardProps> = ({ city }) => {
       const response = await http.get(
         `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}&days=10&aqi=yes&alerts=yes&lang=vi`
       )
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
       setWeatherDashboard(response.data)
       setLoading(false)
     } catch (err) {
