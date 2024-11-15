@@ -56,10 +56,9 @@ const Hourly: React.FC<HourlyProps> = ({ selectedWeather, contentRef }) => {
 
       if (calculatedNumColumn !== slidesToShow) {
         setSlidesToShow(calculatedNumColumn)
-        console.log('slidesToShow: ', calculatedNumColumn)
       }
     }
-  }, [windowWidth])
+  }, [windowWidth, selectedWeather.length])
 
   useEffect(() => {
     const leftButton = document.querySelector<HTMLElement>('.every-hour-display-button-left')

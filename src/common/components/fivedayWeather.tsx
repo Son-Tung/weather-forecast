@@ -14,18 +14,26 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   const [currentSlide, setCurrentSlide] = useState(0)
   const [slidesToShow, setSlidesToShow] = useState(0)
   const [selectedButton, setSelectedButton] = useState<number[]>([300, 200, 200, 200, 200])
-  const [responsiveRate, setResponsiveRate] = useState(1)
   const [translateX, settranslateX] = useState(0)
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
-    updateSlidesToShow()
-    window.addEventListener('resize', updateSlidesToShow) // Thêm event listener
-    return () => {
-      window.removeEventListener('resize', updateSlidesToShow) // Bỏ đăng ký khi component unmount
-    }
-  }, [updateSlidesToShow])
+    function handleResize() {
+      setWindowWidth(window.innerWidth);
+    };
 
-  function updateSlidesToShow() {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    setCurrentSlide(0);
+  }, [windowWidth]);
+
+
+  useEffect(() => {
     if (contentRef.current) {
       const gridContainer = document.querySelector('.five') as HTMLElement
       gridContainer.style.display = 'grid'
@@ -49,22 +57,31 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
           slideNow++
         }
 
-        let reponsiveRate = width / widthCount
-        setResponsiveRate(reponsiveRate)
-        let columnGap = 4 * reponsiveRate
+        let responsiveRate = width / widthCount
+        let columnGap = 4 * responsiveRate
 
-        gridContainer.style.gridTemplateColumns = `${getGridString2(selectedButton, reponsiveRate, selectedButton.length)}`
+        gridContainer.style.gridTemplateColumns = `${getGridString2(selectedButton, responsiveRate, selectedButton.length)}`
         gridContainer.style.columnGap = `${columnGap}px`
         calculatedNumColumn = buttonArray.length
+
+        let translateX = -4
+        if (currentSlide == 0) {
+          settranslateX(0)
+        } else {
+          for (let i = 0; i < currentSlide; i++) {
+            translateX += selectedButton[i] + 4
+          }
+          translateX *= responsiveRate
+          settranslateX(translateX) 
+        }
       }
 
       if (calculatedNumColumn !== slidesToShow) {
         setSlidesToShow(calculatedNumColumn)
       }
-      console.log('slidesToShow: ', calculatedNumColumn)
-      settranslateX(getTranslateX(selectedButton, currentSlide, responsiveRate))
+
     }
-  }
+  }, [windowWidth, selectedButton, contentRef.current, currentSlide]);
 
   function nextSlide() {
     setCurrentSlide(function (prevSlide) {
@@ -118,19 +135,6 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
 
   function getSameVariable(variable: any) {
     return variable
-  }
-
-  const getTranslateX = (selectedButton: any, currentSlide: number, reponsiveRate: number) => {
-    let translateX = -4
-    if (currentSlide == 0) {
-      return 0
-    } else {
-      for (let i = 0; i < currentSlide; i++) {
-        translateX += selectedButton[i] + 4
-      }
-      translateX *= reponsiveRate
-      return translateX
-    }
   }
 
   useEffect(() => {
