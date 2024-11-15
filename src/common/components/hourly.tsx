@@ -86,10 +86,8 @@ const Hourly: React.FC<HourlyProps> = ({ selectedWeather, contentRef }) => {
     setCurrentSlide(function (prevSlide) {
       let slideCount = prevSlide + slidesToShow
       if (slideCount > numColumn - slidesToShow) {
-        console.log('currentSlide:', numColumn - slidesToShow)
         return numColumn - slidesToShow
       } else {
-        console.log('currentSlide:', slideCount)
         return slideCount
       }
     })
@@ -99,10 +97,8 @@ const Hourly: React.FC<HourlyProps> = ({ selectedWeather, contentRef }) => {
     setCurrentSlide(function (prevSlide) {
       let slideCount = prevSlide - slidesToShow
       if (slideCount < 0) {
-        console.log('currentSlide:', 0)
         return 0
       } else {
-        console.log('currentSlide:', slideCount)
         return slideCount
       }
     })
@@ -112,16 +108,16 @@ const Hourly: React.FC<HourlyProps> = ({ selectedWeather, contentRef }) => {
     switch (iconCode) {
       case '01d':
       case '01n':
-        return 'src/assets/images/sunny.svg'
+        return 'src/assets/images/Sunny.png'
       case '02d':
       case '02n':
       case '03d':
       case '03n':
       case '04n':
       case '04d':
-        return 'src/assets/images/cloud.svg'
+        return 'src/assets/images/Cloudy.png'
       default:
-        return 'src/assets/images/rain.svg'
+        return 'src/assets/images/Rain.png'
     }
   }
 
@@ -141,7 +137,7 @@ const Hourly: React.FC<HourlyProps> = ({ selectedWeather, contentRef }) => {
   }
 
   function getDate(epoch: number) {
-    const date = new Date(epoch * 1000);
+    const date = new Date(epoch * 1000)
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     const month = months[date.getMonth()]
     const day = date.getDate()

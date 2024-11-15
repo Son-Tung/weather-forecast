@@ -1,9 +1,9 @@
-import '../styles/details.css';
-import { useState, useEffect } from 'react';
-import { Sun, MapPin, Thermometer, Droplet, Eye, Wind, Cloud } from 'lucide-react';
-import SunriseIcon from '../../assets/images/sunrise.svg';
-import SunsetIcon from '../../assets/images/sunset.svg';
-import { forecastWeather } from '../services/api';
+import '../styles/details.css'
+import { useState, useEffect } from 'react'
+import { Sun, MapPin, Thermometer, Droplet, Eye, Wind, Cloud } from 'lucide-react'
+import SunriseIcon from '../../assets/images/sunrise.svg'
+import SunsetIcon from '../../assets/images/sunset.svg'
+import { forecastWeather } from '../services/api'
 
 interface DetailsProps {
   selectedWeather: any[]
@@ -49,66 +49,67 @@ interface WeatherData {
 }
 
 const Details = ({ selectedWeather, weather }: DetailsProps) => {
-  console.log('selectedWeather === ', selectedWeather[1])
-  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+  const [weatherData, setWeatherData] = useState<WeatherData | null>(null)
 
   useEffect(() => {
     const getWeatherData = async () => {
       try {
-        const weather = await forecastWeather('London');
-        console.log('Weather Data:', weather); // Check API data
-        setWeatherData(weather?.weatherData);
+        const weather = await forecastWeather('London')
+
+        setWeatherData(weather?.weatherData)
       } catch (error) {
-        console.error('Error fetching weather data:', error);
+        console.error('Error fetching weather data:', error)
       }
-    };
-  
-    getWeatherData();
-  }, []);
-  
+    }
+
+    getWeatherData()
+  }, [])
+
   const formatTime = (timestamp: number) => {
-    if (!timestamp) return 'N/A'; // Check for null or undefined value
-    return new Date(timestamp * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  };
+    if (!timestamp) return 'N/A' // Check for null or undefined value
+    return new Date(timestamp * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  }
 
   const getUVLevel = (uvIndex: number) => {
-    if (uvIndex >= 0 && uvIndex <= 2) return 'Low';
-    if (uvIndex >= 3 && uvIndex <= 5) return 'Moderate';
-    if (uvIndex >= 6 && uvIndex <= 7) return 'High';
-    if (uvIndex >= 8 && uvIndex <= 10) return 'Very High';
-    return 'Extreme';
-  };
+    if (uvIndex >= 0 && uvIndex <= 2) return 'Low'
+    if (uvIndex >= 3 && uvIndex <= 5) return 'Moderate'
+    if (uvIndex >= 6 && uvIndex <= 7) return 'High'
+    if (uvIndex >= 8 && uvIndex <= 10) return 'Very High'
+    return 'Extreme'
+  }
 
   return (
-    <div className="details">
-      <div className="details-content">
+    <div className='details'>
+      <div className='details-content'>
         {selectedWeather[0] && (
           <>
-            <div className="weather-info-left">
+            <div className='weather-info-left'>
               <h3>Sun Information</h3>
-              <div className="sun-info">
-                <div className="info-header">
-                  <Sun className="weather-icon sun" />
-                  <div className="info-text">
+              <div className='sun-info'>
+                <div className='info-header'>
+                  <Sun className='weather-icon sun' />
+                  <div className='info-text'>
                     <p>UV Index</p>
-                    <p className="uv-value">{selectedWeather[0].uvIndex} - {getUVLevel(selectedWeather[0].uvIndex)}</p>
+                    <p className='uv-value'>
+                      {selectedWeather[0].uvIndex} - {getUVLevel(selectedWeather[0].uvIndex)}
+                    </p>
                   </div>
                 </div>
-                <div className="path-container">
-                  <div className="sun-path">
-                    <div className="path-line"></div>
-                    <div className="sun-indicator"></div>
+                <div className='path-container'>
+                  <div className='sun-path'>
+                    <div className='path-line'></div>
+                    <div className='sun-indicator'></div>
                   </div>
-                  <div className="time-labels">
-                    <div className="time-label sunrise">
+                  <div className='time-labels'>
+                    <div className='time-label sunrise'>
                       <p>Sunrise</p>
-                      <p className="time">{formatTime(selectedWeather[0].sys.sunrise)}</p>
-                      <img src={SunriseIcon} alt="Sunrise" className="sunrise-icon" />
+                      <p className='time'>{formatTime(selectedWeather[0].sys.sunrise)}</p>
+                      <img src={SunriseIcon} alt='Sunrise' className='sunrise-icon' />
                     </div>
-                    <div className="time-label sunset">
+                    <div className='time-label sunset'>
                       <p>Sunset</p>
-                      <p className="time">{formatTime(selectedWeather[0].sys.sunset)}</p>
-                      <img src={SunsetIcon} alt="Sunset" className="sunset-icon" />
+                      <p className='time'>{formatTime(selectedWeather[0].sys.sunset)}</p>
+                      <img src={SunsetIcon} alt='Sunset' className='sunset-icon' />
                     </div>
                   </div>
                 </div>
@@ -125,25 +126,31 @@ const Details = ({ selectedWeather, weather }: DetailsProps) => {
                   <MapPin className='weather-icon' /> <strong>Timezone:</strong> {weather.timezone / 3600} UTC
                 </div>
                 <div>
-                  <Thermometer className='weather-icon' /> <strong>Temperature:</strong> {selectedWeather[0].main.temp}°C
+                  <Thermometer className='weather-icon' /> <strong>Temperature:</strong> {selectedWeather[0].main.temp}
+                  °C
                 </div>
                 <div>
-                  <Thermometer className='weather-icon' /> <strong>Feels Like:</strong> {selectedWeather[0].main.feels_like}°C
+                  <Thermometer className='weather-icon' /> <strong>Feels Like:</strong>{' '}
+                  {selectedWeather[0].main.feels_like}°C
                 </div>
                 <div>
-                  <Thermometer className='weather-icon' /> <strong>Min Temperature:</strong> {selectedWeather[0].main.temp_min}°C
+                  <Thermometer className='weather-icon' /> <strong>Min Temperature:</strong>{' '}
+                  {selectedWeather[0].main.temp_min}°C
                 </div>
                 <div>
-                  <Thermometer className='weather-icon' /> <strong>Max Temperature:</strong> {selectedWeather[0].main.temp_max}°C
+                  <Thermometer className='weather-icon' /> <strong>Max Temperature:</strong>{' '}
+                  {selectedWeather[0].main.temp_max}°C
                 </div>
                 <div>
                   <Droplet className='weather-icon' /> <strong>Pressure:</strong> {selectedWeather[0].main.pressure} hPa
                 </div>
                 <div>
-                  <Droplet className='weather-icon' /> <strong>Sea Level Pressure:</strong> {selectedWeather[0].main.sea_level} hPa
+                  <Droplet className='weather-icon' /> <strong>Sea Level Pressure:</strong>{' '}
+                  {selectedWeather[0].main.sea_level} hPa
                 </div>
                 <div>
-                  <Droplet className='weather-icon' /> <strong>Ground Level Pressure:</strong> {selectedWeather[0].main.grnd_level} hPa
+                  <Droplet className='weather-icon' /> <strong>Ground Level Pressure:</strong>{' '}
+                  {selectedWeather[0].main.grnd_level} hPa
                 </div>
                 <div>
                   <Droplet className='weather-icon' /> <strong>Humidity:</strong> {selectedWeather[0].main.humidity}%
@@ -169,7 +176,7 @@ const Details = ({ selectedWeather, weather }: DetailsProps) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Details;
+export default Details

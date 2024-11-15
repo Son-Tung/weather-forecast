@@ -17,7 +17,7 @@ function Detail({ weather, geoData }: any) {
     Thunderstorm_with_rain: BigRain
     // thêm các tình trạng thời tiết khác nếu cần
   }
-  
+
   return (
     <div className='App'>
       {/* Phần nội dung chính */}

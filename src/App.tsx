@@ -2,7 +2,6 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import { useState } from 'react'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import Header from '../src/common/components/header.tsx'
-
 import Footer from './common/components/footer.tsx'
 import Home from './modules/dashboard/pages/Home.tsx'
 import Map from './modules/dashboard/pages/map.tsx'
@@ -55,9 +54,7 @@ function App() {
       })
 
       setSelectedWeather(weatherFilter)
-    } catch (error) {
-      console.log('onItemSelected', error)
-    }
+    } catch (error) {}
   }
 
   return (
@@ -82,7 +79,8 @@ function App() {
             <Route path='/map' element={<Map />} />
             <Route path='/news' element={<Info />} />
             <Route path='/air-quality' element={<Air />} />
-            <Route path='/details' element={<Details selectedWeather={selectedWeather} weather={weather} />} /> {/* Added Details route */}
+            <Route path='/details' element={<Details selectedWeather={selectedWeather} weather={weather} />} />{' '}
+            {/* Added Details route */}
           </Routes>
           <Footer />
         </div>
