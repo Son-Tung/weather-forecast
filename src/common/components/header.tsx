@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import WeatherLogo from '../../assets/images/IMG.png'
+import WeatherLogo from '../../assets/images/pngegg.png'
 import '../styles/header.scss'
 import { lstCities } from '../../assets/cities'
 import { forecastWeather } from '../services/api'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
-function Header({ setCity, setWeather, setWeather5day}: any) {
+function Header({ city, setCity, setWeather, setWeather5day, setGeoData }: any) {
   // định nghĩa component Header với 3 props: city:tên thành phố hiện tại, setcity: hàm để cập nhật tên thành phố, setweather: hàm để cập nhật dữ liệu thời thiết
-  const [filteredCities, setFilteredCities] = useState<any[]>([]);
+  const [filteredCities, setFilteredCities] = useState<any[]>([])
   const [tempInput, setTempInput] = useState<string>('')
-  const [errorMessage, setErrorMessage] = useState<string | null>('');
 
   const handleCityChange = (input: string) => {
     //hàm xử lí khi người dùng nhập tên thành phố
@@ -36,19 +35,18 @@ function Header({ setCity, setWeather, setWeather5day}: any) {
   }
 
   const getWeather = async (scopeCity?: string) => {
+    console.log('scopeCity === ', scopeCity)
     if (!scopeCity && !tempInput) {
-      setErrorMessage('Error: No city provided');
-      return;
-    }
-
-    else {
+      return
+    } else {
       try {
-        let correctCity = scopeCity || tempInput;
-        const totalWeather = await forecastWeather(correctCity);
-        setCity(correctCity);
-        setWeather(totalWeather.weatherData);
-        setWeather5day(totalWeather.forecastData);
+        let correctCity = scopeCity || tempInput
+        const totalWeather = await forecastWeather(correctCity)
+        setCity(correctCity)
+        setWeather(totalWeather.weatherData)
+        setWeather5day(totalWeather.forecastData)
         setFilteredCities([]) // xoá danh sách gợi ý thành phố
+        setGeoData(totalWeather.geoData)
       } catch (error) {
         console.error('Error:', error)
       }
@@ -63,9 +61,9 @@ function Header({ setCity, setWeather, setWeather5day}: any) {
 
   // Khởi tạo giá trị thành phố là "Hanoi" khi component được mount
   useEffect(() => {
-    const initialCity = 'Hanoi'
-    setTempInput('') // Cập nhật tên thành phố
-    getWeather(initialCity) // Gọi hàm để lấy dữ liệu thời tiết
+    // const initialCity = 'Hanoi'
+    // setTempInput('') // Cập nhật tên thành phố
+    getWeather(city) // Gọi hàm để lấy dữ liệu thời tiết
   }, []) // Chỉ chạy một lần khi component mount
 
   return (
@@ -78,50 +76,32 @@ function Header({ setCity, setWeather, setWeather5day}: any) {
               <img src={WeatherLogo} alt='Weather Logo' />
               <h1>Weather Forecast</h1>
             </div>
-            <nav>
-              <ul>
-                <li>
-                  <a href='#'>Home</a>
-                </li>
-                <li>
-                  <a href='#'>Map</a>
-                </li>
-                <li>
-                  <a href='#'>Tin tức</a>
-                </li>
-                <li>
-                  <a href='#'>Không khí</a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-          {/* Search bar */}
-          <div className='search-container'>
-            <div className='input-wrapper'>
-              <input
-                type='text'
-                value={tempInput}
-                onChange={(e) => handleCityChange(e.target.value)}
-                onKeyDown={handleKeyDown} // Thêm sự kiện onKeyDown
-                placeholder='Enter city name'
-              />
-              <button onClick={() => getWeather()}>Search</button>
-              <i className='fas fa-search search-icon'></i>
-              {/* Hiển thị danh sách các thành phố gợi ý */}
-              {filteredCities?.length > 0 && (
-                <div className='city-suggestions'>
-                  {filteredCities?.map((tempInput) => (
-                    <div key={tempInput.geonameid} onClick={() => handleCityClick(tempInput.name)}>
-                      {tempInput.name + ' (' + tempInput.country + ')'}
-                    </div>
-                  ))}
-                </div>
-              )}
-              {filteredCities?.length === 0 && tempInput?.length > 0 && <div></div>}
+            {/* Search bar */}
+            <div className='search-container'>
+              <div className='input-wrapper'>
+                <input
+                  type='text'
+                  value={tempInput}
+                  onChange={(e) => handleCityChange(e.target.value)}
+                  onKeyDown={handleKeyDown} // Thêm sự kiện onKeyDown
+                  placeholder='Enter country or city name'
+                />
+                <button onClick={() => getWeather()}>Search</button>
+                <i className='fas fa-search search-icon'></i>
+                {/* Hiển thị danh sách các thành phố gợi ý */}
+                {filteredCities?.length > 0 && (
+                  <div className='city-suggestions'>
+                    {filteredCities?.map((tempInput) => (
+                      <div key={tempInput.geonameid} onClick={() => handleCityClick(tempInput.name)}>
+                        {tempInput.name + ' (' + tempInput.country + ')'}
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {filteredCities?.length === 0 && tempInput?.length > 0 && <div></div>}
+              </div>
             </div>
           </div>
-
-          <div className='notification-input-city-error'>{errorMessage}</div>
         </div>
       </header>
     </>
