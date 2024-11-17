@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { weatherImages } from '../../assets/images/weatherImages'
 import '../styles/FiveWeather.scss'
+import WeatherMap from './WeatherMap'
 
 interface FivedayWeatherProps {
   weather: any
@@ -158,7 +159,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   }, [currentSlide, slidesToShow, width])
 
   const groupedByDay = weather5day?.list?.reduce((acc: any, curr: any) => {
-    const date = new Date(curr.dt * 1000).toLocaleDateString('vi-VN', {
+    const date = new Date(curr.dt * 1000).toLocaleDateString('en-US', {
       weekday: 'long',
       day: 'numeric'
     })
@@ -215,6 +216,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
       div.addEventListener('click', () => handleItemClick(index, listItems, days, groupedByDay, weather, weather5day))
       div.style.width = '100%'
       div.style.transform = 'scale(1)'
+      onItemSelected(groupedByDay[days[index]]?.date, weather, weather5day)
     })
 
     setRunEffect(true)
@@ -222,6 +224,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
 
   return (
     <div className='fiveday' ref={contentRef}>
+      <WeatherMap/>
       <div className='fivetitle'>
         <h4>Dự báo 5 ngày tới</h4>
         <button>XEM THEO THÁNG</button>
