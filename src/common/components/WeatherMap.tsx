@@ -12,7 +12,7 @@ const WeatherMap: React.FC = () => {
       const cities = [
         { name: "Hà Nội", lat: 21.028511, lon: 105.804817 },
         { name: "Hồ Chí Minh", lat: 10.823099, lon: 106.629664 },
-        // Thêm các thành phố khác nếu cần
+       
       ];
 
       try {
@@ -47,10 +47,10 @@ const WeatherMap: React.FC = () => {
   return (
     <div style={{ width: "100%", height: "50vh" }}>
       <MapContainer
-        center={[21.028511, 105.804817]} // Tọa độ trung tâm bản đồ (Hà Nội)
+        center={[21.028511, 105.804817]} 
         zoom={6}
         style={{ width: "100%", height: "100%" }}
-        attributionControl={false} // Tắt attribution control
+        attributionControl={false} 
       >
         <TileLayer
           url={`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${apiKey}`}
