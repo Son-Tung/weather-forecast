@@ -66,23 +66,6 @@
   right: 0;
 }
 
-.five li {
-  background-color: #fff;
-  padding: 30px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-radius: 15px;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-  display: grid;
-  grid-template-areas:
-    'time temp_max description'
-    'img temp_min humidity';
-  grid-template-columns: auto auto auto;
-  gap: 0px;
-  margin: 3px;
-  flex: 0 0 auto;
-}
-
 .weather-image {
   width: 40px;
   height: 40px;
@@ -138,11 +121,7 @@ h4 {
     padding-bottom: 10px;
     border-radius: 15px;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-    // display: grid;
-    // grid-template-areas:
-    //   'time temp_max description'
-    //   'img temp_min humidity';
-    // grid-template-columns: auto auto auto;
+    cursor: pointer;
     gap: 0px;
     margin: 3px;
     width: 100%;
@@ -186,6 +165,7 @@ h4 {
     padding: 12px 24px 18px 24px;
     flex: 0 0 auto;
     background-color: #ffffff;
+    cursor: pointer;
 
     .current-description {
       display: flex;
@@ -211,3 +191,21 @@ h4 {
     }
   }
 }
+
+.weather-map-screen {
+  height: 50vh;
+  width: 100%;
+  .leaflet-pane {
+    z-index: 50;
+  }
+  .leaflet-top {
+    z-index: 60;
+  }
+  .leaflet-bottom {
+    z-index: 60;
+  }
+}
+
+// .leaflet-pane {
+//   z-index: 50;
+// }

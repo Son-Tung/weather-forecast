@@ -1,79 +1,49 @@
-import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import 'leaflet/dist/leaflet.css'
+import { lstCities } from '../../assets/cities'
 
-const WeatherMap: React.FC = () => {
-  const [weatherData, setWeatherData] = useState<any[]>([]);
-  const apiKey = import.meta.env.OPENWEATHER_API_KEY || '4f2141f03c148886930241854489683e';
+interface CoordProps {
+  lat: number
+  lon: number
+}
 
-  useEffect(() => {
-    // Lấy dữ liệu thời tiết từ OpenWeatherMap API
-    const fetchWeatherData = async () => {
-      const cities = [
-        { name: "Hà Nội", lat: 21.028511, lon: 105.804817 },
-        { name: "Hồ Chí Minh", lat: 10.823099, lon: 106.629664 },
-       
-      ];
+interface WeatherMapProps {
+  coord: CoordProps
+  weather: any
+}
 
-      try {
-        const cityWeatherData = await Promise.all(
-          cities.map(async (city) => {
-            const response = await fetch(
-              `https://api.openweathermap.org/data/2.5/weather?lat=${city.lat}&lon=${city.lon}&appid=${apiKey}&units=metric`
-            );
-            const data = await response.json();
-            return {
-              name: city.name,
-              lat: city.lat,
-              lon: city.lon,
-              temperature: data.main.temp, // Nhiệt độ
-            };
-          })
-        );
-        setWeatherData(cityWeatherData);
-      } catch (error) {
-        console.error("Error fetching weather data:", error);
-      }
-    };
+const WeatherMap = ({ coord, weather }: WeatherMapProps) => {
+  const apiKey = import.meta.env.OPENWEATHER_API_KEY || '4f2141f03c148886930241854489683e'
+  const city = lstCities.find((city) => city.name === weather?.name)
 
-    fetchWeatherData();
-  }, [apiKey]);
-
-  if (!apiKey) {
-    console.error("API key is missing! Please set OPENWEATHER_API_KEY in .env.");
-    return <div>Error: API Key is missing!</div>;
-  }
+  // if (!apiKey) {
+  //   console.error('API key is missing! Please set OPENWEATHER_API_KEY in .env.')
+  //   return <div>Error: API Key is missing!</div>
+  // }
 
   return (
-    <div style={{ width: "100%", height: "50vh" }}>
-      <MapContainer
-        center={[21.028511, 105.804817]} 
-        zoom={6}
-        style={{ width: "100%", height: "100%" }}
-        attributionControl={false} 
-      >
-        <TileLayer
-          url={`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${apiKey}`}
-        />
-        {weatherData.map((city, index) => (
-          <Marker key={index} position={[city.lat, city.lon]}>
-            <Popup>
-              <strong>{city.name}</strong>
-              <br />
-              Temperature: {city.temperature}°C
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
-      <style>
-        {`
-          .leaflet-control-attribution {
-            display: none !important;
-          }
-        `}
-      </style>
-    </div>
-  );
-};
+    // <MapContainer center={[21.028511, 105.804817]} zoom={5} style={{ height: '50vh', width: '100%' }}>
+    //
+    // </MapContainer>
+    <MapContainer
+      center={[coord?.lat ?? 21.028511, coord?.lon ?? 105.804817]}
+      zoom={13}
+      scrollWheelZoom={false}
+      className='weather-map-screen'
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+      />
+      <TileLayer url={`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${apiKey}`} />
+      <Marker position={[coord?.lat ?? 21.028511, coord?.lon ?? 105.804817]}>
+        <Popup>
+          {city ? city.name : weather?.name} <br />
+          Temperature: {weather?.main?.temp}°C
+        </Popup>
+      </Marker>
+    </MapContainer>
+  )
+}
 
-export default WeatherMap;
+export default WeatherMap

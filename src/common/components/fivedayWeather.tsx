@@ -18,7 +18,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   const [translateX, settranslateX] = useState(0)
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [runEffect, setRunEffect] = useState(false)
-  //
+
   const [itemSelectedIdx, setItemSelectedIdx] = useState(0)
   const listItems = document.querySelectorAll<HTMLLIElement>('.five-content')
   //
@@ -39,7 +39,6 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
 
   useEffect(() => {
     if (contentRef.current) {
-      console.log('run slide')
       const gridContainer = document.querySelector('.five-content') as HTMLElement // five
       gridContainer.style.display = 'grid'
       let width = contentRef.current.clientWidth
@@ -224,7 +223,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
 
   return (
     <div className='fiveday' ref={contentRef}>
-      <WeatherMap/>
+      <WeatherMap coord={weather?.coord} weather={weather} />
       <div className='fivetitle'>
         <h4>Dự báo 5 ngày tới</h4>
         <button>XEM THEO THÁNG</button>
