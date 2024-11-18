@@ -16,7 +16,6 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   const [selectedButton, setSelectedButton] = useState<number[]>([300, 200, 200, 200, 200])
   const [translateX, settranslateX] = useState(0)
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-  const [runEffect, setRunEffect] = useState(false)
   //
   const [itemSelectedIdx, setItemSelectedIdx] = useState(0)
   const listItems = document.querySelectorAll<HTMLLIElement>('.five-content')
@@ -38,7 +37,6 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
 
   useEffect(() => {
     if (contentRef.current) {
-      console.log('run slide')
       const gridContainer = document.querySelector('.five-content') as HTMLElement // five
       gridContainer.style.display = 'grid'
       let width = contentRef.current.clientWidth
@@ -63,28 +61,27 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
 
         let responsiveRate = width / widthCount
         let columnGap = 4 * responsiveRate
-
-        gridContainer.style.gridTemplateColumns = `${getGridString2(selectedButton, responsiveRate, selectedButton.length)}`
-        gridContainer.style.columnGap = `${columnGap}px`
         calculatedNumColumn = buttonArray.length
 
-        let translateX = -4
-        if (currentSlide == 0) {
-          settranslateX(0)
-        } else {
+        let translateX = 0
+        if (currentSlide != 0) {
+          translateX = -4
           for (let i = 0; i < currentSlide; i++) {
             translateX += selectedButton[i] + 4
           }
           translateX *= responsiveRate
-          settranslateX(translateX)
         }
+
+        gridContainer.style.gridTemplateColumns = `${getGridString2(selectedButton, responsiveRate, selectedButton.length)}`
+        gridContainer.style.columnGap = `${columnGap}px`
+        settranslateX(translateX)
       }
 
       if (calculatedNumColumn !== slidesToShow) {
         setSlidesToShow(calculatedNumColumn)
       }
     }
-  }, [windowWidth, selectedButton, contentRef.current, currentSlide, runEffect])
+  }, [windowWidth, selectedButton, contentRef.current, currentSlide])
 
   function nextSlide() {
     setCurrentSlide(function (prevSlide) {
@@ -217,8 +214,6 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
       div.style.transform = 'scale(1)'
       onItemSelected(groupedByDay[days[index]]?.date, weather, weather5day)
     })
-
-    setRunEffect(true)
   }, [weather, weather5day, handleItemClick])
 
   return (

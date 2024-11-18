@@ -9,7 +9,7 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend,
+ Legend,
   Filler,
   Chart,
   TooltipItem
@@ -107,14 +107,16 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
         })
       })
     },
-    beforeDatasetsUpdate: (chart: Chart) => { 
-      const ctx = chart.ctx 
-      const dataset = chart.data.datasets[0] 
-      const gradient = ctx.createLinearGradient(0, 0, 0, chart.height) 
+    beforeDatasetsUpdate: (chart: Chart) => {
+      const ctx = chart.ctx
+      const dataset = chart.data.datasets[0]
+      const gradient = ctx.createLinearGradient(0, 0, 0, chart.height)
+
       gradient.addColorStop(0, 'rgba(247,149,145,255)') // Top color
       gradient.addColorStop(0.5, 'rgba(254,243,220,255)') // Middle color
       gradient.addColorStop(1, 'rgba(255,251,243,255)') // Bottom color
-      dataset.backgroundColor = gradient 
+
+      dataset.backgroundColor = gradient
     }
   }
 
