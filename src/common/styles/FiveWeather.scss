@@ -23,13 +23,14 @@
   display: flex;
 
   position: relative;
- 
+
   flex-direction: column;
 }
 
 .five-container {
   position: relative;
   overflow: hidden;
+  padding: 20px 0px 20px 0px;
 }
 
 .five {
@@ -37,7 +38,8 @@
   transition: transform 0.5s ease;
 }
 
-.five-day-button-left, .five-day-button-right {
+.five-day-button-left,
+.five-day-button-right {
   width: 16px;
   height: 32px;
   background: white;
@@ -49,9 +51,11 @@
   justify-content: center;
   align-items: center;
   border-radius: 4px;
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.14), 0px 0px 2px 0px rgba(0, 0, 0, 0.12);
+  box-shadow:
+    0px 2px 4px 0px rgba(0, 0, 0, 0.14),
+    0px 0px 2px 0px rgba(0, 0, 0, 0.12);
   position: absolute;
-  top: 70.585px;
+  top: 50px;
 }
 
 .five-day-button-left {
@@ -71,89 +75,19 @@
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
   display: grid;
   grid-template-areas:
-      "time temp_max description"
-      "img temp_min humidity";
+    'time temp_max description'
+    'img temp_min humidity';
   grid-template-columns: auto auto auto;
   gap: 0px;
   margin: 3px;
   flex: 0 0 auto;
 }
 
-.five li p:nth-child(1) {
-  grid-area: time;
-  position: absolute;
-  margin-bottom: 20px;
-  font-size: 0.9em;
-  font-weight: 600;
-  font-family: Arial, Helvetica, sans-serif;
-  flex: 0 0 auto;
-}
-
-.five li p:nth-child(2) {
-  grid-area: temp_max;
-  position: relative;
-  margin-top: 40px;
-  font-size: 0.9em;
-  font-weight: 600;
-  font-family: Arial, Helvetica, sans-serif;
-  left: 10px;
-  flex: 0 0 auto;
-}
-
-.five li p:nth-child(3) {
-  grid-area: description;
-  position: relative;
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 40px;
-  font-size: 0.8em;
-  font-weight: 0;
-  margin-left: 30px;
-  font-family: Arial, Helvetica, sans-serif;
-  flex: 0 0 auto;
-}
-
-.five li img {
-  grid-area: img;
-  width: 40px;
-  height: auto;
-  position: relative;
-  bottom: 25px;
-  left: 20px;
-  flex: 0 0 auto;
-}
-
-.five li p:nth-child(5) {
-  grid-area: temp_min;
-  position: relative;
-  bottom: 10px;
-  font-size: 0.9em;
-  font-family: Arial, Helvetica, sans-serif;
-  left: 10px;
-  flex: 0 0 auto;
-}
-
-.five li p:nth-child(6) {
-  grid-area: humidity;
-  position: relative;
-  display: flex;
-  justify-content: flex-end;
-  bottom: 10px;
-  font-size: 0.8em;
-  font-weight: 0;
-  margin-left: 30px;
-  font-family: Arial, Helvetica, sans-serif;
-  flex: 0 0 auto;
-}
-
-.five li.compact p:nth-child(3),
-.five li.compact p:nth-child(6) {
-  display: none;
-}
-
 .weather-image {
-  width: 60px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  margin-right: 14px;
 }
 
 .scroll-button {
@@ -171,21 +105,19 @@
 }
 
 .five li {
-  cursor: pointer; 
+  cursor: pointer;
 }
 
-.five li.compact {
-  width: 200px;
-}
-.fivetitle{
+.fivetitle {
   display: flex;
   justify-content: space-between;
   font-family: Arial, Helvetica, sans-serif;
-  position: relative;
+  // position: relative;
   margin-top: 30px;
-  top: 20px;
+  margin-bottom: 40px;
+  // top: 20px;
 }
-.fivetitle button{
+.fivetitle button {
   border: none;
   background-color: #ffffff;
   cursor: pointer;
@@ -196,134 +128,86 @@ h4 {
   flex: 0 0 auto;
 }
 
+.five-content {
+  display: flex;
+  transform: scale(1.1);
 
-
-@media screen and (max-width: 1500px){
-  .fiveday {
-    margin-left: 0;
-    padding: 0px;
-  }
-
-
-  .five li {
-    grid-template-areas:
-      "time temp_max description"
-      "img temp_min humidity";
-    grid-template-columns: auto auto auto;
+  .five-item {
+    padding: 12px 37px 18px 28px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    // display: grid;
+    // grid-template-areas:
+    //   'time temp_max description'
+    //   'img temp_min humidity';
+    // grid-template-columns: auto auto auto;
     gap: 0px;
     margin: 3px;
-  }
-
-  .five li p:nth-child(1),
-  .five li p:nth-child(2),
-  .five li p:nth-child(3),
-  .five li p:nth-child(5),
-  .five li p:nth-child(6) {
-    text-align: center;
+    width: 100%;
     flex: 0 0 auto;
+    background-color: rgb(239 242 247);
+    color: #000000;
+
+    .current-time {
+      margin-bottom: 4px;
+    }
+
+    .current-description {
+      display: flex;
+      width: 100%;
+    }
+
+    .right {
+      display: none;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      padding-left: 6px;
+
+      .temp-info {
+        font-size: 18px;
+        line-height: 24px;
+        opacity: 0.8;
+
+        & p:first-child {
+          margin-bottom: 6px;
+          font-weight: 600;
+        }
+      }
+    }
   }
 
-  .five li img {
-    margin: 0 auto;
-    display: block;
-  }
-}
-@media screen and (max-width: 1240px) {
-
-
-  .fiveday {
-    margin-left: 0;
-    padding: 0px;
-  }
-
-  .five li {
-    grid-template-areas:
-      "time temp_max description"
-      "img temp_min humidity";
-    grid-template-columns: auto auto auto;
-    gap: 0px;
-    margin: 3px;
-  }
-
-  .five li p:nth-child(1),
-  .five li p:nth-child(2),
-  .five li p:nth-child(3),
-  .five li p:nth-child(5),
-  .five li p:nth-child(6) {
-    text-align: center;
+  .five-item.activeCard {
+    width: 100%;
+    padding: 12px 24px 18px 24px;
     flex: 0 0 auto;
-  }
+    background-color: #ffffff;
 
-  .five li img {
-    margin: 0 auto;
-    display: block;
-  }
-}
+    .current-description {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
 
-/* Ẩn thẻ li thứ 3 khi màn hình nhỏ hơn 1050px */
-@media screen and (max-width: 1050px) {
+    .right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
 
-  .fiveday {
-    margin-left: 0;
-    padding: 0px;
-  }
+      & p:first-child {
+        margin-bottom: 12px;
+        font-size: 14px;
+        line-height: 20px;
+      }
 
-  .five li {
-    grid-template-areas:
-      "time temp_max description"
-      "img temp_min humidity";
-    grid-template-columns: auto auto auto;
-    gap: 0px;
-    margin: 3px;
-  }
-
-  .five li p:nth-child(1),
-  .five li p:nth-child(2),
-  .five li p:nth-child(3),
-  .five li p:nth-child(5),
-  .five li p:nth-child(6) {
-    text-align: center;
-    flex: 0 0 auto;
-  }
-
-  .five li img {
-    margin: 0 auto;
-    display: block;
-  }
-}
-
-/* Ẩn thẻ li thứ 2 khi màn hình nhỏ hơn 830px */
-@media screen and (max-width: 830px) {
-
-  .fivetitle h4{
-    left: 0px;
-  }
-  .fiveday {
-    margin-left: 0;
-    padding: 0px;
-  }
-  .fivetitle button{margin-right: 0px;}
-
-  .five li {
-    grid-template-areas:
-      "time temp_max description"
-      "img temp_min humidity";
-    grid-template-columns: auto auto auto;
-    gap: 0px;
-    margin: 3px;
-  }
-
-  .five li p:nth-child(1),
-  .five li p:nth-child(2),
-  .five li p:nth-child(3),
-  .five li p:nth-child(5),
-  .five li p:nth-child(6) {
-    text-align: center;
-    flex: 0 0 auto;
-  }
-
-  .five li img {
-    margin: 0 auto;
-    display: block;
+      & p:last-child {
+        font-size: 12px;
+        line-height: 16px;
+      }
+    }
   }
 }
