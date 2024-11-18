@@ -1,7 +1,7 @@
 import '../styles/detail5day.css'
 import Summary from './summary.tsx'
 import Hourly from './hourly.tsx'
-import Details from './details.tsx'
+import Details from './moredetails.tsx'
 
 import React, { useState, useRef } from 'react'
 

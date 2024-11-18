@@ -40,7 +40,7 @@
   flex: 1;
   background-color: #ffffff; /* Màu nền trắng */
   border-radius: 10px;
-  padding: 30px;
+  padding: 40px;
   margin-bottom: 20px;
   margin: 0 10px; /* Thêm khoảng cách giữa hai phần */
 }
@@ -75,7 +75,7 @@ h3 {
   flex: 1;
   background-color: #f9f9f9; /* Màu nền sáng hơn */
   border-radius: 10px;
-  padding: 20px;
+  padding: 55px;
 }
 
 .info-header {
@@ -99,7 +99,7 @@ h3 {
   font-size: 12px;
 }
 
-.uv-value {
+.lat-lon-value {
   font-size: 14px;
   font-weight: 500;
   color: #333333;
@@ -181,38 +181,6 @@ h3 {
   flex-shrink: 0;
 }
 
-.weather-details .weather-icon.sun {
-  color: #ffd700;
-}
-
-.weather-details .weather-icon.moon {
-  color: #ffffff;
-}
-
-.weather-details .weather-icon.map-pin {
-  color: #ff6347;
-}
-
-.weather-details .weather-icon.thermometer {
-  color: #ff4500;
-}
-
-.weather-details .weather-icon.droplet {
-  color: #1e90ff;
-}
-
-.weather-details .weather-icon.eye {
-  color: #32cd32;
-}
-
-.weather-details .weather-icon.wind {
-  color: #00ced1;
-}
-
-.weather-details .weather-icon.cloud {
-  color: #b0c4de;
-}
-
 @media (max-width: 768px) {
   .details {
     width: 95%;
@@ -230,11 +198,13 @@ h3 {
 .time-label.sunrise {
   display: flex;
   flex-direction: column-reverse;
+  align-items: flex-end;
 }
 
 .time-label.sunset {
   display: flex;
   flex-direction: column-reverse;
+  align-items: flex-start;
 }
 
 img.sunrise-icon, img.sunset-icon {
@@ -270,4 +240,13 @@ img.sunrise-icon, img.sunset-icon {
   .weather-info-right {
     flex: 4;
   }
+}
+
+.icon-group {
+  display: flex;
+  align-items: center;
+}
+
+.icon-group .weather-icon {
+  margin-right: 5px;
 }
