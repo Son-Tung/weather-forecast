@@ -80,7 +80,7 @@ body {
   input {
     padding: 8px 10px; // Giảm padding bên phải để có chỗ cho nút
     width: 400px;
-    border-radius: 20px;
+ font-size: 15px;
     border: 1px solid #ccc; // Thêm border cho input
 
     &:focus + .search-icon {
@@ -98,7 +98,7 @@ body {
     color: #000000;
     border: 1px solid #000000;
     cursor: pointer;
-    border-radius: 20px;
+    
     margin-left: -69px; // Điều chỉnh vị trí của nút
     z-index: 1; // Đảm bảo nút nằm trên input
 
@@ -125,10 +125,10 @@ body {
   padding: 0; /* Loại bỏ padding mặc định */
   margin: 5px 0 0 0; /* Loại bỏ margin mặc định */
   border: 1px solid #ccc; /* Đường viền cho danh sách */
-  border-radius: 20px; /* Bo góc cho danh sách */
+  /*border-radius: 20px; /* Bo góc cho danh sách */
   background-color: white; /* Màu nền trắng */
   position: absolute; /* Đảm bảo danh sách gợi ý hiển thị dưới ô tìm kiếm */
-  width: 98%; /* Đảm bảo danh sách rộng bằng với ô input */
+  width: 100%; /* Đảm bảo danh sách rộng bằng với ô input */
   display: block;
   height: min-content;
   max-height: 300px;
@@ -138,16 +138,17 @@ body {
   z-index: 2;
 
   div {
-    margin-left: 35px;
+    margin-left: 15px;
     max-width: none;
     width: 100%;
     font-size: 1.2em;
     margin-top: 15px;
     margin-bottom: 20px;
+    font-weight: 500;
     cursor: pointer; /* Con trỏ chuột thay đổi khi hover */
 
     &:hover {
-      background-color: #dadada; /* Đổi màu nền khi hover */
+     color:#ce7337; /* Đổi màu nền khi hover */
     }
   }
 }
@@ -193,4 +194,15 @@ body {
       }
     }
   }
+}
+
+.App-footer {
+  background-color: #ffffff;
+  color: #000000;
+  text-align: center;
+  padding: 1rem;  
+  margin-top: 45px;
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-family: serif;
 }
