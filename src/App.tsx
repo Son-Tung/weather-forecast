@@ -9,6 +9,7 @@ import Info from './modules/dashboard/pages/TinTuc.tsx'
 import Air from './modules/dashboard/pages/KhongKhi.tsx'
 import './common/styles/FiveWeather.scss'
 import Details from './common/components/details.tsx'
+import './common/styles/all.css'
 
 function App() {
   // khai báo sate và refs
