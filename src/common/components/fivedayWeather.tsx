@@ -206,11 +206,8 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   )
   //
   useEffect(() => {
-    // Thiết lập trạng thái ban đầu
     setItemSelectedIdx(0)
     updateElementAtIndex(0)
-
-    // Gắn kết sự kiện click cho các item
     listItems.forEach((div, index) => {
       div.addEventListener('click', () => handleItemClick(index, listItems, days, groupedByDay, weather, weather5day))
       div.style.width = '100%'
@@ -225,8 +222,8 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
     <div className='fiveday' ref={contentRef}>
       <WeatherMap coord={weather?.coord} weather={weather} />
       <div className='fivetitle'>
-        <h4>Dự báo 5 ngày tới</h4>
-        <button>XEM THEO THÁNG</button>
+        <h4>Five day weather forecast</h4>
+        <button>MONTH</button>
       </div>
       <div className='five-container'>
         <div className='five-content' style={{ transform: `translateX(-${translateX}px)` }}>
