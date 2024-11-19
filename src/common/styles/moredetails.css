@@ -75,7 +75,7 @@ h3 {
   flex: 1;
   background-color: #f9f9f9; /* Màu nền sáng hơn */
   border-radius: 10px;
-  padding: 55px;
+  padding: 12px;
 }
 
 .info-header {
@@ -90,7 +90,7 @@ h3 {
   height: 24px;
 }
 
-.weather-icon.sun {
+.weather-icon.location {
   color: #ffd700;
 }
 
@@ -236,17 +236,4 @@ img.sunrise-icon, img.sunset-icon {
   .weather-info-left {
     flex: 1;
   }
-
-  .weather-info-right {
-    flex: 4;
-  }
-}
-
-.icon-group {
-  display: flex;
-  align-items: center;
-}
-
-.icon-group .weather-icon {
-  margin-right: 5px;
 }

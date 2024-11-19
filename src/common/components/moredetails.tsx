@@ -84,7 +84,7 @@ const Details = ({ selectedWeather, weather }: DetailsProps) => {
               <h3>Current Sun Information</h3>
               <div className="sun-info">
                 <div className="info-header">
-                  <FaMapMarkerAlt className="weather-icon sun" />
+                  <FaMapMarkerAlt className="weather-icon location" />
                   <div className="info-text">
                     <p>Lat and Lon</p>
                     <p className="lat-lon-value">{weather.coord.lat} and {weather.coord.lon}</p>
@@ -141,9 +141,7 @@ const Details = ({ selectedWeather, weather }: DetailsProps) => {
                   <FaMountain className='weather-icon' style={{ color: 'brown' }} /> <strong>Ground Level Pressure:</strong> {selectedWeather[0].main.grnd_level} hPa
                 </div>
                 <div className='icon-group'>
-                <FaTint className='weather-icon' style={{ color: 'blue' }} />
-                <FaThermometerHalf className='weather-icon' style={{ color: 'red' }} />
-                  <strong>Humidity:</strong> {selectedWeather[0].main.humidity}%
+                  <FaThermometerHalf className='weather-icon' style={{ color: 'red' }} /> <strong>Humidity:</strong> {selectedWeather[0].main.humidity}%
                 </div>
                 <div>
                   <FaEye className='weather-icon' style={{ color: 'green' }} /> <strong>Visibility:</strong> {selectedWeather[0].visibility} m
