@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { weatherImages } from '../../assets/images/weatherImages'
 import '../styles/FiveWeather.scss'
+import WeatherMap from './WeatherMap'
 
 interface FivedayWeatherProps {
   weather: any
@@ -17,7 +18,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   const [translateX, settranslateX] = useState(0)
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [runEffect, setRunEffect] = useState(false)
-  //
+
   const [itemSelectedIdx, setItemSelectedIdx] = useState(0)
   const listItems = document.querySelectorAll<HTMLLIElement>('.five-content')
   //
@@ -38,7 +39,6 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
 
   useEffect(() => {
     if (contentRef.current) {
-      console.log('run slide')
       const gridContainer = document.querySelector('.five-content') as HTMLElement // five
       gridContainer.style.display = 'grid'
       let width = contentRef.current.clientWidth
@@ -158,7 +158,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   }, [currentSlide, slidesToShow, width])
 
   const groupedByDay = weather5day?.list?.reduce((acc: any, curr: any) => {
-    const date = new Date(curr.dt * 1000).toLocaleDateString('vi-VN', {
+    const date = new Date(curr.dt * 1000).toLocaleDateString('en-US', {
       weekday: 'long',
       day: 'numeric'
     })
@@ -206,11 +206,8 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   )
   //
   useEffect(() => {
-    // Thiết lập trạng thái ban đầu
     setItemSelectedIdx(0)
     updateElementAtIndex(0)
-
-    // Gắn kết sự kiện click cho các item
     listItems.forEach((div, index) => {
       div.addEventListener('click', () => handleItemClick(index, listItems, days, groupedByDay, weather, weather5day))
       div.style.width = '100%'
@@ -223,9 +220,10 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
 
   return (
     <div className='fiveday' ref={contentRef}>
+      <WeatherMap coord={weather?.coord} weather={weather} />
       <div className='fivetitle'>
-        <h4>Dự báo 5 ngày tới</h4>
-        <button>XEM THEO THÁNG</button>
+        <h4>Five day weather forecast</h4>
+        <button>MONTH</button>
       </div>
       <div className='five-container'>
         <div className='five-content' style={{ transform: `translateX(-${translateX}px)` }}>

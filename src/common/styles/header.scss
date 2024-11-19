@@ -80,8 +80,9 @@ body {
   input {
     padding: 8px 10px; // Giảm padding bên phải để có chỗ cho nút
     width: 400px;
- font-size: 15px;
+    font-size: 15px;
     border: 1px solid #ccc; // Thêm border cho input
+    border-radius: 15px;
 
     &:focus + .search-icon {
       display: none;
@@ -98,7 +99,8 @@ body {
     color: #000000;
     border: 1px solid #000000;
     cursor: pointer;
-    
+    border-radius: 15px;
+
     margin-left: -69px; // Điều chỉnh vị trí của nút
     z-index: 1; // Đảm bảo nút nằm trên input
 
@@ -148,7 +150,7 @@ body {
     cursor: pointer; /* Con trỏ chuột thay đổi khi hover */
 
     &:hover {
-     color:#ce7337; /* Đổi màu nền khi hover */
+      color: #ce7337; /* Đổi màu nền khi hover */
     }
   }
 }
@@ -200,7 +202,7 @@ body {
   background-color: #ffffff;
   color: #000000;
   text-align: center;
-  padding: 1rem;  
+  padding: 1rem;
   margin-top: 45px;
   font-size: 20px;
   margin-bottom: 20px;
