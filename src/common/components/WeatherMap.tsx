@@ -62,6 +62,7 @@ const WeatherMap = ({ coord, weather }: WeatherMapProps) => {
     return gradients[type as keyof typeof gradients]
   }
 
+
   const Legend = () => {
     const map = useMap()
 
@@ -69,30 +70,39 @@ const WeatherMap = ({ coord, weather }: WeatherMapProps) => {
       const legend = new L.Control({ position: 'bottomright' })
 
       legend.onAdd = () => {
-        const div = L.DomUtil.create('div', 'legend-box')
+        const div = L.DomUtil.create('div', 'legend-box');
         const grades = {
           temperature: [-40, -20, 0, 20, 40],
           windSpeed: [0, 2, 3, 4, 12, 25, 50, 100],
-          cloudCover: [0, 25, 50, 75, 100]
-        }
-        const labels: { [key: string]: string } = {
-          temperature: 'Nhiệt độ (°C)',
-          windSpeed: 'Tốc độ gió (m/s)',
-          cloudCover: 'Mây phủ (%)'
-        }
-
-        div.innerHTML += `<class="legend-label" >${labels[mapType]}</div>`
-
-        grades[mapType as keyof typeof grades].forEach((grade) => {
-          div.innerHTML += `<class="legend-value" ">
-                              <div>${grade}</div>                             
-                            </div>`
-        })
-        div.innerHTML += `<class="legend-gradient" style="width: 260px; height: 4px; background:${getGradient(mapType)}; position: absolute; bottom: 0;"></div>`
-
-        return div
-      }
-
+          cloudCover: [0, 25, 50, 75, 100],
+        };
+        const labels:{ [key: string]: string } = {
+          temperature: 'Temperature(°C)',
+          windSpeed: 'Wind Speed(m/s)',
+          cloudCover: 'Clouds(%)',
+        };
+      
+        // Thêm nhãn
+        div.innerHTML += `<div class="legend-label">${labels[mapType]}</div>`;
+      
+        // Thêm các giá trị và gradient
+        div.innerHTML += `
+          <div class="legend-child">
+            <div class="legend-values">
+              ${grades[mapType as keyof typeof grades]
+                .map((grade) => `<span>${grade}</span>`)
+                .join('')}
+            </div>
+            <div 
+              class="legend-gradient" 
+              style="background: ${getGradient(mapType)};">
+            </div>
+          </div>
+        `;
+      
+        return div;
+      };
+      
       legend.addTo(map)
       return () => {
         legend.remove()
