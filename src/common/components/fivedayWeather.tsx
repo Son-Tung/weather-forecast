@@ -31,11 +31,8 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   }, [])
 
   useEffect(() => {
-    if (groupedByDay && days.length > 0) {
-      onItemSelected(groupedByDay[days[0]]?.date, weather, weather5day)
-    }
-  }, [weather, weather5day])
-
+    setCurrentSlide(0)
+  }, [windowWidth])
 
   useEffect(() => {
     if (contentRef.current) {
@@ -125,16 +122,6 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
     })
   }
 
-  const updateElementAtIndex = (index: number) => {
-    const newState = [200, 200, 200, 200, 200]
-    newState[index] = 300
-    if (newState !== selectedButton) {
-      setSelectedButton(() => {
-        return newState
-      })
-    }
-  }
-
   function getGridString() {
     let gridString = ''
     for (let i = 0; i < 5; i++) {
@@ -204,12 +191,19 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   const days = Object.keys(groupedByDay || {})
   function handleItemClick (index: number, dateGMT: any, weather: any, weather5day: any)  {
     if (itemSelectedIdx != index) {
-      updateElementAtIndex(index)
+      const newState = [200, 200, 200, 200, 200]
+      newState[index] = 300
+      setSelectedButton(newState)
       setItemSelectedIdx(index)
     }
     onItemSelected(dateGMT, weather, weather5day)
   }
 
+  useEffect(() => {
+    if (groupedByDay && days.length > 0) {
+      onItemSelected(groupedByDay[days[0]]?.date, weather, weather5day)
+    }
+  }, [weather, weather5day])
 
   return (
     <div className='fiveday' ref={contentRef}>
