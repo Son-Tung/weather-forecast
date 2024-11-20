@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { weatherImages } from '../../assets/images/weatherImages'
 import '../styles/FiveWeather.scss'
 import WeatherMap from './WeatherMap'
@@ -29,6 +29,13 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
       window.removeEventListener('resize', handleResize)
     }
   }, [])
+
+  useEffect(() => {
+    if (groupedByDay && days.length > 0) {
+      onItemSelected(groupedByDay[days[0]]?.date, weather, weather5day)
+    }
+  }, [weather, weather5day])
+
 
   useEffect(() => {
     if (contentRef.current) {
@@ -195,21 +202,14 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   }, {})
 
   const days = Object.keys(groupedByDay || {})
-  const handleItemClick = useCallback(
-    (
-      index: number,
-      dateGMT: any,
-      weather: any,
-      weather5day: any
-    ) => {
+  function handleItemClick (index: number, dateGMT: any, weather: any, weather5day: any)  {
+    if (itemSelectedIdx != index) {
       updateElementAtIndex(index)
-      if (index != itemSelectedIdx) {
-        setItemSelectedIdx(index)
-      }
-      onItemSelected(dateGMT, weather, weather5day)
-    },
-    []
-  )
+      setItemSelectedIdx(index)
+    }
+    onItemSelected(dateGMT, weather, weather5day)
+  }
+
 
   return (
     <div className='fiveday' ref={contentRef}>
@@ -223,7 +223,6 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
           {days.slice(0, 5).map((day, index) => {
             const dayData = groupedByDay[day]
             let dateGMT =  groupedByDay[day]?.date
-            
             return (
               <div
                 key={index}
