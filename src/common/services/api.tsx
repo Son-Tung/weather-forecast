@@ -17,7 +17,9 @@ export const forecastWeather = async (city: string): Promise<{ weatherData: any;
 
     const weatherData = await weatherResponse.json()
     const forecastData = await forecastResponse.json()
-    const geoData = {}
+    const geoData = {
+      name: weatherData?.name
+    }
 
     return {
       weatherData,
