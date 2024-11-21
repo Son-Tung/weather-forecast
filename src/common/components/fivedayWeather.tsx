@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { weatherImages } from '../../assets/images/weatherImages'
 import '../styles/FiveWeather.scss'
-import WeatherMap from './WeatherMap'
 
 interface FivedayWeatherProps {
   weather: any
@@ -57,22 +56,19 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
 
         while (widthCount + selectedButton[slideNow] + 4 <= width5button) {
           if (slideNow === 5) {
-            slideNow = slideStart - 1;
-            increase = false;
+            slideNow = slideStart - 1
+            increase = false
           }
           if (increase) {
             buttonArray.push(selectedButton[slideNow])
             widthCount += selectedButton[slideNow] + 4
             slideNow++
-          }
-
-          else {
+          } else {
             buttonArray.unshift(selectedButton[slideNow])
             widthCount += selectedButton[slideNow] + 4
             slideNow--
           }
         }
-        
 
         let responsiveRate = width5button / widthCount
         let columnGap = 4 * responsiveRate
@@ -189,7 +185,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   }, {})
 
   const days = Object.keys(groupedByDay || {})
-  function handleItemClick (index: number, dateGMT: any, weather: any, weather5day: any)  {
+  function handleItemClick(index: number, dateGMT: any, weather: any, weather5day: any) {
     if (itemSelectedIdx != index) {
       const newState = [200, 200, 200, 200, 200]
       newState[index] = 300
@@ -207,16 +203,14 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
 
   return (
     <div className='fiveday' ref={contentRef}>
-      <WeatherMap coord={weather?.coord} weather={weather} />
       <div className='fivetitle'>
         <h4>Five day weather forecast</h4>
-        <button>MONTH</button>
       </div>
       <div className='five-container'>
         <div className='five-content' style={{ transform: `translateX(-${translateX}px)` }}>
           {days.slice(0, 5).map((day, index) => {
             const dayData = groupedByDay[day]
-            let dateGMT =  groupedByDay[day]?.date
+            let dateGMT = groupedByDay[day]?.date
             return (
               <div
                 key={index}

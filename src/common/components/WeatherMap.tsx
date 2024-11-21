@@ -1,6 +1,5 @@
 import { MapContainer, TileLayer, Marker, Popup, LayersControl, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
-import { lstCities } from '../../assets/cities'
 import { useRef, useEffect, useState } from 'react'
 import L, { Map as LeafletMap } from 'leaflet'
 
@@ -14,9 +13,9 @@ interface WeatherMapProps {
   weather: any
 }
 
-const WeatherMap = ({ coord, weather }: WeatherMapProps) => {
+const WeatherMap = ({ coord }: WeatherMapProps) => {
   const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY || '4f2141f03c148886930241854489683e'
-  const city = lstCities.find((city) => city.name === weather?.name)
+
   const mapRef = useRef<LeafletMap | null>(null)
   const [mapType, setMapType] = useState('temperature')
 
@@ -110,17 +109,17 @@ const WeatherMap = ({ coord, weather }: WeatherMapProps) => {
   }
 
   return (
-    <div>
-      <div className='tile'>WEATHER MAP</div>
+    <div className='WeatherMap'>
+      <div className='tile'>Weather Map</div>
       <div className='map-container'>
         <MapContainer
           center={[coord?.lat ?? 21.028511, coord?.lon ?? 105.804817]}
-          zoom={11}
+          zoom={9}
           scrollWheelZoom={true}
           className='weather-map-screen'
           ref={mapRef}
-          maxZoom={15}
-          minZoom={5}
+          maxZoom={13}
+          minZoom={4}
           maxBoundsViscosity={1.0}
           maxBounds={[
             [85, -180],
@@ -158,8 +157,7 @@ const WeatherMap = ({ coord, weather }: WeatherMapProps) => {
           </LayersControl>
           <Marker position={[coord?.lat ?? 21.028511, coord?.lon ?? 105.804817]}>
             <Popup>
-              {city ? city.name : weather?.name} <br />
-              Temperature: {weather?.main?.temp}°C
+              <br />
             </Popup>
           </Marker>
         </MapContainer>
