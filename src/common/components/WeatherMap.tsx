@@ -13,9 +13,8 @@ interface WeatherMapProps {
   weather: any
 }
 
-const WeatherMap = ({ coord }: WeatherMapProps) => {
+const WeatherMap = ({ coord, weather }: WeatherMapProps) => {
   const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY || '4f2141f03c148886930241854489683e'
-
   const mapRef = useRef<LeafletMap | null>(null)
   const [mapType, setMapType] = useState('temperature')
 
@@ -114,7 +113,7 @@ const WeatherMap = ({ coord }: WeatherMapProps) => {
       <div className='map-container'>
         <MapContainer
           center={[coord?.lat ?? 21.028511, coord?.lon ?? 105.804817]}
-          zoom={9}
+          zoom={10}
           scrollWheelZoom={true}
           className='weather-map-screen'
           ref={mapRef}
@@ -157,7 +156,8 @@ const WeatherMap = ({ coord }: WeatherMapProps) => {
           </LayersControl>
           <Marker position={[coord?.lat ?? 21.028511, coord?.lon ?? 105.804817]}>
             <Popup>
-              <br />
+              {weather?.name} <br />
+              Temperature: {weather?.main?.temp}°C
             </Popup>
           </Marker>
         </MapContainer>
