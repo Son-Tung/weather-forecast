@@ -135,10 +135,10 @@ const Details = ({ selectedWeather, weather }: DetailsProps) => {
                   <FaTachometerAlt className='weather-icon' style={{ color: 'darkgray' }} /> <strong>Pressure:</strong> {selectedWeather[0].main.pressure} hPa
                 </div>
                 <div>
-                  <FaWater className='weather-icon' style={{ color: 'blue' }} /> <strong>Sea Level Pressure:</strong> {selectedWeather[0].main.sea_level} hPa
+                  <FaWater className='weather-icon' style={{ color: 'blue' }} /> <strong>Sea Pressure:</strong> {selectedWeather[0].main.sea_level} hPa
                 </div>
                 <div>
-                  <FaMountain className='weather-icon' style={{ color: 'brown' }} /> <strong>Ground Level Pressure:</strong> {selectedWeather[0].main.grnd_level} hPa
+                  <FaMountain className='weather-icon' style={{ color: 'brown' }} /> <strong>Ground Pressure:</strong> {selectedWeather[0].main.grnd_level} hPa
                 </div>
                 <div className='icon-group'>
                   <FaTint className='weather-icon' style={{ color: 'blue' }} /> <strong>Humidity:</strong> {selectedWeather[0].main.humidity}%
