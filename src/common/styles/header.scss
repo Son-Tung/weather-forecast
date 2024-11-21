@@ -199,12 +199,16 @@ body {
 }
 
 .App-footer {
-  background-color: #ffffff;
+  background-color:  #dae9fb;
   color: #000000;
   text-align: center;
   padding: 1rem;
-  margin-top: 15px;
-  font-size: 20px;
-  margin-bottom: 15px;
+ 
+  font-size: 15px;
+ 
   font-family: serif;
+}
+
+.App-footer p{
+  margin: 0;
 }
