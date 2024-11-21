@@ -9,7 +9,7 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend,
+ Legend,
   Filler,
   Chart,
   TooltipItem
@@ -102,7 +102,7 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
           ctx.textAlign = 'center'
           ctx.textBaseline = 'bottom'
           ctx.fillStyle = 'black'
-          ctx.fillText(`${value}°`, point.x, point.y - 3)
+          ctx.fillText(`${value}°`, point.x, point.y - 8)
           ctx.restore()
         })
       })
@@ -112,66 +112,12 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
       const dataset = chart.data.datasets[0]
       const gradient = ctx.createLinearGradient(0, 0, 0, chart.height)
 
-      // Find the highest temperature in the dataset
-      const validData = dataset.data.filter((value) => value !== null) as number[]
-      const maxTemp = Math.max(...validData)
-      const minTemp = Math.min(...validData)
+      gradient.addColorStop(0, 'rgba(247,149,145,255)') // Top color
+      gradient.addColorStop(0.5, 'rgba(254,243,220,255)') // Middle color
+      gradient.addColorStop(1, 'rgba(255,251,243,255)') // Bottom color
 
-      let color1
-      if (maxTemp <= 25) {
-        color1 = 'rgba(255,251,243,255)'
-      } else {
-        if (maxTemp <= 30) {
-          color1 = interpolateColor(maxTemp)
-        } else {
-          color1 = 'rgba(247,149,145,255)'
-        }
-
-        gradient.addColorStop( 1 - (25 - minTemp) / (maxTemp - minTemp) , 'rgba(254,243,220,255)') // Mid color    rgba(247,149,145,255)
-      }
-
-      gradient.addColorStop(0, color1) // Top color    highest to 'rgba(247,149,145,255)' with 40°C
-      gradient.addColorStop(1, 'rgba(255,251,243,255)') // Bottom color rgba(255,251,243,255)
       dataset.backgroundColor = gradient
     }
-  }
-
-  function getColor(temp: number) {
-    if (temp <= 20) {
-      return 'rgba(255,251,243,255)'
-    }
-
-    else if (temp >= 30) {
-      return 'rgba(247,149,145,255)'
-    }
-
-    else {
-      const startColor = { r: 254, g: 243, b: 220, a: 255 }
-      const endColor = { r: 247, g: 149, b: 145, a: 255 }
-
-      const ratio = (temp - 20) / (30 - 20)
-
-      const r = Math.round(startColor.r + ratio * (endColor.r - startColor.r))
-      const g = Math.round(startColor.g + ratio * (endColor.g - startColor.g))
-      const b = Math.round(startColor.b + ratio * (endColor.b - startColor.b))
-      const a = Math.round(startColor.a + ratio * (endColor.a - startColor.a))
-
-      return `rgba(${r},${g},${b},${a})`
-    }
-  }
-
-  function interpolateColor(temp: number) {
-    const startColor = { r: 254, g: 243, b: 220, a: 255 }
-    const endColor = { r: 247, g: 149, b: 145, a: 255 }
-
-    const ratio = (temp - 25) / (30 - 25)
-
-    const r = Math.round(startColor.r + ratio * (endColor.r - startColor.r))
-    const g = Math.round(startColor.g + ratio * (endColor.g - startColor.g))
-    const b = Math.round(startColor.b + ratio * (endColor.b - startColor.b))
-    const a = Math.round(startColor.a + ratio * (endColor.a - startColor.a))
-
-    return `rgba(${r},${g},${b},${a})`
   }
 
   useEffect(() => {
@@ -216,8 +162,8 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
           data={data}
           options={options}
           plugins={[customPlugin]}
-          width={window.innerWidth * 4 / 5} // Set width here
-          height={228} // Set height
+          width={window.innerWidth - 30} // Set width here
+          height={238} // Set height
         />
       )}
     </div>
