@@ -100,13 +100,10 @@
   margin-bottom: 10px;
   // top: 20px;
 }
-.fivetitle button {
-  border: none;
-  background-color: #ffffff;
-  cursor: pointer;
-}
+
 h4 {
   position: relative;
+  font-size: 23px;
 
   flex: 0 0 auto;
 }
@@ -132,6 +129,7 @@ h4 {
 
     .current-time {
       margin-bottom: 4px;
+      font-size: 18px;
     }
 
     .current-description {
@@ -181,12 +179,12 @@ h4 {
 
       & p:first-child {
         margin-bottom: 12px;
-        font-size: 14px;
+        font-size: 16px;
         line-height: 20px;
       }
 
       & p:last-child {
-        font-size: 12px;
+        font-size: 16px;
         line-height: 16px;
       }
     }
@@ -212,36 +210,59 @@ h4 {
 .tile {
   align-content: center;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 30px 0px 20px 0px;
-  font-size: 1.3em;
+  font-size: 23px;
   font-family: 'Arial', 'Calibri', sans-serif;
-  font-weight: 500;
+  font-weight: 600;
 }
 .map-container {
   overflow: hidden;
 }
 .legend-box {
-  background: white;
-  padding: 10px;
+  background: rgb(242, 243, 247);
+  padding: 5px;
   border-radius: 5px;
-  width: 360px;
+  width: 370px;
   height: 26.6px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
   align-items: center;
-  .legend-label {
-    width: 80px;
-    height: 15px;
-  }
-  .legend-child {
-    display: flex;
-    .legend-values {
-      width: 260px;
-      height: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-  }
+}
+
+.legend-label {
+  width: 80px;
+  white-space: nowrap;
+  font-size: 10px;
+  padding-right: 10px;
+}
+
+.legend-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 260px;
+  padding-left: 31px;
+}
+
+.legend-values {
+  display: flex;
+  justify-content: space-between;
+  width: 260px;
+  margin-bottom: 3px;
+  font-size: 10px;
+}
+
+.legend-gradient {
+  border-radius: 4pt;
+  height: 4px;
+  opacity: 0.9;
+  width: 260px;
+  border-left: 1px solid #f2f2f2;
+  border-bottom: 1px solid #f2f2f2;
+}
+.WeatherMap {
+  width: 80%;
+  margin: 0 10%;
+  padding: 30px 0px 60px 0px;
 }

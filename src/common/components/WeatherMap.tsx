@@ -1,6 +1,5 @@
 import { MapContainer, TileLayer, Marker, Popup, LayersControl, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
-import { lstCities } from '../../assets/cities'
 import { useRef, useEffect, useState } from 'react'
 import L, { Map as LeafletMap } from 'leaflet'
 
@@ -16,7 +15,6 @@ interface WeatherMapProps {
 
 const WeatherMap = ({ coord, weather }: WeatherMapProps) => {
   const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY || '4f2141f03c148886930241854489683e'
-  const city = lstCities.find((city) => city.name === weather?.name)
   const mapRef = useRef<LeafletMap | null>(null)
   const [mapType, setMapType] = useState('temperature')
 
@@ -76,19 +74,26 @@ const WeatherMap = ({ coord, weather }: WeatherMapProps) => {
           cloudCover: [0, 25, 50, 75, 100]
         }
         const labels: { [key: string]: string } = {
-          temperature: 'Nhiệt độ (°C)',
-          windSpeed: 'Tốc độ gió (m/s)',
-          cloudCover: 'Mây phủ (%)'
+          temperature: 'Temperature(°C)',
+          windSpeed: 'Wind Speed(m/s)',
+          cloudCover: 'Clouds(%)'
         }
 
-        div.innerHTML += `<class="legend-label" >${labels[mapType]}</div>`
+        // Thêm nhãn
+        div.innerHTML += `<div class="legend-label">${labels[mapType]}</div>`
 
-        grades[mapType as keyof typeof grades].forEach((grade) => {
-          div.innerHTML += `<class="legend-value" ">
-                              <div>${grade}</div>                             
-                            </div>`
-        })
-        div.innerHTML += `<class="legend-gradient" style="width: 260px; height: 4px; background:${getGradient(mapType)}; position: absolute; bottom: 0;"></div>`
+        // Thêm các giá trị và gradient
+        div.innerHTML += `
+          <div class="legend-child">
+            <div class="legend-values">
+              ${grades[mapType as keyof typeof grades].map((grade) => `<span>${grade}</span>`).join('')}
+            </div>
+            <div 
+              class="legend-gradient" 
+              style="background: ${getGradient(mapType)};">
+            </div>
+          </div>
+        `
 
         return div
       }
@@ -103,15 +108,22 @@ const WeatherMap = ({ coord, weather }: WeatherMapProps) => {
   }
 
   return (
-    <div>
-      <div className='tile'>WEATHER MAP</div>
+    <div className='WeatherMap'>
+      <div className='tile'>Weather Map</div>
       <div className='map-container'>
         <MapContainer
           center={[coord?.lat ?? 21.028511, coord?.lon ?? 105.804817]}
-          zoom={13}
+          zoom={10}
           scrollWheelZoom={true}
           className='weather-map-screen'
           ref={mapRef}
+          maxZoom={13}
+          minZoom={4}
+          maxBoundsViscosity={1.0}
+          maxBounds={[
+            [85, -180],
+            [-85, 180]
+          ]}
         >
           <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
           <MapUpdater />
@@ -144,7 +156,7 @@ const WeatherMap = ({ coord, weather }: WeatherMapProps) => {
           </LayersControl>
           <Marker position={[coord?.lat ?? 21.028511, coord?.lon ?? 105.804817]}>
             <Popup>
-              {city ? city.name : weather?.name} <br />
+              {weather?.name} <br />
               Temperature: {weather?.main?.temp}°C
             </Popup>
           </Marker>
