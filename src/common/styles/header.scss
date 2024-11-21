@@ -1,11 +1,10 @@
+
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 body {
-  margin: 0;
+  margin: 0
 }
 /* Văn bản chung cho responsive */
 .responsive-text {
@@ -18,9 +17,9 @@ body {
 .App-header {
   background-image: url('../../assets/images/—Pngtree—cumulonimbus\ capillatus\ incus\ in\ the_15539280.png'); // Thay đổi đường dẫn đến bức ảnh của bạn
   background-size: cover; // Đảm bảo bức ảnh phủ kín toàn bộ header
-  background-position: bottom; // Căn giữa bức ảnh
+  background-position:bottom; // Căn giữa bức ảnh
   padding: 20px 50px;
-  display: flex;
+  display: flex;  
   align-items: center;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   top: 0;
@@ -56,7 +55,7 @@ body {
 
   .header-content {
     display: flex;
-    justify-content: space-between;
+    justify-content:space-between;
     width: 100%;
     align-items: center;
 
@@ -80,7 +79,7 @@ body {
   input {
     padding: 8px 10px; // Giảm padding bên phải để có chỗ cho nút
     width: 400px;
-    font-size: 15px;
+    border-radius: 20px;
     border: 1px solid #ccc; // Thêm border cho input
     border-radius: 15px;
 
@@ -99,15 +98,14 @@ body {
     color: #000000;
     border: 1px solid #000000;
     cursor: pointer;
-    border-radius: 15px;
-
+    border-radius: 20px;
     margin-left: -69px; // Điều chỉnh vị trí của nút
     z-index: 1; // Đảm bảo nút nằm trên input
 
     &:hover {
-      background-color: #70b4f9;
+      background-color: #1770eb;
       color: rgb(255, 255, 255);
-      border-color: #5eaeff;
+      border-color: #1770eb;
       transition:
         background-color 0.3s ease,
         color 0.3s ease;
@@ -127,10 +125,10 @@ body {
   padding: 0; /* Loại bỏ padding mặc định */
   margin: 5px 0 0 0; /* Loại bỏ margin mặc định */
   border: 1px solid #ccc; /* Đường viền cho danh sách */
-  /*border-radius: 20px; /* Bo góc cho danh sách */
+  border-radius: 20px; /* Bo góc cho danh sách */
   background-color: white; /* Màu nền trắng */
-  position: absolute; /* Đảm bảo danh sách gợi ý hiển thị dưới ô tìm kiếm */
-  width: 100%; /* Đảm bảo danh sách rộng bằng với ô input */
+  position:absolute; /* Đảm bảo danh sách gợi ý hiển thị dưới ô tìm kiếm */
+  width: 98%; /* Đảm bảo danh sách rộng bằng với ô input */
   display: block;
   height: min-content;
   max-height: 300px;
@@ -140,17 +138,17 @@ body {
   z-index: 2;
 
   div {
-    margin-left: 15px;
+    margin-left: 20px;
     max-width: none;
     width: 100%;
     font-size: 1.2em;
     margin-top: 15px;
     margin-bottom: 20px;
-    font-weight: 500;
     cursor: pointer; /* Con trỏ chuột thay đổi khi hover */
 
     &:hover {
-      color: #ce7337; /* Đổi màu nền khi hover */
+      color: #1770eb; /* Đổi màu nền khi hover */
+      
     }
   }
 }
@@ -178,20 +176,21 @@ body {
       justify-content: center;
     }
   }
-
+  
   .search-container {
     align-items: center;
     justify-content: center;
+    margin-bottom: 30px;
   }
   .notification-icon {
     display: none;
   }
 }
 
-@media (max-width: 1098px) {
-  .App-header {
-    .header-content {
-      h1 {
+@media (max-width: 1098px){
+  .App-header{
+    .header-content{
+      h1{
         display: none;
       }
     }
