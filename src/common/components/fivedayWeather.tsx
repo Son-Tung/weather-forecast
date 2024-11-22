@@ -13,7 +13,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   const [width, setWidth] = useState(0)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [slidesToShow, setSlidesToShow] = useState(0)
-  const [selectedButton, setSelectedButton] = useState<number[]>([300, 200, 200, 200, 200])
+  const [selectedButton, setSelectedButton] = useState<number[]>([365, 182.5, 182.5, 182.5, 182.5])
   const [translateX, settranslateX] = useState(0)
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [itemSelectedIdx, setItemSelectedIdx] = useState(0)
@@ -43,7 +43,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
       }
 
       let calculatedNumColumn
-      if (width5button >= 1116) {
+      if (width5button >= 1111) {
         gridContainer.style.gridTemplateColumns = `${getGridString()}`
         gridContainer.style.columnGap = `${(4 / 1116) * 100}%`
         calculatedNumColumn = 5
@@ -187,8 +187,8 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   const days = Object.keys(groupedByDay || {})
   function handleItemClick(index: number, dateGMT: any, weather: any, weather5day: any) {
     if (itemSelectedIdx != index) {
-      const newState = [200, 200, 200, 200, 200]
-      newState[index] = 300
+      const newState = [182.5, 182.5, 182.5, 182.5, 182.5]
+      newState[index] = 365
       setSelectedButton(newState)
       setItemSelectedIdx(index)
     }
