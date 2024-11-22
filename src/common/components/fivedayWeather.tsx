@@ -47,6 +47,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
         gridContainer.style.gridTemplateColumns = `${getGridString()}`
         gridContainer.style.columnGap = `${(4 / 1116) * 100}%`
         calculatedNumColumn = 5
+        settranslateX(0)
       } else {
         let widthCount = -4
         let buttonArray = []
