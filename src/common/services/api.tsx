@@ -1,4 +1,4 @@
-const apiKey = import.meta.env.OPENWEATHER_API_KEY || '4f2141f03c148886930241854489683e'
+const apiKey =  '4f2141f03c148886930241854489683e'
 const baseUrl = 'https://api.openweathermap.org'
 
 export const forecastWeather = async (city: string): Promise<{ weatherData: any; forecastData: any; geoData: any }> => {
@@ -17,7 +17,9 @@ export const forecastWeather = async (city: string): Promise<{ weatherData: any;
 
     const weatherData = await weatherResponse.json()
     const forecastData = await forecastResponse.json()
-    const geoData = {}
+    const geoData = {
+      name: weatherData?.name
+    }
 
     return {
       weatherData,

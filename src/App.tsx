@@ -8,7 +8,8 @@ import Map from './modules/dashboard/pages/map.tsx'
 import Info from './modules/dashboard/pages/TinTuc.tsx'
 import Air from './modules/dashboard/pages/KhongKhi.tsx'
 import './common/styles/FiveWeather.scss'
-import Details from './common/components/details.tsx'
+import Details from './common/components/moredetails.tsx'
+import './common/styles/all.css'
 
 function App() {
   // khai báo sate và refs
