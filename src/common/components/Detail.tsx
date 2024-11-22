@@ -32,11 +32,9 @@ function Detail({ weather, geoData }: any) {
               />
               <div className='temperature-details'>
                 <h1>{weather?.main?.temp}°C</h1>
-                <h2>
-                  <i className='fas fa-map-marker-alt'></i> {/* Icon vị trí */}
-                  {geoData?.[0]?.name}
-                </h2>{' '}
-                {/* Hiển thị tên thành phố ở đây */}
+                <h2><i className="fas fa-map-marker-alt"></i> {/* Icon vị trí */}
+                  {geoData && Object.keys(geoData)?.length > 0 ? geoData?.name : 'Không tìm thấy vị trí'}
+                </h2> {/* Hiển thị tên thành phố ở đây */}
                 <p className='weather-description'>
                   {weather?.weather?.[0]?.description.charAt(0).toUpperCase() +
                     weather?.weather?.[0]?.description?.slice(1)}
