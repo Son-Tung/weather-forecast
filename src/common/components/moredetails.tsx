@@ -16,7 +16,6 @@ import {
 } from 'react-icons/fa';
 import SunriseIcon from '../../assets/images/sunrise.svg';
 import SunsetIcon from '../../assets/images/sunset.svg';
-import { forecastWeather } from '../services/api';
 
 interface MoreDetailsProps {
   selectedWeather: any[];
@@ -76,17 +75,12 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
 
   useEffect(() => {
-    const getWeatherData = async () => {
-      try {
-        const weather = await forecastWeather('London');
-        setWeatherData(weather?.weatherData);
-      } catch (error) {
-        console.error('Error fetching weather data:', error);
-      }
-    };
-
-    getWeatherData();
-  }, []);
+    if (selectedWeather.length === 0) {
+      setWeatherData(null); // Hoặc có thể giữ weatherData ở trạng thái ban đầu nếu cần
+    } else {
+      setWeatherData(selectedWeather[0]); // Cập nhật dữ liệu từ selectedWeather
+    }
+  }, [selectedWeather]);
 
   const formatTime = (timestamp: number) => {
     if (!timestamp) return 'N/A'; // Check for null or undefined value
