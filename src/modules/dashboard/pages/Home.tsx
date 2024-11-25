@@ -17,7 +17,7 @@ const Home: React.FC<{
       <Main weather={weather} geoData={geoData} />
       <FivedayWeather weather={weather} weather5day={weather5day} onItemSelected={onItemSelected} />
       <Detail5day selectedWeather={selectedWeather} weather={weather} weather5day={weather5day} />
-      <WeatherMap coord={weather?.coord} weather={weather} />
+      <WeatherMap coord={weather?.coord} weather={weather} city={city} />
       <WeatherDashboard city={city} />
     </div>
   )
