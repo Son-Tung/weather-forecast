@@ -12,12 +12,12 @@ import {
   FaClock,
   FaTint,
   FaMapMarkerAlt,
+  FaSnowflake,
 } from 'react-icons/fa';
 import SunriseIcon from '../../assets/images/sunrise.svg';
 import SunsetIcon from '../../assets/images/sunset.svg';
-import { forecastWeather } from '../services/api';
 
-interface DetailsProps {
+interface MoreDetailsProps {
   selectedWeather: any[];
   weather: any;
 }
@@ -39,8 +39,8 @@ interface WeatherData {
     temp_max: number;
     pressure: number;
     humidity: number;
-    sea_level?: number; // Áp suất ở mực nước biển
-    grnd_level?: number; // Áp suất ở mặt đất
+    sea_level?: number;
+    grnd_level?: number;
   };
   visibility: number;
   wind: {
@@ -51,6 +51,12 @@ interface WeatherData {
   clouds: {
     all: number;
   };
+  rain?: {
+    '3h'?: number;
+  };
+  snow?: {
+    '3h'?: number;
+  };
   dt: number;
   sys: {
     country: string;
@@ -58,28 +64,23 @@ interface WeatherData {
     sunset: number;
   };
   coord: {
-    lat: number; // Vĩ độ
-    lon: number; // Kinh độ
+    lat: number;
+    lon: number;
   };
   name: string;
   cod: number;
 }
 
-const Details = ({ selectedWeather, weather }: DetailsProps) => {
+const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
 
   useEffect(() => {
-    const getWeatherData = async () => {
-      try {
-        const weather = await forecastWeather('London');
-        setWeatherData(weather?.weatherData);
-      } catch (error) {
-        console.error('Error fetching weather data:', error);
-      }
-    };
-
-    getWeatherData();
-  }, []);
+    if (selectedWeather.length === 0) {
+      setWeatherData(null); // Hoặc có thể giữ weatherData ở trạng thái ban đầu nếu cần
+    } else {
+      setWeatherData(selectedWeather[0]); // Cập nhật dữ liệu từ selectedWeather
+    }
+  }, [selectedWeather]);
 
   const formatTime = (timestamp: number) => {
     if (!timestamp) return 'N/A'; // Check for null or undefined value
@@ -116,6 +117,24 @@ const Details = ({ selectedWeather, weather }: DetailsProps) => {
   const minTemp = firstDay ? groupedByDay[firstDay].temp_min : 'N/A';
   const maxTemp = firstDay ? groupedByDay[firstDay].temp_max : 'N/A';
 
+  // Function to get rain data and default to 0 if no data
+  const getRainData = (rainKey: '3h') => {
+    const rainData = selectedWeather[0]?.rain?.[rainKey];
+    return rainData ? `${rainData} mm` : '0 mm';
+  };
+
+  // Function to get snow data and default to 0 if no data
+  const getSnowData = (snowKey: '3h') => {
+    const snowData = selectedWeather[0]?.snow?.[snowKey];
+    return snowData ? `${snowData} mm` : '0 mm';
+  };
+
+  // Function to get wind gust and default to 0 if no data
+  const getWindGustData = () => {
+    const gustData = selectedWeather[0]?.wind?.gust;
+    return gustData !== undefined ? `${gustData} km/h` : '0 km/h';
+  };
+  
   return (
     <div className="details">
       <div className="details-content">
@@ -193,7 +212,17 @@ const Details = ({ selectedWeather, weather }: DetailsProps) => {
                   <strong>Ground Pressure:</strong> {selectedWeather[0].main.grnd_level} hPa
                 </div>
                 <div>
-                  <FaTint className="weather-icon" style={{ color: 'blue' }} />{' '}
+                  <FaSnowflake className="weather-icon" style={{ color: 'lightblue' }} />{' '}
+                  <strong>Snow (3h):</strong>{' '}
+                  {getSnowData('3h')}
+                </div>
+                <div>
+                  <FaTint className="weather-icon" style={{ color: 'lightblue' }} />{' '}
+                  <strong>Rain (3h):</strong>{' '}
+                  {getRainData('3h')}
+                </div>
+                <div>
+                  <FaTint className="weather-icon" style={{ color: 'lightblue' }} />{' '}
                   <strong>Humidity:</strong> {selectedWeather[0].main.humidity}%
                 </div>
                 <div>
@@ -202,7 +231,7 @@ const Details = ({ selectedWeather, weather }: DetailsProps) => {
                 </div>
                 <div>
                   <FaWind className="weather-icon" style={{ color: 'lightblue' }} />{' '}
-                  <strong>Wind Gust:</strong> {selectedWeather[0].wind.gust} km/h
+                  <strong>Wind Gust:</strong> {getWindGustData()}
                 </div>
                 <div>
                   <FaWind className="weather-icon" style={{ color: 'lightblue' }} />{' '}
@@ -211,6 +240,10 @@ const Details = ({ selectedWeather, weather }: DetailsProps) => {
                 <div>
                   <FaCloud className="weather-icon" style={{ color: 'gray' }} />{' '}
                   <strong>Clouds:</strong> {selectedWeather[0].clouds.all}%
+                </div>
+                {/* Add weather description */}
+                <div>
+                  <strong>Weather:</strong> {selectedWeather[0]?.weather[0]?.main || 'No data available'}
                 </div>
                 <div>
                   <strong>City Info:</strong> ID: {weather.id}, Country: {weather.sys.country}
@@ -224,4 +257,4 @@ const Details = ({ selectedWeather, weather }: DetailsProps) => {
   );
 };
 
-export default Details;
+export default MoreDetails;
