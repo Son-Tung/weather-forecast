@@ -59,7 +59,6 @@ $sun-color: #ffd700;
     border-radius: 10px;
     padding: 40px;
     margin: 0 10px;
-    margin-bottom: 20px;
 
     @media (max-width: 1439px) {
       margin: 10px 0;
@@ -97,7 +96,7 @@ h3 {
   flex: 1;
   background-color: $background-lighter;
   border-radius: 10px;
-  padding: 32px;
+  padding: 15px;
 }
 
 .info {
