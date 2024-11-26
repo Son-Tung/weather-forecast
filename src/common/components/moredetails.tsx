@@ -129,6 +129,12 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
     return snowData ? `${snowData} mm` : '0 mm';
   };
 
+  // Function to get wind gust and default to 0 if no data
+  const getWindGustData = () => {
+    const gustData = selectedWeather[0]?.wind?.gust;
+    return gustData !== undefined ? `${gustData} km/h` : '0 km/h';
+  };
+  
   return (
     <div className="details">
       <div className="details-content">
@@ -206,17 +212,17 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
                   <strong>Ground Pressure:</strong> {selectedWeather[0].main.grnd_level} hPa
                 </div>
                 <div>
-                  <FaSnowflake className="weather-icon" style={{ color: 'blue' }} />{' '}
+                  <FaSnowflake className="weather-icon" style={{ color: 'lightblue' }} />{' '}
                   <strong>Snow (3h):</strong>{' '}
                   {getSnowData('3h')}
                 </div>
                 <div>
-                  <FaTint className="weather-icon" style={{ color: 'blue' }} />{' '}
+                  <FaTint className="weather-icon" style={{ color: 'lightblue' }} />{' '}
                   <strong>Rain (3h):</strong>{' '}
                   {getRainData('3h')}
                 </div>
                 <div>
-                  <FaTint className="weather-icon" style={{ color: 'blue' }} />{' '}
+                  <FaTint className="weather-icon" style={{ color: 'lightblue' }} />{' '}
                   <strong>Humidity:</strong> {selectedWeather[0].main.humidity}%
                 </div>
                 <div>
@@ -225,7 +231,7 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
                 </div>
                 <div>
                   <FaWind className="weather-icon" style={{ color: 'lightblue' }} />{' '}
-                  <strong>Wind Gust:</strong> {selectedWeather[0].wind.gust} km/h
+                  <strong>Wind Gust:</strong> {getWindGustData()}
                 </div>
                 <div>
                   <FaWind className="weather-icon" style={{ color: 'lightblue' }} />{' '}
