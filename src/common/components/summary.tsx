@@ -49,10 +49,12 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
         data: [],
         pointRadius: 0,
         fill: true,
-        backgroundColor: '' // This will be set dynamically
+        backgroundColor: '',
       }
     ]
   })
+
+  const [humidityData, setHumidityData] = useState<number[]>([])
 
   const [options] = useState({
     responsive: false,
@@ -60,7 +62,10 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
       x: {
         grid: {
           display: false // Hide x-axis grid lines
-        }
+        },
+        ticks: { 
+          display: false
+        } // Ẩn nhãn giờ trên trục x
       },
       y: {
         grid: {
@@ -89,6 +94,7 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
     }
   })
 
+  
   const customPlugin = {
     id: 'customDataLabels',
     afterDatasetsDraw: (chart: Chart) => {
@@ -96,14 +102,16 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
       chart.data.datasets.forEach((dataset, i) => {
         const meta = chart.getDatasetMeta(i)
         meta.data.forEach((point: any, index: number) => {
-          const value = dataset.data[index] as number
-          ctx.save()
-          ctx.font = '12px Arial'
-          ctx.textAlign = 'center'
-          ctx.textBaseline = 'bottom'
-          ctx.fillStyle = 'black'
-          ctx.fillText(`${value}°`, point.x, point.y - 3)
-          ctx.restore()
+          if (index !== 0) {
+            const value = dataset.data[index] as number
+            ctx.save()
+            ctx.font = '12px Arial'
+            ctx.textAlign = 'center'
+            ctx.textBaseline = 'bottom'
+            ctx.fillStyle = 'black'
+            ctx.fillText(`${value}°`, point.x, point.y - 3)
+            ctx.restore()
+          }
         })
       })
     },
@@ -175,22 +183,64 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
 
   useEffect(() => {
     let bigArray = []
-    bigArray.push(weather)
+    let push1time = true;
+    let has1small = false;
+    let positionWeather;
     for (let i = 0; i < 40; i++) {
-      if (weather5day?.list[i]?.dt > weather?.dt) {
-        bigArray.push(weather5day?.list[i])
-      }
-    }
+      if (push1time) {
+        if (weather5day?.list[i]?.dt > weather?.dt) {
+          positionWeather = i;
+          bigArray.push(weather)
+        }
 
+        else if (!has1small) {
+          has1small = true;
+        }
+        push1time = false
+      }
+
+      bigArray.push(weather5day?.list[i])
+    }
+    
     let temperatureArray = []
     let humidityArray = []
     let hourArray = []
 
+    if (!has1small) {
+      temperatureArray.push(bigArray[0]?.main?.temp)
+      humidityArray.push(bigArray[0]?.main?.humidity)
+      hourArray.push(`${(new Date(bigArray[1]?.dt * 1000).getHours() - 3).toString().padStart(2, '0')}:00`)
+    }
+
     for (let i = 0; i < bigArray.length; i++) {
       temperatureArray.push(bigArray[i]?.main?.temp)
       humidityArray.push(bigArray[i]?.main?.humidity)
-      hourArray.push(`${new Date(bigArray[i]?.dt * 1000).getHours().toString()}:00`)
+      
+      if (i == positionWeather) {
+
+      }
+
+      else {
+
+      }
+      
+      hourArray.push(`${new Date(bigArray[i]?.dt * 1000).getHours().toString().padStart(2, '0')}:${new Date(bigArray[i]?.dt * 1000).getMinutes().toString().padStart(2, '0')}`)
     }
+
+    console.log('positionWeather: ', positionWeather)
+    console.log('selectedWeather: ', selectedWeather)
+    console.log('weather: ', weather)
+    console.log('weather5day: ', weather5day)
+    console.log('temperatureArray: ', temperatureArray)
+    console.log('humidityArray: '   , humidityArray   )
+    console.log('hourArray: '       , hourArray       )
+    console.log('temperatureArray.length: ', temperatureArray.length)
+    console.log('humidityArray.length: '   , humidityArray.length   )
+    console.log('hourArray.length: '       , hourArray.length       )
+    console.log('bigArray: ' , bigArray )
+    console.log('push1time: ', push1time)
+    console.log('has1small: ', has1small)
+
 
     setData({
       labels: hourArray,
@@ -202,31 +252,38 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
           data: temperatureArray,
           pointRadius: 0,
           fill: true,
-          backgroundColor: '' // This will be set dynamically
-        },
-        {
-          label: 'Humidity', // Second dataset
-          borderColor: 'rgba(54,162,235,255)',
-          borderWidth: 1,
-          data: [],
-          pointRadius: 0,
-          fill: true,
-          backgroundColor: 'rgba(54,162,235,0.2)'
+          backgroundColor: '',
         }
       ]
     })
+
+    setHumidityData(humidityArray) // Cập nhật state độ ẩm
   }, [selectedWeather, weather, weather5day])
 
   return (
     <div className='summary-display' ref={contentRef}>
       {data != null && options != null && (
-        <Line
-          data={data}
-          options={options}
-          plugins={[customPlugin]}
-          width={window.innerWidth * 4 / 5} // Set width here
-          height={228} // Set height
-        />
+        <>
+          <Line
+            data={data}
+            options={options}
+            plugins={[customPlugin]}
+            width={window.innerWidth * 4} // Set width here
+            height={228} // Set height
+          />
+
+          <div className='humidity-row'>
+            {humidityData.map((humidity, index) => (
+              <span key={index} className='humidity-text'>{`${humidity}%`}</span>
+            ))}
+          </div>
+
+          <div className='hour-labels'> 
+            {data.labels.map((label, index) => ( 
+              <span key={index} className='hour-text'>{label}</span> 
+            ))} 
+          </div>
+        </>
       )}
     </div>
   )

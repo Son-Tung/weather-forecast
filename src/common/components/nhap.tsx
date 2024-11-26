@@ -9,7 +9,7 @@ import {
   LineElement,
   Title,
   Tooltip,
- Legend,
+  Legend,
   Filler,
   Chart,
   TooltipItem
@@ -26,7 +26,7 @@ interface SummaryProps {
 interface DataState {
   labels: string[]
   datasets: {
-    label: 'Temperature'
+    label: string
     borderColor: string
     borderWidth: number
     data: number[]
@@ -49,10 +49,12 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
         data: [],
         pointRadius: 0,
         fill: true,
-        backgroundColor: '' // This will be set dynamically
+        backgroundColor: '',
       }
     ]
   })
+
+  const [humidityData, setHumidityData] = useState<number[]>([])
 
   const [options] = useState({
     responsive: false,
@@ -102,7 +104,7 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
           ctx.textAlign = 'center'
           ctx.textBaseline = 'bottom'
           ctx.fillStyle = 'black'
-          ctx.fillText(`${value}°`, point.x, point.y - 8)
+          ctx.fillText(`${value}°`, point.x, point.y - 3)
           ctx.restore()
         })
       })
@@ -112,12 +114,65 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
       const dataset = chart.data.datasets[0]
       const gradient = ctx.createLinearGradient(0, 0, 0, chart.height)
 
-      gradient.addColorStop(0, 'rgba(247,149,145,255)') // Top color
-      gradient.addColorStop(0.5, 'rgba(254,243,220,255)') // Middle color
-      gradient.addColorStop(1, 'rgba(255,251,243,255)') // Bottom color
+      // Find the highest temperature in the dataset
+      const validData = dataset.data.filter((value) => value !== null) as number[]
+      const maxTemp = Math.max(...validData)
+      const minTemp = Math.min(...validData)
 
+      gradient.addColorStop(0, getColor(maxTemp)) // Top color    highest to 'rgba(247,149,145,255)' with 40°C
+
+      if (minTemp < 30 && maxTemp > 30) {
+        gradient.addColorStop((maxTemp - 30) / (maxTemp - minTemp), 'rgba(247,149,145,255)') 
+      }
+
+      if (minTemp < 25 && maxTemp > 25) {
+        gradient.addColorStop((maxTemp - 25) / (maxTemp - minTemp), 'rgba(254,243,220,255)') 
+      }
+
+      if (minTemp < 20 && maxTemp > 20) {
+        gradient.addColorStop((maxTemp - 20) / (maxTemp - minTemp), 'rgba(255,251,243,255)') 
+      }
+
+      gradient.addColorStop(1, getColor(minTemp)) // Bottom color rgba(255,251,243,255)
       dataset.backgroundColor = gradient
     }
+  }
+
+  function getColor(temp: number) {
+    let color: string;
+
+    if      (temp >= 30) { color = 'rgba(247,149,145,255)'; }
+    else if (temp == 25) { color = 'rgba(254,243,220,255)'; }
+    else if (temp <= 20) { color = 'rgba(255,251,243,255)'; }
+
+    else {
+      const startColor = { r: 255, g: 251, b: 243, a: 255 }
+      const midColor   = { r: 254, g: 243, b: 220, a: 255 }
+      const endColor   = { r: 247, g: 149, b: 145, a: 255 }
+
+      let ratio = (temp - 25) / 5  
+      let r, g, b, a, r2, g2, b2, a2: number;
+      if (ratio < 0) {
+        r2 = midColor.r - startColor.r
+        g2 = midColor.g - startColor.g
+        b2 = midColor.b - startColor.b
+        a2 = midColor.a - startColor.a
+      }
+
+      else {
+        r2 = endColor.r - midColor.r
+        g2 = endColor.g - midColor.g
+        b2 = endColor.b - midColor.b
+        a2 = endColor.a - midColor.a
+      }
+
+      r = Math.round(midColor.r + ratio * r2)
+      g = Math.round(midColor.g + ratio * g2)
+      b = Math.round(midColor.b + ratio * b2)
+      a = Math.round(midColor.a + ratio * a2)
+      color = `rgba(${r},${g},${b},${a})`;
+    }
+    return color;
   }
 
   useEffect(() => {
@@ -149,22 +204,31 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
           data: temperatureArray,
           pointRadius: 0,
           fill: true,
-          backgroundColor: '' // This will be set dynamically
+          backgroundColor: '',
         }
       ]
     })
+
+    setHumidityData(humidityArray) // Cập nhật state độ ẩm
   }, [selectedWeather, weather, weather5day])
 
   return (
     <div className='summary-display' ref={contentRef}>
       {data != null && options != null && (
-        <Line
-          data={data}
-          options={options}
-          plugins={[customPlugin]}
-          width={window.innerWidth - 30} // Set width here
-          height={238} // Set height
-        />
+        <>
+          <Line
+            data={data}
+            options={options}
+            plugins={[customPlugin]}
+            width={window.innerWidth * 4 / 5} // Set width here
+            height={228} // Set height
+          />
+          <div className='humidity-row'>
+            {humidityData.map((humidity, index) => (
+              <span key={index} className='humidity-text'>{`${humidity}%`}</span>
+            ))}
+          </div>
+        </>
       )}
     </div>
   )
