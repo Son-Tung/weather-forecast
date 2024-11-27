@@ -22,41 +22,39 @@ interface MoreDetailsProps {
   weather: any;
 }
 
+interface WeatherCondition {
+  id: number;
+  main: string;
+  description: string;
+  icon: string;
+}
+
+interface MainWeatherData {
+  temp: number;
+  feels_like: number;
+  temp_min: number;
+  temp_max: number;
+  pressure: number;
+  humidity: number;
+  sea_level?: number;
+  grnd_level?: number;
+}
+
+interface Wind {
+  speed: number;
+  deg: number;
+  gust: number;
+}
+
 interface WeatherData {
   timezone: number;
-  weather: [
-    {
-      id: number;
-      main: string;
-      description: string;
-      icon: string;
-    }
-  ];
-  main: {
-    temp: number;
-    feels_like: number;
-    temp_min: number;
-    temp_max: number;
-    pressure: number;
-    humidity: number;
-    sea_level?: number;
-    grnd_level?: number;
-  };
+  weather: [WeatherCondition];
+  main: MainWeatherData;
   visibility: number;
-  wind: {
-    speed: number;
-    deg: number;
-    gust: number;
-  };
-  clouds: {
-    all: number;
-  };
-  rain?: {
-    '3h'?: number;
-  };
-  snow?: {
-    '3h'?: number;
-  };
+  wind: Wind;
+  clouds: { all: number };
+  rain?: { '3h'?: number };
+  snow?: { '3h'?: number };
   dt: number;
   sys: {
     country: string;
@@ -71,14 +69,62 @@ interface WeatherData {
   cod: number;
 }
 
+// Các hàm helper nhỏ để khởi tạo từng phần
+const getInitialWeatherCondition = (): WeatherCondition => ({
+  id: 0,
+  main: '',
+  description: '',
+  icon: ''
+});
+
+const getInitialMainWeatherData = (): MainWeatherData => ({
+  temp: 0,
+  feels_like: 0,
+  temp_min: 0,
+  temp_max: 0,
+  pressure: 0,
+  humidity: 0,
+  sea_level: 0,
+  grnd_level: 0
+});
+
+const getInitialWind = (): Wind => ({
+  speed: 0,
+  deg: 0,
+  gust: 0
+});
+
+const getInitialWeatherData = (): WeatherData => ({
+  timezone: 0,
+  weather: [getInitialWeatherCondition()],
+  main: getInitialMainWeatherData(),
+  visibility: 0,
+  wind: getInitialWind(),
+  clouds: { all: 0 },
+  rain: { '3h': 0 },
+  snow: { '3h': 0 },
+  dt: 0,
+  sys: {
+    country: '',
+    sunrise: 0,
+    sunset: 0
+  },
+  coord: {
+    lat: 0,
+    lon: 0
+  },
+  name: '',
+  cod: 0
+});
+
 const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
-  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+  const [weatherData, setWeatherData] = useState<WeatherData>(getInitialWeatherData());
 
   useEffect(() => {
     if (selectedWeather.length === 0) {
-      setWeatherData(null); // Hoặc có thể giữ weatherData ở trạng thái ban đầu nếu cần
+      setWeatherData(getInitialWeatherData());
     } else {
-      setWeatherData(selectedWeather[0]); // Cập nhật dữ liệu từ selectedWeather
+      setWeatherData(selectedWeather[0]);
     }
   }, [selectedWeather]);
 
@@ -119,13 +165,13 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
 
   // Function to get rain data and default to 0 if no data
   const getRainData = (rainKey: '3h') => {
-    const rainData = selectedWeather[0]?.rain?.[rainKey];
+    const rainData = weatherData?.rain?.[rainKey];
     return rainData ? `${rainData} mm` : '0 mm';
   };
 
   // Function to get snow data and default to 0 if no data
   const getSnowData = (snowKey: '3h') => {
-    const snowData = selectedWeather[0]?.snow?.[snowKey];
+    const snowData = weatherData?.snow?.[snowKey];
     return snowData ? `${snowData} mm` : '0 mm';
   };
 
