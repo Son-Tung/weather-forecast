@@ -161,12 +161,14 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   }, [currentSlide, slidesToShow, width])
 
   const groupedByDay = weather5day?.list?.reduce((acc: any, curr: any) => {
-    const date = new Date(curr.dt * 1000).toLocaleDateString('en-US', {
-      weekday: 'long',
-      day: 'numeric'
-    })
+    const dateObj = new Date(curr.dt * 1000)
+    const day = dateObj.getDate()
+    const month = dateObj.toLocaleDateString('en-US', { month: 'short' })
+    const weekday = dateObj.toLocaleDateString('en-US', { weekday: 'long' })
+    const date = `${day} ${weekday}`
 
-    const hour = new Date(curr.dt * 1000).getHours()
+    const hour = dateObj.getHours()
+
     if (hour >= 0 && hour <= 21) {
       if (!acc[date]) {
         acc[date] = {
@@ -174,7 +176,8 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
           temp_min: curr.main.temp_min,
           weather: curr.weather[0],
           humidity: curr.main.humidity,
-          date: new Date(curr.dt * 1000)
+          date: dateObj,
+          displayDate: day === 1 ? `${month} ${day} ${weekday}` : `${day} ${weekday}`
         }
       } else {
         acc[date].temp_max = Math.max(acc[date].temp_max, curr.main.temp_max)
@@ -219,11 +222,11 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
             return (
               <div
                 key={index}
-                aria-label={`Weather forecast for ${day}`}
+                aria-label={`Dự báo thời tiết cho ${day}`}
                 className={`${itemSelectedIdx === index ? 'activeCard' : ''} five-item`}
                 onClick={() => handleItemClick(index, dateGMT, weather, weather5day)}
               >
-                <p className='current-time'>{index === 0 ? 'Today' : day}</p>
+                <p className='current-time'>{index === 0 ? 'Today' : dayData.displayDate}</p>
                 <div className='current-description'>
                   <div className='left'>
                     <img

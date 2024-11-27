@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 
 interface WeatherAlertProps {
   city: string
+  weather: CurrentWeather | null
+  weather5Day: { list: Forecast[] } | null
 }
 
 interface CurrentWeather {
   dt: number
-
   weather: {
     main: string
     description: string
@@ -29,53 +29,81 @@ interface Forecast {
   }[]
 }
 
-const WeatherAlert: React.FC<WeatherAlertProps> = ({ city }) => {
-  const apiKey = '4f2141f03c148886930241854489683e'
+const WeatherAlert: React.FC<WeatherAlertProps> = ({ city, weather, weather5Day }) => {
   const [alert, setAlert] = useState<string>('')
-  const [, setCurrentWeather] = useState<CurrentWeather | null>(null)
+
+  const getAlertType = (forecast: Forecast) => {
+    const conditions = [
+      { condition: forecast?.main?.temp > 30, alert: 'High Temperature' },
+      { condition: forecast?.main?.temp < 0, alert: 'Low Temperature' },
+      { condition: forecast?.main?.humidity > 80, alert: 'High Humidity' },
+      { condition: forecast?.wind?.speed > 10, alert: 'Strong Wind' },
+      { condition: forecast?.weather[0]?.main === 'Rain', alert: 'Rain' },
+      { condition: forecast?.weather[0]?.main === 'Snow', alert: 'Snow' },
+      { condition: forecast?.weather[0]?.main === 'Thunderstorm', alert: 'Thunderstorm' },
+      { condition: forecast?.weather[0]?.main === 'Fog', alert: 'Fog' },
+      { condition: forecast?.main?.temp > 40, alert: 'Extreme Heat' },
+      { condition: forecast?.main?.temp < -10, alert: 'Extreme Cold' },
+      { condition: forecast?.weather[0]?.main === 'Extreme', alert: 'Extreme Weather' },
+      { condition: forecast?.weather[0]?.main === 'Drizzle', alert: 'Drizzle' },
+      { condition: forecast?.weather[0]?.main === 'Mist', alert: 'Mist' },
+      { condition: forecast?.main?.temp > 35, alert: 'Hot Weather' },
+      { condition: forecast?.main?.temp < 5, alert: 'Cold Weather' },
+      { condition: forecast?.weather[0]?.description.includes('heavy rain'), alert: 'Heavy Rain' },
+      { condition: forecast?.weather[0]?.main === 'Hurricane', alert: 'Hurricane' },
+      { condition: forecast?.wind?.speed > 15, alert: 'Very Strong Wind' }
+    ]
+
+    for (const { condition, alert } of conditions) {
+      if (condition) return alert
+    }
+    return null
+  }
 
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
-        const currentWeatherResponse = await axios.get<CurrentWeather>(
-          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
-        )
-        const currentWeather = currentWeatherResponse.data
-        setCurrentWeather(currentWeather)
+        if (!weather || !weather5Day || !weather5Day.list) {
+          setAlert(`City not found: ${city}`)
+          return
+        }
 
-        const forecastResponse = await axios.get<{ list: Forecast[] }>(
-          `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`
-        )
-        const forecastList = forecastResponse.data.list
+        const currentWeather = weather
+        const forecastList = weather5Day.list
 
-        const alerts = forecastList.filter(
-          (forecast) =>
-            forecast.main.temp > 30 ||
-            forecast.main.temp < 0 ||
-            forecast.main.humidity > 80 ||
-            forecast.wind.speed > 10 ||
-            forecast.weather[0].main === 'Rain' ||
-            forecast.weather[0].main === 'Snow' ||
-            forecast.weather[0].main === 'Thunderstorm'
-        )
+        const currentTime = currentWeather.dt * 1000
+        const endTime = currentTime + 24 * 60 * 60 * 1000
 
-        if (alerts.length > 0) {
-          alerts.sort((a, b) => a.dt - b.dt)
-          const nearestAlert = alerts[0]
-          const currentTime = currentWeather.dt * 1000
+        const currentAlert = getAlertType({
+          dt: currentWeather?.dt,
+          main: { temp: currentWeather.weather[0]?.main === 'Clear' ? 20 : 0, humidity: 50 },
+          wind: { speed: 5 },
+          weather: currentWeather?.weather
+        })
+
+        const futureAlerts = forecastList
+          .filter((forecast) => forecast.dt * 1000 <= endTime)
+          .map((forecast) => ({ ...forecast, alertType: getAlertType(forecast) }))
+          .filter((forecast) => forecast.alertType)
+
+        let alertMessage = `${city}:  ${currentAlert || currentWeather.weather[0].description}`
+
+        if (futureAlerts.length > 0) {
+          futureAlerts.sort((a, b) => a.dt - b.dt)
+          const nearestAlert = futureAlerts[0]
           const alertTime = nearestAlert.dt * 1000
           const hoursUntilAlert = Math.round((alertTime - currentTime) / (1000 * 60 * 60))
-          setAlert(` ${city}: ${hoursUntilAlert} hours to ${nearestAlert.weather[0].description}`)
-        } else {
-          setAlert(`There are no weather warnings for ${city} in the next 24 hours.`)
+          alertMessage += `. ${hoursUntilAlert} hours to ${nearestAlert.alertType}`
         }
+
+        setAlert(alertMessage)
       } catch (error) {
-        console.error('Error fetching weather data:', error)
+        console.error('Error processing weather data:', error)
       }
     }
 
     fetchWeatherData()
-  }, [city, apiKey])
+  }, [city, weather, weather5Day])
 
   return <div className='alert'>{alert && <p>{alert}</p>}</div>
 }
