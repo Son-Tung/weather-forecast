@@ -186,6 +186,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   }, {})
 
   const days = Object.keys(groupedByDay || {})
+
   function handleItemClick(index: number, dateGMT: any, weather: any, weather5day: any) {
     if (itemSelectedIdx != index) {
       const newState = [182.5, 182.5, 182.5, 182.5, 182.5]
@@ -212,6 +213,9 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
           {days.slice(0, 5).map((day, index) => {
             const dayData = groupedByDay[day]
             let dateGMT = groupedByDay[day]?.date
+            let description = dayData?.weather?.description
+            let capitalizedDescription = description ? description.charAt(0).toUpperCase() + description.slice(1) : ''
+
             return (
               <div
                 key={index}
@@ -219,7 +223,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
                 className={`${itemSelectedIdx === index ? 'activeCard' : ''} five-item`}
                 onClick={() => handleItemClick(index, dateGMT, weather, weather5day)}
               >
-                <p className='current-time'>{day}</p>
+                <p className='current-time'>{index === 0 ? 'Today' : day}</p>
                 <div className='current-description'>
                   <div className='left'>
                     <img
@@ -233,7 +237,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
                     </div>
                   </div>
                   <div className='right'>
-                    <p>{dayData?.weather?.description}</p>
+                    <p>{capitalizedDescription}</p>
                     <p>{Math.ceil(dayData?.humidity)}%</p>
                   </div>
                 </div>
@@ -241,7 +245,6 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
             )
           })}
         </div>
-
         <button className='five-day-button-left' onClick={prevSlide}>
           <svg
             xmlns='http://www.w3.org/2000/svg'
