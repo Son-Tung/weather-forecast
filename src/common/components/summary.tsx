@@ -60,27 +60,20 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
     responsive: false,
     scales: {
       x: {
-        grid: {
-          display: false // Hide x-axis grid lines
-        },
-        ticks: { 
-          display: false
-        } // Ẩn nhãn giờ trên trục x
+        grid:  { display: false },
+        ticks: { display: false }
       },
       y: {
         grid: {
-          display: false // Hide y-axis grid lines
+          display: false, 
+          drawOnChartArea: false,
         },
-        display: false // Hide y-axis
+        display: false
       }
     },
     plugins: {
-      legend: {
-        display: false
-      },
-      title: {
-        display: false // Hide title
-      },
+      legend: { display: false },
+      title:  { display: false },
       tooltip: {
         callbacks: {
           label: function (context: TooltipItem<'line'>) {
@@ -88,8 +81,11 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
           }
         }
       },
-      filler: {
-        propagate: false
+      filler: { propagate: false }
+    },
+    layout: {
+      padding: {
+        bottom: 0 // Remove bottom padding
       }
     }
   })
@@ -181,6 +177,15 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
     return color;
   }
 
+  function getHour(epoch: number) {
+    const hours = new Date(epoch * 1000).getHours()
+    if (hours <= 12) {
+      return `${hours} AM`
+    } else {
+      return `${hours - 12} PM`
+    }
+  }
+
   useEffect(() => {
     let bigArray = []
     let push1time = true;
@@ -208,24 +213,23 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
 
     if (!has1small) {
       temperatureArray.push(bigArray[0]?.main?.temp)
-      humidityArray.push(bigArray[0]?.main?.humidity)
-      hourArray.push(`${(new Date(bigArray[1]?.dt * 1000).getHours() - 3).toString().padStart(2, '0')}:00`)
     }
 
     for (let i = 0; i < bigArray.length; i++) {
       temperatureArray.push(bigArray[i]?.main?.temp)
-      humidityArray.push(bigArray[i]?.main?.humidity)
-      
-      if (i == positionWeather) {
-
-      }
-
-      else {
-
+      if (!(has1small && i == 0)) {
+        humidityArray.push(bigArray[i]?.main?.humidity)
       }
       
-      hourArray.push(`${new Date(bigArray[i]?.dt * 1000).getHours().toString().padStart(2, '0')}:${new Date(bigArray[i]?.dt * 1000).getMinutes().toString().padStart(2, '0')}`)
+      if ((has1small && i == 1) || (!has1small && i == 0)) {
+        hourArray.push('Now')
+      }
+
+      else if ((has1small && i > 1 ) || !has1small) {
+        hourArray.push(`${getHour(bigArray[i]?.dt)}`)
+      }
     }
+
 
     console.log('positionWeather: ', positionWeather)
     console.log('selectedWeather: ', selectedWeather)
@@ -264,21 +268,29 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
     <div className='summary-display' ref={contentRef}>
       {data != null && options != null && (
         <>
-          <Line
-            data={data}
-            options={options}
-            plugins={[customPlugin]}
-            width={window.innerWidth * 4} // Set width here
-            height={228} // Set height
-          />
-
-          <div className='humidity-row'>
-            {humidityData.map((humidity, index) => (
-              <span key={index} className='humidity-text'>{`${humidity}%`}</span>
-            ))}
+          <div className='chart-row'>
+            <Line
+              data={data}
+              options={options}
+              plugins={[customPlugin]}
+              width={window.innerWidth * 4} // Set width here
+              height={177} // Set height
+            />
           </div>
 
-          <div className='hour-labels'> 
+          <div className='humidity-row'>
+            <span className='humidity-title'>
+              <div>Humidity</div>
+              <div>%</div>
+            </span>
+            <div className = 'humidity-array'>
+              {humidityData.map((humidity, index) => (
+                <span key={index} className='humidity-text'>{`${humidity}%`}</span>
+              ))}
+            </div>
+          </div>
+
+          <div className='hour-row'> 
             {data.labels.map((label, index) => ( 
               <span key={index} className='hour-text'>{label}</span> 
             ))} 
