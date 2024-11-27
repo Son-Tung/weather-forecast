@@ -1,7 +1,6 @@
 // Định nghĩa đường dẫn của toàn bộ Application
 import { Route, Routes } from 'react-router-dom'
 import { APP_PATH } from '../configs/enum'
-
 import Dashboard from '../../modules/dashboard/pages/Dashboard'
 import MainScreen from '../layouts/MainScreen'
 
