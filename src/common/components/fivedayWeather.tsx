@@ -136,7 +136,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
   }
 
   function getSameVariable(variable: any) {
-    return variable
+    return JSON.parse(JSON.stringify(variable))
   }
 
   useEffect(() => {
