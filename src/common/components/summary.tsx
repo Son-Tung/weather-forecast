@@ -18,9 +18,9 @@ import {
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler)
 
 interface SummaryProps {
-  selectedWeather: any[]
   weather: any
   weather5day: any
+  dateWeather: any
 }
 
 interface DataState {
@@ -36,8 +36,23 @@ interface DataState {
   }[]
 }
 
-const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day }) => {
+const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateWeather}) => {
   const contentRef = useRef<HTMLDivElement | null>(null)
+  const [widthBigChart, setWidthBigChart] = useState(0);
+  const [width1Line, setWidth1Line] = useState(0);
+  const [indexDate, setIndexDate] = useState<number[]>([-1, -1, -1 , -1, -1])
+
+  useEffect(() => {
+    if (contentRef.current) {
+      let widthSummary = contentRef.current.clientWidth;
+      setWidthBigChart(widthSummary * 5.125);
+      setWidth1Line(widthSummary * 5.125 / 41);
+    }
+  }, [contentRef]);
+
+  useEffect(() => {
+    console.log('dateWeather: ', dateWeather)
+  }, [dateWeather]);
 
   const [data, setData] = useState<DataState>({
     labels: [],
@@ -55,6 +70,7 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
   })
 
   const [humidityData, setHumidityData] = useState<number[]>([])
+  const [hourData, setHourData] = useState<String[]>([])
 
   const [options] = useState({
     responsive: false,
@@ -98,7 +114,7 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
       chart.data.datasets.forEach((dataset, i) => {
         const meta = chart.getDatasetMeta(i)
         meta.data.forEach((point: any, index: number) => {
-          if (index !== 0) {
+          if (index > 0 && index < 41) {
             const value = dataset.data[index] as number
             ctx.save()
             ctx.font = '12px Arial'
@@ -190,11 +206,9 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
     let bigArray = []
     let push1time = true;
     let has1small = false;
-    let positionWeather;
     for (let i = 0; i < 40; i++) {
       if (push1time) {
         if (weather5day?.list[i]?.dt > weather?.dt) {
-          positionWeather = i;
           bigArray.push(weather)
         }
 
@@ -208,46 +222,67 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
     }
     
     let temperatureArray = []
-    let humidityArray = []
-    let hourArray = []
+    let humidityArray    = []
+    let hourArrayChart   = []
+    let hourArrayDisplay = []
 
-    if (!has1small) {
-      temperatureArray.push(bigArray[0]?.main?.temp)
-    }
+    let checkDay         = []
 
-    for (let i = 0; i < bigArray.length; i++) {
+    for (let i = 0; i < bigArray.length; i++) { 
       temperatureArray.push(bigArray[i]?.main?.temp)
-      if (!(has1small && i == 0)) {
+      if ((has1small && i > 0) || (!has1small && i < 40)) {
         humidityArray.push(bigArray[i]?.main?.humidity)
       }
+
+      hourArrayChart.push(bigArray[i]?.dt)
       
       if ((has1small && i == 1) || (!has1small && i == 0)) {
-        hourArray.push('Now')
+        hourArrayDisplay.push('Now')
       }
 
-      else if ((has1small && i > 1 ) || !has1small) {
-        hourArray.push(`${getHour(bigArray[i]?.dt)}`)
+      else {
+        hourArrayDisplay.push(`${getHour(bigArray[i]?.dt)}`)
       }
     }
 
+    for (let i = 0; i < hourArrayChart.length; i++) {
+      // dang viet code do
+    }
+    
+    if (has1small) {
+      temperatureArray.push(bigArray[40]?.main?.temp)
+      hourArrayChart.push(bigArray[40]?.dt)
+      hourArrayDisplay.shift();
+    }
 
-    console.log('positionWeather: ', positionWeather)
-    console.log('selectedWeather: ', selectedWeather)
-    console.log('weather: ', weather)
-    console.log('weather5day: ', weather5day)
-    console.log('temperatureArray: ', temperatureArray)
-    console.log('humidityArray: '   , humidityArray   )
-    console.log('hourArray: '       , hourArray       )
+    else {
+      temperatureArray.unshift(bigArray[0]?.main?.temp)
+      hourArrayChart.unshift(bigArray[0]?.dt)
+      hourArrayDisplay.pop();
+    }
+    
+    /*
+    console.log('weather: '                , weather                )
+    console.log('weather5day: '            , weather5day            )
+    console.log('temperatureArray: '       , temperatureArray       )
+    console.log('humidityArray: '          , humidityArray          )
+    
     console.log('temperatureArray.length: ', temperatureArray.length)
     console.log('humidityArray.length: '   , humidityArray.length   )
-    console.log('hourArray.length: '       , hourArray.length       )
-    console.log('bigArray: ' , bigArray )
-    console.log('push1time: ', push1time)
-    console.log('has1small: ', has1small)
+    
+    console.log('bigArray: '               , bigArray               )
+    console.log('push1time: '              , push1time              )
+    console.log('has1small: '              , has1small              )
+    */
+
+    console.log('hourArrayChart: '         , hourArrayChart         )
+    console.log('hourArrayDisplay: '       , hourArrayDisplay       )
+    console.log('hourArrayChart.length: '  , hourArrayChart.length  )
+    console.log('hourArrayDisplay.length: ', hourArrayDisplay.length)
 
 
     setData({
-      labels: hourArray,
+      labels: hourArrayChart,
       datasets: [
         {
           label: 'Temperature',
@@ -262,18 +297,19 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
     })
 
     setHumidityData(humidityArray) // Cập nhật state độ ẩm
-  }, [selectedWeather, weather, weather5day])
+    setHourData(hourArrayDisplay) // Cập nhật state giờ hiển thị
+  }, [weather, weather5day])
 
   return (
     <div className='summary-display' ref={contentRef}>
-      {data != null && options != null && (
+      {contentRef != null && data != null && widthBigChart != 0 && width1Line != 0 &&(
         <>
           <div className='chart-row'>
-            <Line
+            <Line style={{ transform: `translateX(-${width1Line / 2}px)` }}
               data={data}
               options={options}
               plugins={[customPlugin]}
-              width={window.innerWidth * 4} // Set width here
+              width={widthBigChart} // Set width here
               height={177} // Set height
             />
           </div>
@@ -291,8 +327,8 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
           </div>
 
           <div className='hour-row'> 
-            {data.labels.map((label, index) => ( 
-              <span key={index} className='hour-text'>{label}</span> 
+            {hourData.map((hour, index) => ( 
+              <span key={index} className='hour-text'>{hour}</span> 
             ))} 
           </div>
         </>
