@@ -13,9 +13,10 @@ interface WeatherMapProps {
   coord: CoordProps
   weather: any
   city: string
+  weather5day: any
 }
 
-const WeatherMap = ({ coord, weather, city }: WeatherMapProps) => {
+const WeatherMap = ({ coord, weather, city, weather5day }: WeatherMapProps) => {
   const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY || '4f2141f03c148886930241854489683e'
   const mapRef = useRef<LeafletMap | null>(null)
   const [mapType, setMapType] = useState('temperature')
@@ -160,7 +161,11 @@ const WeatherMap = ({ coord, weather, city }: WeatherMapProps) => {
               Temperature: {weather?.main?.temp}°C
             </Popup>
           </Marker>
-          <WeatherAlert city={city} />
+          <WeatherAlert
+            city={city}
+            weather={weather || { dt: 0, weather: [] }}
+            weather5Day={weather5day || { list: [] }}
+          />
         </MapContainer>
       </div>
     </div>
