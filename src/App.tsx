@@ -18,6 +18,7 @@ function App() {
   const [weather5day, setWeather5day] = useState<any>(null)
   const [selectedWeather, setSelectedWeather] = useState<any[]>([])
   const [geoData, setGeoData] = useState(null)
+  const [dateWeather, setDateWeather] = useState<any>(null)
 
   const getDateWithoutTime = (date: Date): Date => {
     const year = date.getFullYear()
@@ -53,7 +54,7 @@ function App() {
           weatherFilter.push(getWeather)
         }
       })
-
+      setDateWeather(date)
       setSelectedWeather(weatherFilter)
     } catch (error) {}
   }
@@ -61,7 +62,7 @@ function App() {
   return (
     <>
       <Router>
-        <div className='App'>
+        <div className='total-container'>
           <Header
             city={city}
             setCity={setCity}
@@ -80,6 +81,7 @@ function App() {
                   selectedWeather={selectedWeather}
                   city={city}
                   geoData={geoData}
+                  dateWeather={dateWeather}
                 />
               }
             />
