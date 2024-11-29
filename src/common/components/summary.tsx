@@ -26,7 +26,7 @@ interface SummaryProps {
 interface DataState {
   labels: string[]
   datasets: {
-    label: 'Temperature'
+    label: string
     borderColor: string
     borderWidth: number
     data: number[]
@@ -49,33 +49,31 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
         data: [],
         pointRadius: 0,
         fill: true,
-        backgroundColor: '' // This will be set dynamically
+        backgroundColor: '',
       }
     ]
   })
+
+  const [humidityData, setHumidityData] = useState<number[]>([])
 
   const [options] = useState({
     responsive: false,
     scales: {
       x: {
-        grid: {
-          display: false // Hide x-axis grid lines
-        }
+        grid:  { display: false },
+        ticks: { display: false }
       },
       y: {
         grid: {
-          display: false // Hide y-axis grid lines
+          display: false, 
+          drawOnChartArea: false,
         },
-        display: false // Hide y-axis
+        display: false
       }
     },
     plugins: {
-      legend: {
-        display: false
-      },
-      title: {
-        display: false // Hide title
-      },
+      legend: { display: false },
+      title:  { display: false },
       tooltip: {
         callbacks: {
           label: function (context: TooltipItem<'line'>) {
@@ -83,12 +81,16 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
           }
         }
       },
-      filler: {
-        propagate: false
+      filler: { propagate: false }
+    },
+    layout: {
+      padding: {
+        bottom: 0 // Remove bottom padding
       }
     }
   })
 
+  
   const customPlugin = {
     id: 'customDataLabels',
     afterDatasetsDraw: (chart: Chart) => {
@@ -96,14 +98,16 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
       chart.data.datasets.forEach((dataset, i) => {
         const meta = chart.getDatasetMeta(i)
         meta.data.forEach((point: any, index: number) => {
-          const value = dataset.data[index] as number
-          ctx.save()
-          ctx.font = '12px Arial'
-          ctx.textAlign = 'center'
-          ctx.textBaseline = 'bottom'
-          ctx.fillStyle = 'black'
-          ctx.fillText(`${value}°`, point.x, point.y - 3)
-          ctx.restore()
+          if (index !== 0) {
+            const value = dataset.data[index] as number
+            ctx.save()
+            ctx.font = '12px Arial'
+            ctx.textAlign = 'center'
+            ctx.textBaseline = 'bottom'
+            ctx.fillStyle = 'black'
+            ctx.fillText(`${value}°`, point.x, point.y - 3)
+            ctx.restore()
+          }
         })
       })
     },
@@ -117,81 +121,130 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
       const maxTemp = Math.max(...validData)
       const minTemp = Math.min(...validData)
 
-      let color1
-      if (maxTemp <= 25) {
-        color1 = 'rgba(255,251,243,255)'
-      } else {
-        if (maxTemp <= 30) {
-          color1 = interpolateColor(maxTemp)
-        } else {
-          color1 = 'rgba(247,149,145,255)'
-        }
+      gradient.addColorStop(0, getColor(maxTemp)) // Top color    highest to 'rgba(247,149,145,255)' with 40°C
 
-        gradient.addColorStop( 1 - (25 - minTemp) / (maxTemp - minTemp) , 'rgba(254,243,220,255)') // Mid color    rgba(247,149,145,255)
+      if (minTemp < 30 && maxTemp > 30) {
+        gradient.addColorStop((maxTemp - 30) / (maxTemp - minTemp), 'rgba(247,149,145,255)') 
       }
 
-      gradient.addColorStop(0, color1) // Top color    highest to 'rgba(247,149,145,255)' with 40°C
-      gradient.addColorStop(1, 'rgba(255,251,243,255)') // Bottom color rgba(255,251,243,255)
+      if (minTemp < 25 && maxTemp > 25) {
+        gradient.addColorStop((maxTemp - 25) / (maxTemp - minTemp), 'rgba(254,243,220,255)') 
+      }
+
+      if (minTemp < 20 && maxTemp > 20) {
+        gradient.addColorStop((maxTemp - 20) / (maxTemp - minTemp), 'rgba(255,251,243,255)') 
+      }
+
+      gradient.addColorStop(1, getColor(minTemp)) // Bottom color rgba(255,251,243,255)
       dataset.backgroundColor = gradient
     }
   }
 
   function getColor(temp: number) {
-    if (temp <= 20) {
-      return 'rgba(255,251,243,255)'
-    }
+    let color: string;
 
-    else if (temp >= 30) {
-      return 'rgba(247,149,145,255)'
-    }
+    if      (temp >= 30) { color = 'rgba(247,149,145,255)'; }
+    else if (temp == 25) { color = 'rgba(254,243,220,255)'; }
+    else if (temp <= 20) { color = 'rgba(255,251,243,255)'; }
 
     else {
-      const startColor = { r: 254, g: 243, b: 220, a: 255 }
-      const endColor = { r: 247, g: 149, b: 145, a: 255 }
+      const startColor = { r: 255, g: 251, b: 243, a: 255 }
+      const midColor   = { r: 254, g: 243, b: 220, a: 255 }
+      const endColor   = { r: 247, g: 149, b: 145, a: 255 }
 
-      const ratio = (temp - 20) / (30 - 20)
+      let ratio = (temp - 25) / 5  
+      let r, g, b, a, r2, g2, b2, a2: number;
+      if (ratio < 0) {
+        r2 = midColor.r - startColor.r
+        g2 = midColor.g - startColor.g
+        b2 = midColor.b - startColor.b
+        a2 = midColor.a - startColor.a
+      }
 
-      const r = Math.round(startColor.r + ratio * (endColor.r - startColor.r))
-      const g = Math.round(startColor.g + ratio * (endColor.g - startColor.g))
-      const b = Math.round(startColor.b + ratio * (endColor.b - startColor.b))
-      const a = Math.round(startColor.a + ratio * (endColor.a - startColor.a))
+      else {
+        r2 = endColor.r - midColor.r
+        g2 = endColor.g - midColor.g
+        b2 = endColor.b - midColor.b
+        a2 = endColor.a - midColor.a
+      }
 
-      return `rgba(${r},${g},${b},${a})`
+      r = Math.round(midColor.r + ratio * r2)
+      g = Math.round(midColor.g + ratio * g2)
+      b = Math.round(midColor.b + ratio * b2)
+      a = Math.round(midColor.a + ratio * a2)
+      color = `rgba(${r},${g},${b},${a})`;
     }
+    return color;
   }
 
-  function interpolateColor(temp: number) {
-    const startColor = { r: 254, g: 243, b: 220, a: 255 }
-    const endColor = { r: 247, g: 149, b: 145, a: 255 }
-
-    const ratio = (temp - 25) / (30 - 25)
-
-    const r = Math.round(startColor.r + ratio * (endColor.r - startColor.r))
-    const g = Math.round(startColor.g + ratio * (endColor.g - startColor.g))
-    const b = Math.round(startColor.b + ratio * (endColor.b - startColor.b))
-    const a = Math.round(startColor.a + ratio * (endColor.a - startColor.a))
-
-    return `rgba(${r},${g},${b},${a})`
+  function getHour(epoch: number) {
+    const hours = new Date(epoch * 1000).getHours()
+    if (hours <= 12) {
+      return `${hours} AM`
+    } else {
+      return `${hours - 12} PM`
+    }
   }
 
   useEffect(() => {
     let bigArray = []
-    bigArray.push(weather)
+    let push1time = true;
+    let has1small = false;
+    let positionWeather;
     for (let i = 0; i < 40; i++) {
-      if (weather5day?.list[i]?.dt > weather?.dt) {
-        bigArray.push(weather5day?.list[i])
-      }
-    }
+      if (push1time) {
+        if (weather5day?.list[i]?.dt > weather?.dt) {
+          positionWeather = i;
+          bigArray.push(weather)
+        }
 
+        else if (!has1small) {
+          has1small = true;
+        }
+        push1time = false
+      }
+
+      bigArray.push(weather5day?.list[i])
+    }
+    
     let temperatureArray = []
     let humidityArray = []
     let hourArray = []
 
+    if (!has1small) {
+      temperatureArray.push(bigArray[0]?.main?.temp)
+    }
+
     for (let i = 0; i < bigArray.length; i++) {
       temperatureArray.push(bigArray[i]?.main?.temp)
-      humidityArray.push(bigArray[i]?.main?.humidity)
-      hourArray.push(`${new Date(bigArray[i]?.dt * 1000).getHours().toString()}:00`)
+      if (!(has1small && i == 0)) {
+        humidityArray.push(bigArray[i]?.main?.humidity)
+      }
+      
+      if ((has1small && i == 1) || (!has1small && i == 0)) {
+        hourArray.push('Now')
+      }
+
+      else if ((has1small && i > 1 ) || !has1small) {
+        hourArray.push(`${getHour(bigArray[i]?.dt)}`)
+      }
     }
+
+
+    console.log('positionWeather: ', positionWeather)
+    console.log('selectedWeather: ', selectedWeather)
+    console.log('weather: ', weather)
+    console.log('weather5day: ', weather5day)
+    console.log('temperatureArray: ', temperatureArray)
+    console.log('humidityArray: '   , humidityArray   )
+    console.log('hourArray: '       , hourArray       )
+    console.log('temperatureArray.length: ', temperatureArray.length)
+    console.log('humidityArray.length: '   , humidityArray.length   )
+    console.log('hourArray.length: '       , hourArray.length       )
+    console.log('bigArray: ' , bigArray )
+    console.log('push1time: ', push1time)
+    console.log('has1small: ', has1small)
+
 
     setData({
       labels: hourArray,
@@ -203,22 +256,46 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
           data: temperatureArray,
           pointRadius: 0,
           fill: true,
-          backgroundColor: '' // This will be set dynamically
+          backgroundColor: '',
         }
       ]
     })
+
+    setHumidityData(humidityArray) // Cập nhật state độ ẩm
   }, [selectedWeather, weather, weather5day])
 
   return (
     <div className='summary-display' ref={contentRef}>
       {data != null && options != null && (
-        <Line
-          data={data}
-          options={options}
-          plugins={[customPlugin]}
-          width={window.innerWidth * 4 / 5} // Set width here
-          height={228} // Set height
-        />
+        <>
+          <div className='chart-row'>
+            <Line
+              data={data}
+              options={options}
+              plugins={[customPlugin]}
+              width={window.innerWidth * 4} // Set width here
+              height={177} // Set height
+            />
+          </div>
+
+          <div className='humidity-row'>
+            <span className='humidity-title'>
+              <div>Humidity</div>
+              <div>%</div>
+            </span>
+            <div className = 'humidity-array'>
+              {humidityData.map((humidity, index) => (
+                <span key={index} className='humidity-text'>{`${humidity}%`}</span>
+              ))}
+            </div>
+          </div>
+
+          <div className='hour-row'> 
+            {data.labels.map((label, index) => ( 
+              <span key={index} className='hour-text'>{label}</span> 
+            ))} 
+          </div>
+        </>
       )}
     </div>
   )

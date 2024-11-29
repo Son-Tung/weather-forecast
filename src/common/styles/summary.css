@@ -1,4 +1,54 @@
 .summary-display {
-  margin: 5px 0px;
+  display: grid;
+  grid-template-rows: 182px 30px 26px;
+  line-height: 16px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.chart-row, .humidity-row, .hour-row {
   overflow: hidden;
 }
+
+.chart-row {
+  padding-top: 5px;
+}
+
+.humidity-row {
+  position: relative;
+  border-bottom: 1px solid #e0e0e0;
+  box-sizing: border-box;
+}
+
+.humidity-array, .hour-row {
+  display: grid;
+  grid-template-columns: repeat(41, 12.5%);
+  width: 100%;
+}
+
+.humidity-title {
+  position: absolute;
+  top: 5.5px;
+  left: 0%;
+
+  text-align: center;
+  line-height: 12px;
+  font-size: 10px;
+  text-transform: capitalize;
+  opacity: 0.8;
+}
+
+.humidity-text {
+  margin: 7px 0;
+  text-align: center;
+
+  font-size: 12px;
+}
+
+.hour-text { 
+  margin: 5px 0;
+
+  font-size: 14px;
+  text-align: center;
+  opacity: 0.8;
+  transition: 0.5s;
+} 
