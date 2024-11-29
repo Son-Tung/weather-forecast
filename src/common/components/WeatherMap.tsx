@@ -113,7 +113,7 @@ const WeatherMap = ({ coord, weather, city, weather5day }: WeatherMapProps) => {
       <div className='tile'>Weather Map</div>
       <div className='map-container'>
         <MapContainer
-          center={[coord?.lat ?? 21.028511, coord?.lon ?? 105.804817]}
+          center={[coord?.lat ?? 21.028, coord?.lon ?? 105.83991]}
           zoom={10}
           scrollWheelZoom={true}
           className='weather-map-screen'
@@ -122,8 +122,8 @@ const WeatherMap = ({ coord, weather, city, weather5day }: WeatherMapProps) => {
           minZoom={3}
           maxBoundsViscosity={1.0}
           maxBounds={[
-            [85, -180],
-            [-85, 180]
+            [90, -200],
+            [-90, 200]
           ]}
         >
           <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
@@ -155,9 +155,9 @@ const WeatherMap = ({ coord, weather, city, weather5day }: WeatherMapProps) => {
               />
             </LayersControl.BaseLayer>
           </LayersControl>
-          <Marker position={[coord?.lat ?? 21.028511, coord?.lon ?? 105.804817]}>
+          <Marker position={[coord?.lat ?? 21.028, coord?.lon ?? 105.804817]}>
             <Popup>
-              {weather?.name} <br />
+              {city} <br />
               Temperature: {weather?.main?.temp}°C
             </Popup>
           </Marker>
