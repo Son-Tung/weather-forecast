@@ -9,10 +9,10 @@ interface Detail5dayProps {
   selectedWeather: any[]
   weather: any
   weather5day: any
-  dateWeather: any
+  dateSelected: any
 }
 
-const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather, weather, weather5day, dateWeather }) => {
+const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather, weather, weather5day, dateSelected }) => {
   const contentRef = useRef<HTMLDivElement | null>(null)
   const [activeTab, setActiveTab] = useState(0)
 
@@ -37,7 +37,7 @@ const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather, weather, weath
 
         <div className='detail-5-day-content' ref={contentRef}>
           {activeTab === 0 && selectedWeather.length != 0 && weather != null && weather5day != null && (
-            <Summary weather={weather} weather5day={weather5day} dateWeather={dateWeather} />
+            <Summary weather={weather} weather5day={weather5day} dateSelected={dateSelected} />
           )}
           {activeTab === 1 && <Hourly selectedWeather={selectedWeather} contentRef={contentRef} />}
           {activeTab === 2 && <Details selectedWeather={selectedWeather} weather={weather} />}
