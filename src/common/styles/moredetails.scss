@@ -15,6 +15,8 @@ $sun-color: #ffd700;
   background-color: $background-light;
   color: $primary-text-color;
   font-family: 'Open Sans', sans-serif;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 
   &-sidebar {
     display: flex;
