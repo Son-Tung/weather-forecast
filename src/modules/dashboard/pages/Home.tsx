@@ -1,7 +1,8 @@
 import Detail5day from '../../../common/components/detail5day'
 import FivedayWeather from '../../../common/components/fivedayWeather'
 import Main from '../../../common/components/main'
-import WeatherMap from '../../../common/components/WeatherMap'
+import MapComponent from '../../../common/components/MapComponent'
+// import WeatherMap from '../../../common/components/WeatherMap'
 import WeatherDashboard from './WeatherDashboard'
 
 const Home: React.FC<{
@@ -17,7 +18,8 @@ const Home: React.FC<{
       <Main weather={weather} geoData={geoData} />
       <FivedayWeather weather={weather} weather5day={weather5day} onItemSelected={onItemSelected} />
       <Detail5day selectedWeather={selectedWeather} weather={weather} weather5day={weather5day} />
-      <WeatherMap coord={weather?.coord} weather={weather} city={city} weather5day={weather5day} />
+      <MapComponent />
+      {/* <WeatherMap coord={weather?.coord} weather={weather} city={city} weather5day={weather5day} /> */}
       <WeatherDashboard city={city} />
     </div>
   )
