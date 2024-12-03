@@ -5,7 +5,7 @@ import { lstCities } from '../../assets/cities'
 import { forecastWeather } from '../services/api'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
-function Header({ city, setCity, setWeather, setWeather5day, setGeoData }: any) {
+function Header({ city, setCity, setWeather, setWeather5day, setGeoData, setIsLoading }: any) {
   // định nghĩa component Header với 3 props: city:tên thành phố hiện tại, setcity: hàm để cập nhật tên thành phố, setweather: hàm để cập nhật dữ liệu thời thiết
   const [filteredCities, setFilteredCities] = useState<any[]>([])
   const [tempInput, setTempInput] = useState<string>('')
@@ -35,7 +35,6 @@ function Header({ city, setCity, setWeather, setWeather5day, setGeoData }: any) 
   }
 
   const getWeather = async (scopeCity?: string) => {
-    console.log('scopeCity === ', scopeCity)
     if (!scopeCity && !tempInput) {
       return
     } else {
@@ -47,6 +46,9 @@ function Header({ city, setCity, setWeather, setWeather5day, setGeoData }: any) 
         setWeather5day(totalWeather.forecastData)
         setFilteredCities([]) // xoá danh sách gợi ý thành phố
         setGeoData(totalWeather.geoData)
+        window.scrollTo({
+          top: 0
+        })
       } catch (error) {
         console.error('Error:', error)
       }
