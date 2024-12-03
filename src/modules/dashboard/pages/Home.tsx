@@ -25,7 +25,7 @@ const Home: React.FC<{
         weather5day={weather5day}
         dateSelected={dateSelected}
       />
-      <MapComponent coord={weather?.coord} city={city} weather={weather} />
+      <MapComponent coord={weather?.coord} city={city} weather={weather} weather5day={weather5day} />
       <WeatherDashboard city={city} />
     </div>
   )

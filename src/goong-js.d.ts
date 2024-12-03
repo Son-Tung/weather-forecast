@@ -7,17 +7,23 @@ declare module '@goongmaps/goong-js' {
       constructor(options: { 
         container: string; 
         style: string; 
-        center: [number, number]; 
-        zoom: number; 
+        center?: [number, number]; 
+        zoom?: number; 
         maxZoom?: number; 
         minZoom?: number; 
       })
       setCenter(center: [number, number]): void
       on(event: string, callback: () => void): void
       addControl(control: NavigationControl, position?: string): void
-      addLayer(layer: Layer): void // Add this line
-      removeLayer(id: string): void // Add this line
-      removeSource(id: string): void // Add this line
+      addLayer(layer: Layer): void
+      removeLayer(id: string): void
+      removeSource(id: string): void
+      isStyleLoaded(): boolean
+      once(event: string, callback: () => void): void
+      getLayer(id: string): Layer | undefined // Thêm định nghĩa này
+      getSource(id: string): Source | undefined // Thêm định nghĩa này
+      getZoom(): number // Thêm định nghĩa này
+      setZoom(zoom: number): void // Thêm định nghĩa này
     }
     class Marker {
       [x: string]: any;
@@ -28,7 +34,7 @@ declare module '@goongmaps/goong-js' {
     }
     class Popup {
       setLngLat(lngLat: [number, number]): this
-      constructor(options?: { offset?: number })
+      constructor(options?: { offset?: number, closeButton?: boolean }) 
       setText(text: string): this
       setHTML(html: string): this
       addTo(map: Map): this
@@ -36,14 +42,14 @@ declare module '@goongmaps/goong-js' {
     class NavigationControl {
       constructor(options?: { showCompass?: boolean, showZoom?: boolean })
     }
-    class Layer { // Add this class
+    class Layer {
       constructor(options: { 
         id: string; 
         type: string; 
         source: Source 
       })
     }
-    class Source { // Add this class
+    class Source {
       constructor(options: { 
         type: string; 
         tiles: string[]; 
