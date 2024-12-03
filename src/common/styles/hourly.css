@@ -30,9 +30,10 @@
 .day {
   height: 16px;
   padding-top: 3px;
-  font-size: 12px;
+  font-size: 14px;
   opacity: 0.8;
   line-height: 16px;
+  margin: 10px 0;
 }
 
 .weather-icon {
@@ -50,7 +51,7 @@
 .weather-status {
   margin-top: 6px;
   line-height: 16px;
-  font-size: 12px;
+  font-size: 14px;
   opacity: 0.8;
   max-width: 48px;
   max-height: 48px;
@@ -62,15 +63,16 @@
 }
 
 .humidity-percent {
-  font-size: 12px;
+  font-size: 16px;
   line-height: 16px;
 }
 
 .speed-wind {
-  font-size: 12px;
+  font-size: 14px;
   margin-right: 4px;
   margin-top: 6px;
   line-height: 16px;
+  display: inline-block;
 }
 
 .hour {

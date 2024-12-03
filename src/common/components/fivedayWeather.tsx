@@ -153,7 +153,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, w
     const dateObj = new Date(curr.dt * 1000)
     const day = dateObj.getDate()
     const month = dateObj.toLocaleDateString('en-US', { month: 'short' })
-    const weekday = dateObj.toLocaleDateString('en-US', { weekday: 'long' })
+    const weekday = dateObj.toLocaleDateString('en-US', { weekday: 'short' })
     const date = `${day} ${weekday}`
 
     const hour = dateObj.getHours()
