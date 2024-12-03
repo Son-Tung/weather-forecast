@@ -1,9 +1,9 @@
 import '../styles/detail.scss'
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import SunnyImage from '../../assets/images/pngegg (1).png' // ảnh trời nắng
-import RainyImage from '../../assets/images/pngegg (2).png' // ảnh trời mưa
-import CloudyImage from '../../assets/images/pngegg (3).png' // ảnh trời mây
-import MistImage from '../../assets/images/pngegg (4).png' // ảnh trời sương mù
+import SunnyImage from '../../assets/images/sunny_detail.png' // ảnh trời nắng
+import RainyImage from '../../assets/images/light_rain.png' // ảnh trời mưa
+import CloudyImage from '../../assets/images/cloudy_detail.png' // ảnh trời mây
+import MistImage from '../../assets/images/mist_detail.png' // ảnh trời sương mù
 import BigRain from '../../assets/images/muatovcl.png' // ảnh trời mưa to
 
 function Detail({ weather, geoData }: any) {

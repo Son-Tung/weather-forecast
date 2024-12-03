@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import WeatherLogo from '../../assets/images/pngegg.png'
+import WeatherLogo from '../../assets/images/weather_logo.png'
 import '../styles/header.scss'
 import { lstCities } from '../../assets/cities'
 import { forecastWeather } from '../services/api'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
-function Header({ city, setCity, setWeather, setWeather5day, setGeoData, setIsLoading }: any) {
+function Header({ city, setCity, setWeather, setWeather5day, setGeoData }: any) {
   // định nghĩa component Header với 3 props: city:tên thành phố hiện tại, setcity: hàm để cập nhật tên thành phố, setweather: hàm để cập nhật dữ liệu thời thiết
   const [filteredCities, setFilteredCities] = useState<any[]>([])
   const [tempInput, setTempInput] = useState<string>('')
