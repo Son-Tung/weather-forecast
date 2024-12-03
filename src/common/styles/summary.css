@@ -13,13 +13,17 @@
   padding-top: 5px;
 }
 
+.chart, .humidity-array, .hour-row-container {
+  transition: transform 1s ease;
+}
+
 .humidity-row {
   position: relative;
   border-bottom: 1px solid #e0e0e0;
   box-sizing: border-box;
 }
 
-.humidity-array, .hour-row {
+.humidity-array, .hour-row-container {
   display: grid;
   grid-template-columns: repeat(41, 12.5%);
   width: 100%;

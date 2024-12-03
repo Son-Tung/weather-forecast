@@ -18,9 +18,9 @@ import {
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler)
 
 interface SummaryProps {
-  selectedWeather: any[]
   weather: any
   weather5day: any
+  dateSelected: any
 }
 
 interface DataState {
@@ -36,8 +36,19 @@ interface DataState {
   }[]
 }
 
-const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day }) => {
+const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected}) => {
   const contentRef = useRef<HTMLDivElement | null>(null)
+  const [widthBigChart, setWidthBigChart] = useState(0);
+  const [width1Line, setWidth1Line] = useState(0);
+  const [humidityDisplay, setHumidityDisplay] = useState<number[]>([])
+  const [hourDisplay, setHourDisplay] = useState<String[]>([])
+  const [dateArray, setDateArray] = useState<Date[]>([])
+  // const [index, setIndex] = useState(0)
+
+  const [index, setIndex] = useState(0)
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // const [indexDate, setIndexDate] = useState<number[]>([-1, -1, -1 , -1, -1])
 
   const [data, setData] = useState<DataState>({
     labels: [],
@@ -53,8 +64,6 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
       }
     ]
   })
-
-  const [humidityData, setHumidityData] = useState<number[]>([])
 
   const [options] = useState({
     responsive: false,
@@ -89,7 +98,6 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
       }
     }
   })
-
   
   const customPlugin = {
     id: 'customDataLabels',
@@ -98,7 +106,7 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
       chart.data.datasets.forEach((dataset, i) => {
         const meta = chart.getDatasetMeta(i)
         meta.data.forEach((point: any, index: number) => {
-          if (index !== 0) {
+          if (index > 0 && index < 41) {
             const value = dataset.data[index] as number
             ctx.save()
             ctx.font = '12px Arial'
@@ -186,15 +194,55 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
     }
   }
 
+  function getDateString(date: Date) {
+    const day = String(date.getDate()).padStart(2, '0'); // Lấy ngày và thêm số 0 nếu cần
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Lấy tháng (tháng bắt đầu từ 0)
+    const year = date.getFullYear(); // Lấy năm
+  
+    const hours = String(date.getHours()).padStart(2, '0'); // Lấy giờ
+    const minutes = String(date.getMinutes()).padStart(2, '0'); // Lấy phút
+  
+    return `${day}/${month}/${year} ${hours}:${minutes}`; // Trả về chuỗi theo định dạng yêu cầu
+  };
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      let widthSummary = contentRef.current.clientWidth;
+      setWidthBigChart(widthSummary * 5.125);
+      setWidth1Line(widthSummary * 5.125 / 41);
+    }
+  }, [contentRef, windowWidth]);
+
+  useEffect(() => {
+    let index = 0;
+    for (let i = 0; i < dateArray.length; i++) {
+      if (dateArray[i] > dateSelected) {
+        index = i;
+        break;
+      }
+    }
+
+    setIndex(index)
+  }, [dateArray, dateSelected, width1Line]);
+
   useEffect(() => {
     let bigArray = []
     let push1time = true;
     let has1small = false;
-    let positionWeather;
     for (let i = 0; i < 40; i++) {
       if (push1time) {
         if (weather5day?.list[i]?.dt > weather?.dt) {
-          positionWeather = i;
           bigArray.push(weather)
         }
 
@@ -208,46 +256,63 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
     }
     
     let temperatureArray = []
-    let humidityArray = []
-    let hourArray = []
+    let humidityArray    = []
+    let dateArray        = []
+    let hourArrayDisplay = []
 
-    if (!has1small) {
-      temperatureArray.push(bigArray[0]?.main?.temp)
-    }
-
-    for (let i = 0; i < bigArray.length; i++) {
+    for (let i = 0; i < bigArray.length; i++) { 
       temperatureArray.push(bigArray[i]?.main?.temp)
-      if (!(has1small && i == 0)) {
+      if ((has1small && i > 0) || (!has1small && i < 40)) {
         humidityArray.push(bigArray[i]?.main?.humidity)
       }
+
+      dateArray.push(new Date(bigArray[i]?.dt * 1000))
       
       if ((has1small && i == 1) || (!has1small && i == 0)) {
-        hourArray.push('Now')
+        hourArrayDisplay.push('Now')
       }
 
-      else if ((has1small && i > 1 ) || !has1small) {
-        hourArray.push(`${getHour(bigArray[i]?.dt)}`)
+      else {
+        hourArrayDisplay.push(`${getHour(bigArray[i]?.dt)}`)
       }
     }
+    
+    if (has1small) {
+      temperatureArray.push(bigArray[40]?.main?.temp)
+      dateArray.push(new Date(bigArray[40]?.dt * 1000))
+      hourArrayDisplay.shift();
+    }
 
+    else {
+      temperatureArray.unshift(bigArray[0]?.main?.temp)
+      dateArray.unshift(new Date(bigArray[0]?.dt * 1000))
+      hourArrayDisplay.pop();
+    }
+    
+    /*
+    console.log('weather: '                , weather                      )
+    console.log('weather5day: '            , weather5day                  )
+    console.log('temperatureArray: '       , temperatureArray             )
+    console.log('humidityArray: '          , humidityArray                )
+    
+    console.log('temperatureArray.length: ', temperatureArray.length      )
+    console.log('humidityArray.length: '   , humidityArray.length         )
+    
+    console.log('bigArray: '               , bigArray                     )
+    console.log('push1time: '              , push1time                    )
+    console.log('has1small: '              , has1small                    )
+    
+    console.log('dateArray: '              , dateArray.map(getDateString) )
+    console.log('hourArrayDisplay: '       , hourArrayDisplay             )
+    console.log('dateArray.length: '       , dateArray.length             )
+    console.log('hourArrayDisplay.length: ', hourArrayDisplay.length      )
+    */
+    
 
-    console.log('positionWeather: ', positionWeather)
-    console.log('selectedWeather: ', selectedWeather)
-    console.log('weather: ', weather)
-    console.log('weather5day: ', weather5day)
-    console.log('temperatureArray: ', temperatureArray)
-    console.log('humidityArray: '   , humidityArray   )
-    console.log('hourArray: '       , hourArray       )
-    console.log('temperatureArray.length: ', temperatureArray.length)
-    console.log('humidityArray.length: '   , humidityArray.length   )
-    console.log('hourArray.length: '       , hourArray.length       )
-    console.log('bigArray: ' , bigArray )
-    console.log('push1time: ', push1time)
-    console.log('has1small: ', has1small)
-
+    const dateArrayString = dateArray.map(getDateString);
 
     setData({
-      labels: hourArray,
+      labels: dateArrayString,
       datasets: [
         {
           label: 'Temperature',
@@ -261,19 +326,21 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
       ]
     })
 
-    setHumidityData(humidityArray) // Cập nhật state độ ẩm
-  }, [selectedWeather, weather, weather5day])
+    setHumidityDisplay(humidityArray) // Cập nhật state độ ẩm
+    setHourDisplay(hourArrayDisplay) // Cập nhật state giờ hiển thị
+    setDateArray(dateArray)  // Cập nhật state mảng thời gian epoch để đối chiếu với ngày kích hoạt từ nút và di chuyển sơ đồ
+  }, [weather, weather5day])
 
   return (
     <div className='summary-display' ref={contentRef}>
-      {data != null && options != null && (
+      {contentRef != null && data != null && widthBigChart != 0 && width1Line != 0 && (
         <>
           <div className='chart-row'>
-            <Line
+            <Line className='chart' style={{ transform: `translateX(-${(index == 0 ? 0.5 : (index - 0.5)) * width1Line }px)` }}
               data={data}
               options={options}
               plugins={[customPlugin]}
-              width={window.innerWidth * 4} // Set width here
+              width={widthBigChart} // Set width here
               height={177} // Set height
             />
           </div>
@@ -283,17 +350,19 @@ const Summary: React.FC<SummaryProps> = ({ selectedWeather, weather, weather5day
               <div>Humidity</div>
               <div>%</div>
             </span>
-            <div className = 'humidity-array'>
-              {humidityData.map((humidity, index) => (
+            <div className = 'humidity-array' style={{ transform: `translateX(-${(index <= 1 ? 0 : (index - 1)) * width1Line}px)` }}>
+              {humidityDisplay.map((humidity, index) => (
                 <span key={index} className='humidity-text'>{`${humidity}%`}</span>
               ))}
             </div>
           </div>
 
           <div className='hour-row'> 
-            {data.labels.map((label, index) => ( 
-              <span key={index} className='hour-text'>{label}</span> 
-            ))} 
+            <div className='hour-row-container' style={{ transform: `translateX(-${(index <= 1 ? 0 : (index - 1)) * width1Line}px)` }}>
+              {hourDisplay.map((hour, index) => ( 
+                <span key={index} className='hour-text'>{hour}</span> 
+              ))} 
+            </div>
           </div>
         </>
       )}

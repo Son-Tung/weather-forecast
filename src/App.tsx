@@ -18,12 +18,12 @@ function App() {
   const [weather5day, setWeather5day] = useState<any>(null)
   const [selectedWeather, setSelectedWeather] = useState<any[]>([])
   const [geoData, setGeoData] = useState(null)
+  const [dateSelected, setDateSelected] = useState<any>(null)
 
   const getDateWithoutTime = (date: Date): Date => {
-    const year = date.getFullYear()
-    const month = date.getMonth()
-    const day = date.getDate()
-    return new Date(year, month, day)
+    const newDate = new Date(date); // Tạo một bản sao của date
+    newDate.setHours(0, 0, 0, 0); // Thiết lập giờ, phút, giây, mili giây thành 0
+    return newDate;
   }
 
   const onItemSelected = (date: Date, weather: any, weather5day: any) => {
@@ -53,7 +53,7 @@ function App() {
           weatherFilter.push(getWeather)
         }
       })
-
+      setDateSelected(dateSelected)
       setSelectedWeather(weatherFilter)
     } catch (error) {}
   }
@@ -61,7 +61,7 @@ function App() {
   return (
     <>
       <Router>
-        <div className='App'>
+        <div className='total-container'>
           <Header
             city={city}
             setCity={setCity}
@@ -80,6 +80,7 @@ function App() {
                   selectedWeather={selectedWeather}
                   city={city}
                   geoData={geoData}
+                  dateSelected={dateSelected}
                 />
               }
             />

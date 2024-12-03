@@ -9,9 +9,10 @@ interface Detail5dayProps {
   selectedWeather: any[]
   weather: any
   weather5day: any
+  dateSelected: any
 }
 
-const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather, weather, weather5day }) => {
+const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather, weather, weather5day, dateSelected }) => {
   const contentRef = useRef<HTMLDivElement | null>(null)
   const [activeTab, setActiveTab] = useState(0)
 
@@ -21,27 +22,26 @@ const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather, weather, weath
 
   return (
     <>
-      <div className='detail-5-day-sidebar'>
-        <button className={`${activeTab === 0 ? 'active' : ''} summary-button`} onClick={() => handleButtonClick(0)}>
-          Summary
-        </button>
-        <button className={`${activeTab === 1 ? 'active' : ''} every-hour-button`} onClick={() => handleButtonClick(1)}>
-          Hourly
-        </button>
-        <button
-          className={`${activeTab === 2 ? 'active' : ''} more-detail-button`}
-          onClick={() => handleButtonClick(2)}
-        >
-          More details
-        </button>
-      </div>
+      <div className='detail-5-day-container'>
+        <div className='detail-5-day-sidebar'>
+          <button onClick={() => handleButtonClick(0)}>
+            <span className = {`${activeTab === 0 ? 'active' : ''}`}>Summary</span>
+          </button>
+          <button onClick={() => handleButtonClick(1)}>
+            <span className = {`${activeTab === 1 ? 'active' : ''}`}>Hourly</span>
+          </button>
+          <button onClick={() => handleButtonClick(2)}>
+            <span className = {`${activeTab === 2 ? 'active' : ''}`}>More details</span>
+          </button>
+        </div>
 
-      <div className='detail-5-day-content' ref={contentRef}>
-        {activeTab === 0 && selectedWeather.length != 0 && weather != null && weather5day != null && (
-          <Summary selectedWeather={selectedWeather} weather={weather} weather5day={weather5day} />
-        )}
-        {activeTab === 1 && <Hourly selectedWeather={selectedWeather} contentRef={contentRef} />}
-        {activeTab === 2 && <Details selectedWeather={selectedWeather} weather={weather} />}
+        <div className='detail-5-day-content' ref={contentRef}>
+          {activeTab === 0 && selectedWeather.length != 0 && weather != null && weather5day != null && (
+            <Summary weather={weather} weather5day={weather5day} dateSelected={dateSelected} />
+          )}
+          {activeTab === 1 && <Hourly selectedWeather={selectedWeather} contentRef={contentRef} />}
+          {activeTab === 2 && <Details selectedWeather={selectedWeather} weather={weather} />}
+        </div>
       </div>
     </>
   )

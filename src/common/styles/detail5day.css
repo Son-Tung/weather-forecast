@@ -1,27 +1,35 @@
 .detail-5-day-sidebar {
-  padding-left: 50px;
   display: grid;
-  grid-template-columns: 73.4px 82.06px 104px;
+  grid-template-columns: 84.14px 68.44px 100.5px;
   column-gap: 10px;
- 
+  padding-left: 10px;
+  height: 40px;
+}
+
+.detail-5-day-sidebar button {
+  display: flex;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: white;
+  cursor: pointer;
+}
+
+.detail-5-day-sidebar span {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.detail-5-day-sidebar span:hover,
+.detail-5-day-sidebar span.active {
+  font-weight: 600;
+  border-bottom: 2px solid black;
 }
 
 .detail-5-day-content {
   /* height: 245px; */
   border-top: 1px solid #e0e0e0;
   box-sizing: border-box;
-}
-
-.detail-5-day-sidebar button {
-  background-color: white;
-  border: none;
-  height: 40px;
-  box-sizing: border-box;
-  cursor: pointer;
-}
-
-.detail-5-day-sidebar button:hover,
-.detail-5-day-sidebar button.active {
-  font-weight: 600;
-  border-bottom: 2px solid black;
 }
