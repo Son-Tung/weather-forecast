@@ -9,6 +9,19 @@ $background-white: #ffffff;
 $border-color: rgba(0, 0, 0, 0.1);
 $sun-color: #ffd700;
 
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+}
+
+@mixin base-card {
+  background-color: $background-white;
+  border-radius: 10px;
+  padding: 40px;
+}
+
+// Base styles
 .details {
   width: 100%;
   margin: 0 auto;
@@ -17,62 +30,48 @@ $sun-color: #ffd700;
   font-family: 'Open Sans', sans-serif;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+}
 
-  &-sidebar {
-    display: flex;
-    padding: 10px 10px 0;
-    border-bottom: 1px solid $border-color;
+.details-sidebar {
+  display: flex;
+  padding: 10px 10px 0;
+  border-bottom: 1px solid $border-color;
 
-    button {
-      background-color: transparent;
-      border: none;
-      color: $primary-text-color;
-      padding: 10px 15px;
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      font-size: 14px;
+  button {
+    background-color: transparent;
+    border: none;
+    color: $primary-text-color;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    font-size: 14px;
 
-      &.active {
-        border-bottom-color: $primary-text-color;
-        font-weight: bold;
-      }
-    }
-  }
-
-  &-content {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-
-    @media (max-width: 1439px) {
-      flex-direction: column;
-    }
-
-    @media (min-width: 1440px) {
-      flex-direction: row;
+    &.active {
+      border-bottom-color: $primary-text-color;
+      font-weight: bold;
     }
   }
 }
 
-.weather-info {
-  &-left {
-    flex: 1;
-    background-color: $background-white;
-    border-radius: 10px;
-    padding: 40px;
-    margin: 0 10px;
-
-    @media (max-width: 1439px) {
-      margin: 10px 0;
-    }
-  }
-
-  &-right {
-    @extend .weather-info-left;
-    flex: 3;
-  }
+.details-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
 }
 
+// Weather info sections
+.weather-info-left {
+  @include base-card;
+  flex: 1;
+  margin: 0 10px;
+}
+
+.weather-info-right {
+  @extend .weather-info-left;
+  flex: 3;
+}
+
+// Headings
 h3 {
   font-size: 20px;
   font-weight: bold;
@@ -85,13 +84,10 @@ h3 {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+// Sun and Moon section
 .sun-moon-info {
   display: flex;
   gap: 20px;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
 }
 
 .sun-info {
@@ -101,34 +97,30 @@ h3 {
   padding: 35px;
 }
 
-.info {
-  &-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 24px;
+// Info components
+.info-header {
+  @include flex-center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
 
-    .weather-icon {
-      margin-top: 0;
-    }
-  }
+.info-text {
+  p {
+    margin: 0;
 
-  &-text {
-    p {
-      margin: 0;
-
-      &:first-child {
-        margin-bottom: 6px;
-        color: rgba($primary-text-color, 0.7);
-        font-size: 12px;
-      }
+    &:first-child {
+      margin-bottom: 6px;
+      color: rgba($primary-text-color, 0.7);
+      font-size: 12px;
     }
   }
 }
 
+// Icons and values
 .weather-icon {
   width: 24px;
   height: 24px;
+  margin-top: 0;
 
   &.location {
     color: $sun-color;
@@ -141,72 +133,72 @@ h3 {
   color: $primary-text-color;
 }
 
-.path {
-  &-container {
-    margin: 30px 0;
-  }
-
-  &-line {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-top: 2px dashed rgba($primary-text-color, 0.2);
-    transform: translateY(-20px);
-  }
+// Path components
+.path-container {
+  margin: 30px 0;
 }
 
-.sun {
-  &-path {
-    position: relative;
-    height: 2px;
-    background: rgba($primary-text-color, 0.1);
-    margin: 40px 0;
-  }
-
-  &-indicator {
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    top: -5px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: $sun-color;
-  }
+.path-line {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-top: 2px dashed rgba($primary-text-color, 0.2);
+  transform: translateY(-20px);
 }
 
+// Sun path
+.sun-path {
+  position: relative;
+  height: 2px;
+  background: rgba($primary-text-color, 0.1);
+  margin: 40px 0;
+}
+
+.sun-indicator {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: $sun-color;
+}
+
+// Time components
 .time {
-  &-labels {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 10px;
-  }
-
-  &-label {
-    p:first-child {
-      color: rgba($primary-text-color, 0.7);
-      font-size: 12px;
-      margin-bottom: 4px;
-    }
-
-    &.sunrise {
-      display: flex;
-      flex-direction: column-reverse;
-      align-items: flex-end;
-    }
-
-    &.sunset {
-      display: flex;
-      flex-direction: column-reverse;
-      align-items: flex-start;
-    }
-  }
-
   font-size: 14px;
   font-weight: 500;
   color: $primary-text-color;
 }
 
+.time-labels {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.time-label {
+  p:first-child {
+    color: rgba($primary-text-color, 0.7);
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  &.sunrise {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+  }
+
+  &.sunset {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+}
+
+// Weather details grid
 .weather-details {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -215,13 +207,8 @@ h3 {
   padding: 26px;
   border-radius: 10px;
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-
   div {
-    display: flex;
-    align-items: center;
+    @include flex-center;
     font-size: 14px;
     color: $primary-text-color;
     padding: 7px;
@@ -237,21 +224,44 @@ h3 {
     width: 20px;
     height: 20px;
     flex-shrink: 0;
-    margin-top: 0;
   }
 }
 
-img {
-  &.sunrise-icon,
-  &.sunset-icon {
-    border: 2px solid $sun-color;
-    border-radius: 50%;
-    padding: 2px;
+// Images
+.sunrise-icon,
+.sunset-icon {
+  border: 2px solid $sun-color;
+  border-radius: 50%;
+  padding: 2px;
+}
+
+// Media queries
+@media (max-width: 1439px) {
+  .details-content {
+    flex-direction: column;
+  }
+
+  .weather-info-left {
+    margin: 10px 0;
+  }
+}
+
+@media (min-width: 1440px) {
+  .details-content {
+    flex-direction: row;
   }
 }
 
 @media (max-width: 768px) {
   .details {
     width: 95%;
+  }
+
+  .sun-moon-info {
+    flex-direction: column;
+  }
+
+  .weather-details {
+    grid-template-columns: 1fr;
   }
 }
