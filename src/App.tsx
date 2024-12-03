@@ -87,7 +87,7 @@ function App() {
             <Route path='/map' element={<Map />} />
             <Route path='/news' element={<Info />} />
             <Route path='/air-quality' element={<Air />} />
-            <Route path='/details' element={<MoreDetails selectedWeather={selectedWeather} weather={weather} />} />{' '}
+            <Route path='/moredetails' element={<MoreDetails selectedWeather={selectedWeather} weather={weather} />} />{' '}
             {/* Added MoreDetails route */}
           </Routes>
           <Footer />
