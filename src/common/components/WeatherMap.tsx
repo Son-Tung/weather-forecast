@@ -1,8 +1,10 @@
-import { MapContainer, TileLayer, Marker, Popup, LayersControl, useMap } from 'react-leaflet'
+import { TileLayer, Marker, Popup, LayersControl, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import { useRef, useEffect, useState } from 'react'
 import L, { Map as LeafletMap } from 'leaflet'
 import WeatherAlert from './Triggers'
+import goongjs from '@goongmaps/goong-js'
+import '@goongmaps/goong-js/dist/goong-js.css'
 
 interface CoordProps {
   lat: number
@@ -18,12 +20,13 @@ interface WeatherMapProps {
 
 const WeatherMap = ({ coord, weather, city, weather5day }: WeatherMapProps) => {
   const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY || '4f2141f03c148886930241854489683e'
+  const mapContainerRef = useRef<HTMLDivElement | null>(null)
   const mapRef = useRef<LeafletMap | null>(null)
   const [mapType, setMapType] = useState('temperature')
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
-      if (mapRef.current && mapRef.current.getContainer().contains(e.target as Node)) {
+      if (mapContainerRef.current && mapContainerRef.current.contains(e.target as Node)) {
         e.preventDefault()
       }
     }
@@ -33,6 +36,22 @@ const WeatherMap = ({ coord, weather, city, weather5day }: WeatherMapProps) => {
     return () => {
       window.removeEventListener('wheel', handleWheel)
     }
+  }, [])
+
+  useEffect(() => {
+    goongjs.accessToken = 'tnYpbmYpdwWTosjeGsOSrjAXEmf3JLeDbzzWzFys'
+    const map = new goongjs.Map({
+      container: mapContainerRef.current!,
+      style: 'https://tiles.goong.io/assets/goong_map_web.json',
+      center: [105.83991, 21.028],
+      zoom: 9
+    })
+
+    mapRef.current = map
+
+    map.on('load', () => {
+      console.log('Map loaded')
+    })
   }, [])
 
   useEffect(() => {
@@ -112,21 +131,18 @@ const WeatherMap = ({ coord, weather, city, weather5day }: WeatherMapProps) => {
     <div className='WeatherMap'>
       <div className='tile'>Weather Map</div>
       <div className='map-container'>
-        <MapContainer
-          center={[coord?.lat ?? 21.028, coord?.lon ?? 105.83991]}
-          zoom={10}
-          scrollWheelZoom={true}
-          className='weather-map-screen'
-          ref={mapRef}
-          maxZoom={13}
-          minZoom={3}
-          maxBoundsViscosity={1.0}
-          maxBounds={[
-            [90, -200],
-            [-90, 200]
-          ]}
+        <div
+          id='map'
+          style={{
+            display: 'flex',
+            width: '80%',
+            height: '400px',
+            alignItems: 'center',
+            justifyItems: 'center',
+            margin: '0 10%'
+          }}
+          ref={mapContainerRef}
         >
-          <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
           <MapUpdater />
           <Legend />
           <LayersControl position='topright'>
@@ -166,7 +182,7 @@ const WeatherMap = ({ coord, weather, city, weather5day }: WeatherMapProps) => {
             weather={weather || { dt: 0, weather: [] }}
             weather5Day={weather5day || { list: [] }}
           />
-        </MapContainer>
+        </div>
       </div>
     </div>
   )
