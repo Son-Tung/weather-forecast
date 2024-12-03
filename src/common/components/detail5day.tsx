@@ -2,18 +2,17 @@ import '../styles/detail5day.css'
 import Summary from './summary.tsx'
 import Hourly from './hourly.tsx'
 import Details from './moredetails.tsx'
-
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 
 interface Detail5dayProps {
   selectedWeather: any[]
   weather: any
   weather5day: any
   dateSelected: any
+  windowWidth: any
 }
 
-const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather, weather, weather5day, dateSelected }) => {
-  const contentRef = useRef<HTMLDivElement | null>(null)
+const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather, weather, weather5day, dateSelected, windowWidth }) => {
   const [activeTab, setActiveTab] = useState(0)
 
   function handleButtonClick(display: number) {
@@ -35,11 +34,11 @@ const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather, weather, weath
           </button>
         </div>
 
-        <div className='detail-5-day-content' ref={contentRef}>
+        <div className='detail-5-day-content'>
           {activeTab === 0 && selectedWeather.length != 0 && weather != null && weather5day != null && (
-            <Summary weather={weather} weather5day={weather5day} dateSelected={dateSelected} />
+            <Summary weather={weather} weather5day={weather5day} dateSelected={dateSelected} windowWidth={windowWidth} />
           )}
-          {activeTab === 1 && <Hourly selectedWeather={selectedWeather} contentRef={contentRef} />}
+          {activeTab === 1 && <Hourly selectedWeather={selectedWeather} windowWidth={windowWidth}/>}
           {activeTab === 2 && <Details selectedWeather={selectedWeather} weather={weather} />}
         </div>
       </div>

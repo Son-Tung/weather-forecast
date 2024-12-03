@@ -5,29 +5,18 @@ import '../styles/FiveWeather.scss'
 interface FivedayWeatherProps {
   weather: any
   weather5day: any
+  windowWidth: any
   onItemSelected: (date: any, weather: any, weather5day: any) => void
 }
 
-const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, onItemSelected }) => {
+const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, windowWidth, onItemSelected }) => {
   const contentRef = useRef<HTMLDivElement | null>(null)
   const [width, setWidth] = useState(0)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [slidesToShow, setSlidesToShow] = useState(0)
   const [selectedButton, setSelectedButton] = useState<number[]>([365, 182.5, 182.5, 182.5, 182.5])
   const [translateX, settranslateX] = useState(0)
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [itemSelectedIdx, setItemSelectedIdx] = useState(0)
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowWidth(window.innerWidth)
-    }
-
-    window.addEventListener('resize', handleResize)
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
 
   useEffect(() => {
     setCurrentSlide(0)
@@ -95,7 +84,7 @@ const FivedayWeather: React.FC<FivedayWeatherProps> = ({ weather, weather5day, o
         setSlidesToShow(calculatedNumColumn)
       }
     }
-  }, [windowWidth, selectedButton, contentRef.current, currentSlide])
+  }, [windowWidth, selectedButton, contentRef, currentSlide])
 
   function nextSlide() {
     setCurrentSlide(function (prevSlide) {

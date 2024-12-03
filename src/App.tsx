@@ -1,5 +1,5 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import Header from '../src/common/components/header.tsx'
 import Footer from './common/components/footer.tsx'
@@ -19,6 +19,25 @@ function App() {
   const [selectedWeather, setSelectedWeather] = useState<any[]>([])
   const [geoData, setGeoData] = useState(null)
   const [dateSelected, setDateSelected] = useState<any>(null)
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout | undefined; 
+    function handleResize() {
+      if (timer) {
+        clearTimeout(timer);
+      }
+
+      timer = setTimeout(() => {
+        setWindowWidth(window.innerWidth);
+      }, 100);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const getDateWithoutTime = (date: Date): Date => {
     const newDate = new Date(date); // Tạo một bản sao của date
@@ -29,12 +48,12 @@ function App() {
   const onItemSelected = (date: Date, weather: any, weather5day: any) => {
     try {
       let dateNow: Date = getDateWithoutTime(new Date())
-      let dateSelected: Date = getDateWithoutTime(date)
+      let dateSelect: Date = getDateWithoutTime(date)
       let weatherFilter: any = []
       let startTime: Date
       let endTime: Date
 
-      if (dateSelected.getTime() === dateNow.getTime()) {
+      if (dateSelect.getTime() === dateNow.getTime()) {
         startTime = new Date()
         startTime.setHours(startTime.getHours() - (startTime.getHours() % 3) + 3, 0, 0)
         weatherFilter.push(weather)
@@ -53,7 +72,11 @@ function App() {
           weatherFilter.push(getWeather)
         }
       })
-      setDateSelected(dateSelected)
+
+      if (dateSelected == null || dateSelected.getTime() != dateSelect.getTime()) {
+        setDateSelected(dateSelect)
+      }
+
       setSelectedWeather(weatherFilter)
     } catch (error) {}
   }
@@ -81,6 +104,7 @@ function App() {
                   city={city}
                   geoData={geoData}
                   dateSelected={dateSelected}
+                  windowWidth={windowWidth}
                 />
               }
             />

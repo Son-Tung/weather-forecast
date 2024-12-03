@@ -21,6 +21,7 @@ interface SummaryProps {
   weather: any
   weather5day: any
   dateSelected: any
+  windowWidth: any
 }
 
 interface DataState {
@@ -36,19 +37,16 @@ interface DataState {
   }[]
 }
 
-const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected}) => {
+const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected, windowWidth}) => {
   const contentRef = useRef<HTMLDivElement | null>(null)
+  const humidityRef = useRef<HTMLDivElement | null>(null)
   const [widthBigChart, setWidthBigChart] = useState(0);
   const [width1Line, setWidth1Line] = useState(0);
   const [humidityDisplay, setHumidityDisplay] = useState<number[]>([])
   const [hourDisplay, setHourDisplay] = useState<String[]>([])
   const [dateArray, setDateArray] = useState<Date[]>([])
-  // const [index, setIndex] = useState(0)
-
   const [index, setIndex] = useState(0)
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  // const [indexDate, setIndexDate] = useState<number[]>([-1, -1, -1 , -1, -1])
+  const [loadingChart, setLoadingChart] = useState(true);
 
   const [data, setData] = useState<DataState>({
     labels: [],
@@ -206,17 +204,6 @@ const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected}) 
   };
 
   useEffect(() => {
-    function handleResize() {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
     if (contentRef.current) {
       let widthSummary = contentRef.current.clientWidth;
       setWidthBigChart(widthSummary * 5.125);
@@ -234,7 +221,38 @@ const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected}) 
     }
 
     setIndex(index)
-  }, [dateArray, dateSelected, width1Line]);
+  }, [dateArray, dateSelected]);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout | undefined;
+    console.log();
+    if (humidityRef.current) {
+      const humidityTitle =  humidityRef.current as HTMLElement
+      humidityTitle.style.display = 'none';
+
+      timer = setTimeout(() => {
+        humidityTitle.style.display = 'inline-block'; 
+      }, 1000);
+    }
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [dateSelected, humidityRef]);
+
+  useEffect(() => {
+    setLoadingChart(false);
+
+    // Đặt lại loadingChart thành true sau một khoảng thời gian ngắn
+    const timer = setTimeout(() => {
+      setLoadingChart(true);
+    }, 0); // Thời gian có thể điều chỉnh
+
+    // Dọn dẹp timer khi component unmount hoặc khi effect chạy lại
+    return () => clearTimeout(timer);
+  }, [widthBigChart, width1Line]);
 
   useEffect(() => {
     let bigArray = []
@@ -333,39 +351,37 @@ const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected}) 
 
   return (
     <div className='summary-display' ref={contentRef}>
-      {contentRef != null && data != null && widthBigChart != 0 && width1Line != 0 && (
-        <>
-          <div className='chart-row'>
-            <Line className='chart' style={{ transform: `translateX(-${(index == 0 ? 0.5 : (index - 0.5)) * width1Line }px)` }}
-              data={data}
-              options={options}
-              plugins={[customPlugin]}
-              width={widthBigChart} // Set width here
-              height={177} // Set height
-            />
-          </div>
+      <div className='chart-row'>
+        {loadingChart && widthBigChart != 0 && width1Line != 0 && (
+          <Line className='chart' style={{ transform: `translateX(-${(index == 0 ? 0.5 : (index - 0.5)) * width1Line }px)` }}
+            data={data}
+            options={options}
+            plugins={[customPlugin]}
+            width={widthBigChart} // Set width here
+            height={177} // Set height
+          />
+        )}
+      </div>
 
-          <div className='humidity-row'>
-            <span className='humidity-title'>
-              <div>Humidity</div>
-              <div>%</div>
-            </span>
-            <div className = 'humidity-array' style={{ transform: `translateX(-${(index <= 1 ? 0 : (index - 1)) * width1Line}px)` }}>
-              {humidityDisplay.map((humidity, index) => (
-                <span key={index} className='humidity-text'>{`${humidity}%`}</span>
-              ))}
-            </div>
-          </div>
+      <div className='humidity-row'>
+        <span className='humidity-title' ref={humidityRef}>
+          <div>Humidity</div>
+          <div>%</div>
+        </span>
+        <div className = 'humidity-array' style={{ transform: `translateX(-${(index <= 1 ? 0 : (index - 1)) * width1Line}px)` }}>
+          {humidityDisplay.length > 0 && humidityDisplay.map((humidity, index) => (
+            <span key={index} className='humidity-text'>{`${humidity}%`}</span>
+          ))}
+        </div>
+      </div>
 
-          <div className='hour-row'> 
-            <div className='hour-row-container' style={{ transform: `translateX(-${(index <= 1 ? 0 : (index - 1)) * width1Line}px)` }}>
-              {hourDisplay.map((hour, index) => ( 
-                <span key={index} className='hour-text'>{hour}</span> 
-              ))} 
-            </div>
-          </div>
-        </>
-      )}
+      <div className='hour-row'> 
+        <div className='hour-row-container' style={{ transform: `translateX(-${(index <= 1 ? 0 : (index - 1)) * width1Line}px)` }}>
+          {hourDisplay.length > 0 && hourDisplay.map((hour, index) => ( 
+            <span key={index} className='hour-text'>{hour}</span> 
+          ))} 
+        </div>
+      </div>
     </div>
   )
 }
