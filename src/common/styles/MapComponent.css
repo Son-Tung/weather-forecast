@@ -1,5 +1,5 @@
 .mapweather{
-  margin: 3% 10%;
+  margin: 4% 10%;
   .mapboxgl-ctrl.mapboxgl-ctrl-attrib {
     display: none;
   }
@@ -21,6 +21,12 @@
     font-size: 14px;
     font-weight: 600;
     font-family: sans-serif, 'Font Awesome 6 Free';
+  }
+  .tile{
+    font: 1em sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 25px;
   }
 }
 #map-container {
