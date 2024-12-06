@@ -353,10 +353,11 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
                 </div>
                 {/* Add weather description */}
                 <div>
-                  <strong>Weather:</strong> {selectedWeather[0]?.weather[0]?.main || 'No data available'}
+                  <strong>Weather:</strong> {selectedWeather[0]?.weather[0]?.description || 'No data available'}
                 </div>
                 <div>
-                  <strong>City Info:</strong> ID: {weather.id}, Country: {weather.sys.country}
+                  <FaMapMarkerAlt className="weather-icon" style={{ color: 'darkblue' }} />{' '}
+                  <strong>Country:</strong> {weather.sys.country}
                 </div>
               </div>
             </div>
