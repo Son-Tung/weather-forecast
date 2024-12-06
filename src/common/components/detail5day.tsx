@@ -1,7 +1,7 @@
 import '../styles/detail5day.css'
 import Summary from './summary.tsx'
 import Hourly from './hourly.tsx'
-import Details from './moredetails.tsx'
+import MoreDetails from './moredetails.tsx'
 import React, { useState } from 'react'
 
 interface Detail5dayProps {
@@ -39,7 +39,7 @@ const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather, weather, weath
             <Summary weather={weather} weather5day={weather5day} dateSelected={dateSelected} windowWidth={windowWidth} />
           )}
           {activeTab === 1 && <Hourly selectedWeather={selectedWeather} windowWidth={windowWidth}/>}
-          {activeTab === 2 && <Details selectedWeather={selectedWeather} weather={weather} />}
+          {activeTab === 2 && <MoreDetails selectedWeather={selectedWeather} weather={weather} />}
         </div>
       </div>
     </>
