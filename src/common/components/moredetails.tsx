@@ -75,6 +75,7 @@ interface WeatherData {
   cod: number;
 }
 
+// Các hàm helper nhỏ để khởi tạo từng phần
 const getInitialWeatherCondition = (): WeatherCondition => ({
   id: 0,
   main: '',
@@ -202,6 +203,7 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
     });
   };
 
+  // Group weather data by day
   const groupedByDay = selectedWeather?.reduce((acc, curr) => {
     const date = new Date(curr.dt * 1000).toLocaleDateString('en-US', {
       weekday: 'long',
@@ -226,20 +228,24 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
     return acc;
   }, {});
 
+  // Get the first day (current day) from groupedByDay
   const firstDay = Object.keys(groupedByDay || {})[0];
   const minTemp = firstDay ? groupedByDay[firstDay].temp_min : 'N/A';
   const maxTemp = firstDay ? groupedByDay[firstDay].temp_max : 'N/A';
 
+  // Function to get rain data and default to 0 if no data
   const getRainData = (rainKey: '3h') => {
     const rainData = weatherData?.rain?.[rainKey];
     return rainData ? `${rainData} mm` : '0 mm';
   };
 
+  // Function to get snow data and default to 0 if no data
   const getSnowData = (snowKey: '3h') => {
     const snowData = weatherData?.snow?.[snowKey];
     return snowData ? `${snowData} mm` : '0 mm';
   };
 
+  // Function to get wind gust and default to 0 if no data
   const getWindGustData = () => {
     const gustData = selectedWeather[0]?.wind?.gust;
     return gustData !== undefined ? `${gustData} km/h` : '0 km/h';
