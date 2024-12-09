@@ -24,10 +24,10 @@ const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather, weather, weath
       <div className='detail-5-day-container'>
         <div className='detail-5-day-sidebar'>
           <button onClick={() => handleButtonClick(0)}>
-            <span className = {`${activeTab === 0 ? 'active' : ''}`}>Summary</span>
+            <span className = {`${activeTab === 0 ? 'active' : ''}`}>Chart</span>
           </button>
           <button onClick={() => handleButtonClick(1)}>
-            <span className = {`${activeTab === 1 ? 'active' : ''}`}>Hourly</span>
+            <span className = {`${activeTab === 1 ? 'active' : ''}`}>Column</span>
           </button>
           <button onClick={() => handleButtonClick(2)}>
             <span className = {`${activeTab === 2 ? 'active' : ''}`}>More details</span>
