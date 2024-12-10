@@ -53,7 +53,7 @@ const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected, w
     datasets: [
       {
         label: 'Temperature',
-        borderColor: 'rgba(181,181,181,255)',
+        borderColor: 'rgb(181,181,181)',
         borderWidth: 1,
         data: [],
         pointRadius: 0,
@@ -75,9 +75,7 @@ const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected, w
           display: false,
           drawOnChartArea: false
         },
-        display: false,
-        min: 0, 
-        max: 50 
+        display: false
       }
     },
     plugins: {
@@ -130,67 +128,80 @@ const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected, w
       const maxTemp = Math.max(...validData)
       const minTemp = Math.min(...validData)
 
-      gradient.addColorStop(0, getColor(maxTemp)) // Top color    highest to 'rgba(247,149,145,255)' with 40°C
-
+      gradient.addColorStop(0, getColor(maxTemp)) 
 
       const tempArr = [-20, 0, 20, 25, 30]
-      const rgbaArr = [
-        { r: 219, g: 238, b: 255, a: 255 },
-        { r: 202, g: 239, b: 217, a: 255 },
-        { r: 255, g: 251, b: 243, a: 255 },
-        { r: 254, g: 243, b: 220, a: 255 },
-        { r: 247, g: 149, b: 145, a: 255 }
-      ]
+      const rgbArr = [
+        { r: 120, g: 192, b: 255 }, // #78c0ff 
+        { r: 178, g: 255, b: 168 }, // #b2ffa8
+        { r: 253, g: 255, b: 133 }, // #fdff85
+        { r: 255, g: 211, b: 116 }, // #ffd374
+        { r: 247, g: 149, b: 145 }  // #F79591
+      ];
 
       for (let i = 4; i >= 0; i--) {
         if (minTemp < tempArr[i] && maxTemp > tempArr[i]) {
-          gradient.addColorStop((maxTemp - tempArr[i]) / (maxTemp - minTemp), `rgba(${rgbaArr[i].r},${rgbaArr[i].g},${rgbaArr[i].b},${rgbaArr[i].a})`)
+          gradient.addColorStop((maxTemp - tempArr[i]) / (maxTemp - minTemp), `rgb(${rgbArr[i].r},${rgbArr[i].g},${rgbArr[i].b})`)
         }
       }
 
-      gradient.addColorStop(1, getColor(minTemp)) // Bottom color rgba(255,251,243,255)
+      gradient.addColorStop(1, getColor(minTemp))
+
+      console.log('maxTemp: ', maxTemp)
+      console.log('minTemp: ', minTemp)
+
+      console.log('color code top: ', getColor(maxTemp))
+      console.log('color code bottom: ', getColor(minTemp))
       dataset.backgroundColor = gradient
     }
   }
 
   function getColor(temp: number) {
+    console.log('temp: ', temp)
     let color = ''
     let isExactly = false;
     const tempArr = [-20, 0, 20, 25, 30]
-    const rgbaArr = [
-      { r: 219, g: 238, b: 255, a: 255 },
-      { r: 202, g: 239, b: 217, a: 255 },
-      { r: 255, g: 251, b: 243, a: 255 },
-      { r: 254, g: 243, b: 220, a: 255 },
-      { r: 247, g: 149, b: 145, a: 255 }
-    ]
+    const rgbArr = [
+      { r: 120, g: 192, b: 255 }, // #78c0ff 
+      { r: 178, g: 255, b: 168 }, // #b2ffa8
+      { r: 253, g: 255, b: 133 }, // #fdff85
+      { r: 255, g: 211, b: 116 }, // #ffd374
+      { r: 247, g: 149, b: 145 }  // #F79591
+    ];
 
     let position = 4;
     for (let i = 0; i < 5; i++) {
       if (temp < tempArr[i]) {
+        console.log('i: ', i)
         position = i - 1
+        break;
       } else if (temp == tempArr[i]) {
-        color = `rgba(${rgbaArr[i].r},${rgbaArr[i].g},${rgbaArr[i].b},${rgbaArr[i].a})`
+        color = `rgb(${rgbArr[i].r},${rgbArr[i].g},${rgbArr[i].b})`
         isExactly = true;
         break;
       }
     }
 
-    let r, g, b, a: number
+
+    let r, g, b: number
     if (!isExactly) {
       switch (position) {
         case -1:
-          color = 'rgba(219, 238, 255, 255)';
+          color = 'rgb(120, 192, 255)';
           break;
         case 4:
-          color = 'rgba(247, 149, 145, 255)';
+          color = 'rgb(247, 149, 145)';
           break;
         default:
-          r = Math.round(rgbaArr[position].r + (temp - tempArr[position]) / (tempArr[position + 1] - tempArr[position]) * (rgbaArr[position + 1].r - rgbaArr[position].r) )
-          g = Math.round(rgbaArr[position].g + (temp - tempArr[position]) / (tempArr[position + 1] - tempArr[position]) * (rgbaArr[position + 1].g - rgbaArr[position].g) )
-          b = Math.round(rgbaArr[position].b + (temp - tempArr[position]) / (tempArr[position + 1] - tempArr[position]) * (rgbaArr[position + 1].b - rgbaArr[position].b) )
-          a = Math.round(rgbaArr[position].a + (temp - tempArr[position]) / (tempArr[position + 1] - tempArr[position]) * (rgbaArr[position + 1].a - rgbaArr[position].a) )
-          color = `rgba(${r},${g},${b},${a})`;
+          console.log('position: ', position)
+          console.log('rgbArr[position].r: ', rgbArr[position].r );
+          console.log('rgbArr[position].g: ', rgbArr[position].g );
+          console.log('rgbArr[position].b: ', rgbArr[position].b );
+
+          r = Math.round(rgbArr[position].r + (temp - tempArr[position]) / (tempArr[position + 1] - tempArr[position]) * (rgbArr[position + 1].r - rgbArr[position].r) );
+          g = Math.round(rgbArr[position].g + (temp - tempArr[position]) / (tempArr[position + 1] - tempArr[position]) * (rgbArr[position + 1].g - rgbArr[position].g) );
+          b = Math.round(rgbArr[position].b + (temp - tempArr[position]) / (tempArr[position + 1] - tempArr[position]) * (rgbArr[position + 1].b - rgbArr[position].b) );
+          color = `rgb(${r},${g},${b})`;
       }
     }
     return color
@@ -340,7 +351,7 @@ const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected, w
       datasets: [
         {
           label: 'Temperature',
-          borderColor: 'rgba(181,181,181,255)',
+          borderColor: 'rgb(181,181,181)',
           borderWidth: 1,
           data: temperatureArray,
           pointRadius: 0,

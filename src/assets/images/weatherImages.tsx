@@ -1,6 +1,6 @@
 import RainyImage from '../images/Rain.png'
 import CloudyImage from '../images/Cloudy.png'
-import SunnyImage from '../images/Sunny.png'
+import SunnyImage from '/Sunny.png'
 import MistImage from '../images/Mist.png'
 import SnowImage from '../images/Snowdy.png'
 
