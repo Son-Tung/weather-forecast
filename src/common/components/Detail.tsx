@@ -5,6 +5,7 @@ import RainyImage from '../../assets/images/light_rain.png' // ảnh trời mưa
 import CloudyImage from '../../assets/images/cloudy_detail.png' // ảnh trời mây
 import MistImage from '../../assets/images/mist_detail.png' // ảnh trời sương mù
 import BigRain from '../../assets/images/muatovcl.png' // ảnh trời mưa to
+import SnowImage from '../../assets/images/snowdy.png' // ảnh trời có tuyết
 
 function Detail({ weather, geoData }: any) {
   const weatherImages: { [key: string]: string } = {
@@ -14,7 +15,8 @@ function Detail({ weather, geoData }: any) {
     mist: MistImage,
     haze: MistImage,
     frost: MistImage,
-    Thunderstorm_with_rain: BigRain
+    Thunderstorm_with_rain: BigRain,
+    snow: SnowImage
     // thêm các tình trạng thời tiết khác nếu cần
   }
 

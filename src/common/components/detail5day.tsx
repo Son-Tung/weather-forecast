@@ -1,7 +1,7 @@
 import '../styles/detail5day.css'
 import Summary from './summary.tsx'
 import Hourly from './hourly.tsx'
-import Details from './moredetails.tsx'
+import MoreDetails from './moredetails.tsx'
 import React, { useState } from 'react'
 
 interface Detail5dayProps {
@@ -24,10 +24,10 @@ const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather, weather, weath
       <div className='detail-5-day-container'>
         <div className='detail-5-day-sidebar'>
           <button onClick={() => handleButtonClick(0)}>
-            <span className = {`${activeTab === 0 ? 'active' : ''}`}>Summary</span>
+            <span className = {`${activeTab === 0 ? 'active' : ''}`}>Chart</span>
           </button>
           <button onClick={() => handleButtonClick(1)}>
-            <span className = {`${activeTab === 1 ? 'active' : ''}`}>Hourly</span>
+            <span className = {`${activeTab === 1 ? 'active' : ''}`}>Column</span>
           </button>
           <button onClick={() => handleButtonClick(2)}>
             <span className = {`${activeTab === 2 ? 'active' : ''}`}>More details</span>
@@ -39,7 +39,7 @@ const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather, weather, weath
             <Summary weather={weather} weather5day={weather5day} dateSelected={dateSelected} windowWidth={windowWidth} />
           )}
           {activeTab === 1 && <Hourly selectedWeather={selectedWeather} windowWidth={windowWidth}/>}
-          {activeTab === 2 && <Details selectedWeather={selectedWeather} weather={weather} />}
+          {activeTab === 2 && <MoreDetails selectedWeather={selectedWeather} weather={weather} />}
         </div>
       </div>
     </>

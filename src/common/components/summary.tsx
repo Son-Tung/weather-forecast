@@ -75,7 +75,9 @@ const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected, w
           display: false,
           drawOnChartArea: false
         },
-        display: false
+        display: false,
+        min: 0, 
+        max: 50 
       }
     },
     plugins: {
@@ -92,7 +94,8 @@ const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected, w
     },
     layout: {
       padding: {
-        bottom: 0 // Remove bottom padding
+        bottom: 0,
+        top: 15 
       }
     }
   })
@@ -129,16 +132,20 @@ const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected, w
 
       gradient.addColorStop(0, getColor(maxTemp)) // Top color    highest to 'rgba(247,149,145,255)' with 40°C
 
-      if (minTemp < 30 && maxTemp > 30) {
-        gradient.addColorStop((maxTemp - 30) / (maxTemp - minTemp), 'rgba(247,149,145,255)')
-      }
 
-      if (minTemp < 25 && maxTemp > 25) {
-        gradient.addColorStop((maxTemp - 25) / (maxTemp - minTemp), 'rgba(254,243,220,255)')
-      }
+      const tempArr = [-20, 0, 20, 25, 30]
+      const rgbaArr = [
+        { r: 219, g: 238, b: 255, a: 255 },
+        { r: 202, g: 239, b: 217, a: 255 },
+        { r: 255, g: 251, b: 243, a: 255 },
+        { r: 254, g: 243, b: 220, a: 255 },
+        { r: 247, g: 149, b: 145, a: 255 }
+      ]
 
-      if (minTemp < 20 && maxTemp > 20) {
-        gradient.addColorStop((maxTemp - 20) / (maxTemp - minTemp), 'rgba(255,251,243,255)')
+      for (let i = 4; i >= 0; i--) {
+        if (minTemp < tempArr[i] && maxTemp > tempArr[i]) {
+          gradient.addColorStop((maxTemp - tempArr[i]) / (maxTemp - minTemp), `rgba(${rgbaArr[i].r},${rgbaArr[i].g},${rgbaArr[i].b},${rgbaArr[i].a})`)
+        }
       }
 
       gradient.addColorStop(1, getColor(minTemp)) // Bottom color rgba(255,251,243,255)
@@ -147,38 +154,44 @@ const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected, w
   }
 
   function getColor(temp: number) {
-    let color: string
+    let color = ''
+    let isExactly = false;
+    const tempArr = [-20, 0, 20, 25, 30]
+    const rgbaArr = [
+      { r: 219, g: 238, b: 255, a: 255 },
+      { r: 202, g: 239, b: 217, a: 255 },
+      { r: 255, g: 251, b: 243, a: 255 },
+      { r: 254, g: 243, b: 220, a: 255 },
+      { r: 247, g: 149, b: 145, a: 255 }
+    ]
 
-    if (temp >= 30) {
-      color = 'rgba(247,149,145,255)'
-    } else if (temp == 25) {
-      color = 'rgba(254,243,220,255)'
-    } else if (temp <= 20) {
-      color = 'rgba(255,251,243,255)'
-    } else {
-      const startColor = { r: 255, g: 251, b: 243, a: 255 }
-      const midColor = { r: 254, g: 243, b: 220, a: 255 }
-      const endColor = { r: 247, g: 149, b: 145, a: 255 }
-
-      let ratio = (temp - 25) / 5
-      let r, g, b, a, r2, g2, b2, a2: number
-      if (ratio < 0) {
-        r2 = midColor.r - startColor.r
-        g2 = midColor.g - startColor.g
-        b2 = midColor.b - startColor.b
-        a2 = midColor.a - startColor.a
-      } else {
-        r2 = endColor.r - midColor.r
-        g2 = endColor.g - midColor.g
-        b2 = endColor.b - midColor.b
-        a2 = endColor.a - midColor.a
+    let position = 4;
+    for (let i = 0; i < 5; i++) {
+      if (temp < tempArr[i]) {
+        position = i - 1
+      } else if (temp == tempArr[i]) {
+        color = `rgba(${rgbaArr[i].r},${rgbaArr[i].g},${rgbaArr[i].b},${rgbaArr[i].a})`
+        isExactly = true;
+        break;
       }
+    }
 
-      r = Math.round(midColor.r + ratio * r2)
-      g = Math.round(midColor.g + ratio * g2)
-      b = Math.round(midColor.b + ratio * b2)
-      a = Math.round(midColor.a + ratio * a2)
-      color = `rgba(${r},${g},${b},${a})`
+    let r, g, b, a: number
+    if (!isExactly) {
+      switch (position) {
+        case -1:
+          color = 'rgba(219, 238, 255, 255)';
+          break;
+        case 4:
+          color = 'rgba(247, 149, 145, 255)';
+          break;
+        default:
+          r = Math.round(rgbaArr[position].r + (temp - tempArr[position]) / (tempArr[position + 1] - tempArr[position]) * (rgbaArr[position + 1].r - rgbaArr[position].r) )
+          g = Math.round(rgbaArr[position].g + (temp - tempArr[position]) / (tempArr[position + 1] - tempArr[position]) * (rgbaArr[position + 1].g - rgbaArr[position].g) )
+          b = Math.round(rgbaArr[position].b + (temp - tempArr[position]) / (tempArr[position + 1] - tempArr[position]) * (rgbaArr[position + 1].b - rgbaArr[position].b) )
+          a = Math.round(rgbaArr[position].a + (temp - tempArr[position]) / (tempArr[position + 1] - tempArr[position]) * (rgbaArr[position + 1].a - rgbaArr[position].a) )
+          color = `rgba(${r},${g},${b},${a})`;
+      }
     }
     return color
   }
