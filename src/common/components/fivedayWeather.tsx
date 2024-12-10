@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { weatherImages } from '../../assets/images/weatherImages'
+import { weatherImages } from './weatherImages'
 import '../styles/FiveWeather.scss'
 
 interface FivedayWeatherProps {
