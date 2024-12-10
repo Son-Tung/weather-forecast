@@ -123,6 +123,8 @@ const getInitialWeatherData = (): WeatherData => ({
   cod: 0
 });
 
+const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
 const useSunriseSunset = (lat: number, lon: number) => {
   const [sunData, setSunData] = useState<{ [key: string]: SunriseSunsetData }>({});
   const [loading, setLoading] = useState(true);
@@ -132,13 +134,13 @@ const useSunriseSunset = (lat: number, lon: number) => {
     const fetchSunData = async () => {
       try {
         const response = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=sunrise,sunset&timezone=Asia/Ho_Chi_Minh`
+          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=sunrise,sunset&timezone=${userTimezone}`
         );
         
         if (!response.ok) {
           throw new Error('Failed to fetch sunrise-sunset data');
         }
-
+    
         const data = await response.json();
         const groupedData = data.daily.time.map((time: string, index: number) => {
           const date = new Date(time).toLocaleDateString('en-US', {
