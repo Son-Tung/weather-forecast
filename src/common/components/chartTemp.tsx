@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import '../styles/summary.css'
+import '../styles/chartTemp.css'
 import { Line } from 'react-chartjs-2'
 import {
   Chart as ChartJS,
@@ -17,7 +17,7 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler)
 
-interface SummaryProps {
+interface ChartTempProps {
   weather: any
   weather5day: any
   dateSelected: any
@@ -37,7 +37,7 @@ interface DataState {
   }[]
 }
 
-const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected, windowWidth }) => {
+const ChartTemp: React.FC<ChartTempProps> = ({ weather, weather5day, dateSelected, windowWidth }) => {
   const contentRef = useRef<HTMLDivElement | null>(null)
   const humidityRef = useRef<HTMLDivElement | null>(null)
   const [widthBigChart, setWidthBigChart] = useState(0)
@@ -146,18 +146,11 @@ const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected, w
       }
 
       gradient.addColorStop(1, getColor(minTemp))
-
-      console.log('maxTemp: ', maxTemp)
-      console.log('minTemp: ', minTemp)
-
-      console.log('color code top: ', getColor(maxTemp))
-      console.log('color code bottom: ', getColor(minTemp))
       dataset.backgroundColor = gradient
     }
   }
 
   function getColor(temp: number) {
-    console.log('temp: ', temp)
     let color = ''
     let isExactly = false;
     const tempArr = [-20, 0, 20, 25, 30]
@@ -172,7 +165,6 @@ const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected, w
     let position = 4;
     for (let i = 0; i < 5; i++) {
       if (temp < tempArr[i]) {
-        console.log('i: ', i)
         position = i - 1
         break;
       } else if (temp == tempArr[i]) {
@@ -181,7 +173,6 @@ const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected, w
         break;
       }
     }
-
 
     let r, g, b: number
     if (!isExactly) {
@@ -193,11 +184,6 @@ const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected, w
           color = 'rgb(247, 149, 145)';
           break;
         default:
-          console.log('position: ', position)
-          console.log('rgbArr[position].r: ', rgbArr[position].r );
-          console.log('rgbArr[position].g: ', rgbArr[position].g );
-          console.log('rgbArr[position].b: ', rgbArr[position].b );
-
           r = Math.round(rgbArr[position].r + (temp - tempArr[position]) / (tempArr[position + 1] - tempArr[position]) * (rgbArr[position + 1].r - rgbArr[position].r) );
           g = Math.round(rgbArr[position].g + (temp - tempArr[position]) / (tempArr[position + 1] - tempArr[position]) * (rgbArr[position + 1].g - rgbArr[position].g) );
           b = Math.round(rgbArr[position].b + (temp - tempArr[position]) / (tempArr[position + 1] - tempArr[position]) * (rgbArr[position + 1].b - rgbArr[position].b) );
@@ -249,7 +235,6 @@ const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected, w
 
   useEffect(() => {
     let timer: NodeJS.Timeout | undefined
-    console.log()
     if (humidityRef.current) {
       const humidityTitle = humidityRef.current as HTMLElement
       humidityTitle.style.display = 'none'
@@ -325,25 +310,6 @@ const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected, w
       hourArrayDisplay.pop()
     }
 
-    /*
-    console.log('weather: '                , weather                      )
-    console.log('weather5day: '            , weather5day                  )
-    console.log('temperatureArray: '       , temperatureArray             )
-    console.log('humidityArray: '          , humidityArray                )
-    
-    console.log('temperatureArray.length: ', temperatureArray.length      )
-    console.log('humidityArray.length: '   , humidityArray.length         )
-    
-    console.log('bigArray: '               , bigArray                     )
-    console.log('push1time: '              , push1time                    )
-    console.log('has1small: '              , has1small                    )
-    
-    console.log('dateArray: '              , dateArray.map(getDateString) )
-    console.log('hourArrayDisplay: '       , hourArrayDisplay             )
-    console.log('dateArray.length: '       , dateArray.length             )
-    console.log('hourArrayDisplay.length: ', hourArrayDisplay.length      )
-    */
-
     const dateArrayString = dateArray.map(getDateString)
 
     setData({
@@ -416,4 +382,4 @@ const Summary: React.FC<SummaryProps> = ({ weather, weather5day, dateSelected, w
   )
 }
 
-export default Summary
+export default ChartTemp

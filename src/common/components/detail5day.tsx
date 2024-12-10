@@ -1,6 +1,6 @@
 import '../styles/detail5day.css'
-import Summary from './summary.tsx'
-import Hourly from './hourly.tsx'
+import ChartTemp from './chartTemp.tsx'
+import Column from './column.tsx'
 import MoreDetails from './moredetails.tsx'
 import React, { useState } from 'react'
 
@@ -36,9 +36,9 @@ const Detail5day: React.FC<Detail5dayProps> = ({ selectedWeather, weather, weath
 
         <div className='detail-5-day-content'>
           {activeTab === 0 && selectedWeather.length != 0 && weather != null && weather5day != null && (
-            <Summary weather={weather} weather5day={weather5day} dateSelected={dateSelected} windowWidth={windowWidth} />
+            <ChartTemp weather={weather} weather5day={weather5day} dateSelected={dateSelected} windowWidth={windowWidth} />
           )}
-          {activeTab === 1 && <Hourly selectedWeather={selectedWeather} windowWidth={windowWidth}/>}
+          {activeTab === 1 && <Column selectedWeather={selectedWeather} windowWidth={windowWidth}/>}
           {activeTab === 2 && <MoreDetails selectedWeather={selectedWeather} weather={weather} />}
         </div>
       </div>

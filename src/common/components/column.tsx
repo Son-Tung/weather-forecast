@@ -1,12 +1,12 @@
-import '../styles/hourly.css'
+import '../styles/column.css'
 import React, { useState, useEffect, useRef } from 'react'
 
-interface HourlyProps {
+interface ColumnProps {
   selectedWeather: any[]
   windowWidth: any
 }
 
-const Hourly: React.FC<HourlyProps> = ({ selectedWeather, windowWidth}) => {
+const Column: React.FC<ColumnProps> = ({ selectedWeather, windowWidth}) => {
   const contentRef = useRef<HTMLDivElement | null>(null)
   const [width, setWidth] = useState(0)
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -227,4 +227,4 @@ const Hourly: React.FC<HourlyProps> = ({ selectedWeather, windowWidth}) => {
   )
 }
 
-export default Hourly
+export default Column
