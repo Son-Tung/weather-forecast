@@ -238,7 +238,7 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
 
   // Function to get wind gust and default to 0 if no data
   const getWindGustData = () => {
-    const gustData = selectedWeather[0]?.wind?.gust;
+    const gustData = weatherData?.wind?.gust;
     return gustData !== undefined ? `${gustData} km/h` : '0 km/h';
   };
 
