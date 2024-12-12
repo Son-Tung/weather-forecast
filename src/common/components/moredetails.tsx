@@ -234,24 +234,84 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
   const firstDay = Object.keys(groupedByDay || {})[0];
   const minTemp = firstDay ? groupedByDay[firstDay].temp_min : 'N/A';
   const maxTemp = firstDay ? groupedByDay[firstDay].temp_max : 'N/A';
-
-  // Function to get rain data and default to 0 if no data
-  const getRainData = (rainKey: '3h') => {
-    const rainData = weatherData?.rain?.[rainKey];
-    return rainData ? `${rainData} mm` : '0 mm';
-  };
-
-  // Function to get snow data and default to 0 if no data
-  const getSnowData = (snowKey: '3h') => {
-    const snowData = weatherData?.snow?.[snowKey];
-    return snowData ? `${snowData} mm` : '0 mm';
-  };
+  const humidity = firstDay ? groupedByDay[firstDay].humidity : 'N/A';
 
   // Function to get wind gust and default to 0 if no data
   const getWindGustData = () => {
     const gustData = selectedWeather[0]?.wind?.gust;
     return gustData !== undefined ? `${gustData} km/h` : '0 km/h';
   };
+
+  const getRainData = (selectedWeather: any[]): string => {
+    // Nhóm các bản ghi theo ngày
+    const groupedRainData = selectedWeather.reduce((acc: any, curr) => {
+      const date = new Date(curr.dt * 1000).toLocaleDateString('en-US', {
+        weekday: 'long',
+        day: 'numeric',
+      });
+  
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+  
+      // Lấy lượng mưa trong 3 giờ, nếu không có thì là 0
+      const rainValue = curr.rain?.['3h'] || 0;
+      acc[date].push(rainValue);
+  
+      return acc;
+    }, {});
+  
+    // Lấy dữ liệu của ngày đầu tiên (hiện tại)
+    const firstDay = Object.keys(groupedRainData || {})[0];
+  
+    if (firstDay && groupedRainData[firstDay].length > 0) {
+      const totalRain = groupedRainData[firstDay].reduce(
+        (sum: number, val: number) => sum + val,
+        0
+      );
+      const averageRain = totalRain / groupedRainData[firstDay].length;
+      return `${averageRain.toFixed(2)} mm`; // Giới hạn 2 chữ số thập phân
+    }
+  
+    return '0 mm';
+  };
+
+  const getSnowData = (weatherData: any[]): string => {
+    // Nhóm các bản ghi theo ngày
+    const groupedSnowData = weatherData.reduce((acc: any, curr) => {
+      const date = new Date(curr.dt * 1000).toLocaleDateString('en-US', {
+        weekday: 'long',
+        day: 'numeric',
+      });
+  
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+  
+      // Lấy lượng tuyết trong 3 giờ, nếu không có thì là 0
+      const snowValue = curr.snow?.['3h'] || 0;
+      acc[date].push(snowValue);
+  
+      return acc;
+    }, {});
+  
+    // Lấy dữ liệu của ngày đầu tiên (hiện tại)
+    const firstDay = Object.keys(groupedSnowData || {})[0];
+  
+    if (firstDay && groupedSnowData[firstDay].length > 0) {
+      const totalSnow = groupedSnowData[firstDay].reduce(
+        (sum: number, val: number) => sum + val,
+        0
+      );
+      const averageSnow = totalSnow / groupedSnowData[firstDay].length;
+      return `${averageSnow.toFixed(2)} mm`; // Giới hạn 2 chữ số thập phân
+    }
+  
+    return '0 mm';
+  };
+  
+  const averageRain = getRainData(selectedWeather);
+  const averageSnow = getSnowData(selectedWeather);
 
   return (
     <div className="details">
@@ -331,17 +391,15 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
                 </div>
                 <div>
                   <FaSnowflake className="weather-icon" style={{ color: 'lightblue' }} />{' '}
-                  <strong>Snow (3h):</strong>{' '}
-                  {getSnowData('3h')}
+                  <strong>Snow (Avg/Day):</strong> {averageSnow}
                 </div>
                 <div>
                   <FaTint className="weather-icon" style={{ color: 'lightblue' }} />{' '}
-                  <strong>Rain (3h):</strong>{' '}
-                  {getRainData('3h')}
+                  <strong>Rain (Avg/Day):</strong> {averageRain} 
                 </div>
                 <div>
                   <FaTint className="weather-icon" style={{ color: 'lightblue' }} />{' '}
-                  <strong>Humidity:</strong> {selectedWeather[0].main.humidity}%
+                  <strong>Humidity:</strong> {humidity}%
                 </div>
                 <div>
                   <FaEye className="weather-icon" style={{ color: 'green' }} />{' '}
