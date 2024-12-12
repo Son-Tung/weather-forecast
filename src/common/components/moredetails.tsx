@@ -234,7 +234,6 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
   const firstDay = Object.keys(groupedByDay || {})[0];
   const minTemp = firstDay ? groupedByDay[firstDay].temp_min : 'N/A';
   const maxTemp = firstDay ? groupedByDay[firstDay].temp_max : 'N/A';
-  const humidity = firstDay ? groupedByDay[firstDay].humidity : 'N/A';
 
   // Function to get wind gust and default to 0 if no data
   const getWindGustData = () => {
@@ -310,8 +309,45 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
     return '0 mm';
   };
   
+  const getAverageHumidity = (weatherData: any[]): string => {
+    // Nhóm các bản ghi theo ngày
+    const groupedHumidityData = weatherData.reduce((acc: any, curr) => {
+      const date = new Date(curr.dt * 1000).toLocaleDateString('en-US', {
+        weekday: 'long',
+        day: 'numeric',
+      });
+  
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+  
+      // Lấy độ ẩm cho mỗi bản cập nhật, nếu không có thì mặc định là 0
+      const humidityValue = curr.main.humidity || 0;
+      acc[date].push(humidityValue);
+  
+      return acc;
+    }, {});
+  
+    // Lấy dữ liệu của ngày đầu tiên (hiện tại)
+    const firstDay = Object.keys(groupedHumidityData || {})[0];
+  
+    if (firstDay && groupedHumidityData[firstDay].length > 0) {
+      const totalHumidity = groupedHumidityData[firstDay].reduce(
+        (sum: number, val: number) => sum + val,
+        0
+      );
+      const averageHumidity = totalHumidity / groupedHumidityData[firstDay].length;
+  
+      // Làm tròn thành số nguyên và trả về giá trị độ ẩm trung bình
+      return `${Math.round(averageHumidity)}%`;
+    }
+  
+    return ''; // Nếu không có dữ liệu cho firstDay, trả về chuỗi rỗng
+  };
+  
   const averageRain = getRainData(selectedWeather);
   const averageSnow = getSnowData(selectedWeather);
+  const averageHumidity = getAverageHumidity(selectedWeather);
 
   return (
     <div className="details">
@@ -399,7 +435,7 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
                 </div>
                 <div>
                   <FaTint className="weather-icon" style={{ color: 'lightblue' }} />{' '}
-                  <strong>Humidity:</strong> {humidity}%
+                  <strong>Humidity (Avg/Day):</strong> {averageHumidity}
                 </div>
                 <div>
                   <FaEye className="weather-icon" style={{ color: 'green' }} />{' '}
