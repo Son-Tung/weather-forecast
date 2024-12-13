@@ -349,6 +349,15 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
   const averageSnow = getSnowData(selectedWeather);
   const averageHumidity = getAverageHumidity(selectedWeather);
 
+  const getCountryName = (countryCode: string): string => {
+    try {
+      const countryName = new Intl.DisplayNames(['en'], { type: 'region' }).of(countryCode);
+      return countryName || countryCode; // Nếu không tìm thấy, trả về mã quốc gia gốc
+    } catch (e) {
+      return countryCode; // Trả về mã quốc gia nếu có lỗi
+    }
+  };
+
   return (
     <div className="details">
       <div className="details-content">
@@ -459,7 +468,7 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
                 </div>
                 <div>
                   <FaMapMarkerAlt className="weather-icon" style={{ color: 'darkblue' }} />{' '}
-                  <strong>Country:</strong> {weather.sys.country}
+                  <strong>Country:</strong> {getCountryName(weather.sys.country)} ({weather.sys.country})
                 </div>
               </div>
             </div>
