@@ -1,45 +1,211 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+# 🌦️ Weather Forecast App
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
-
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+A modern, responsive weather forecast web application built with **React**, **TypeScript**, and **Vite**. This app provides real-time weather data, interactive maps, and visual analytics to help users easily explore weather conditions.
 
 ---
 
-## Edit a file
+## 🚀 Features
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
+* 🌍 **Search Weather by Location**
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
+  * Search for any city or location worldwide
+* 📍 **Interactive Maps**
 
----
+  * Integrated with map libraries (Leaflet, Google Maps, Goong Maps)
+* 📊 **Weather Data Visualization**
 
-## Create a file
+  * Charts powered by Chart.js for temperature, humidity, etc.
+* ⏱️ **Real-time Weather Updates**
+* 🎨 **Modern UI/UX**
 
-Next, you’ll add a new file to this repository.
+  * Clean and responsive design
+* ⚡ **Fast Performance**
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
+  * Powered by Vite for lightning-fast development and build
+* 🧩 **Reusable Components**
+* 🔄 **Routing Support**
 
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+  * Managed via React Router
 
 ---
 
-## Clone a repository
+## 🛠️ Tech Stack
 
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
+### Frontend
 
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
+* React 18
+* TypeScript
+* Vite
 
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+### UI & Styling
+
+* SCSS / Sass
+* React Icons
+* Lucide Icons
+* Font Awesome
+
+### Maps & Location
+
+* Leaflet
+* React Leaflet
+* Google Maps API
+* Goong Maps
+
+### Data & API
+
+* Axios
+
+### Charts
+
+* Chart.js
+* React Chart.js 2
+
+---
+
+## 📦 Installation
+
+### 1. Clone the repository
+
+```bash
+git clone git@bitbucket.org:quangtra2k41aafe68838584aac9f8272d4da12a258/weather-forecast.git
+cd weather-forecast
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Setup environment variables
+
+Create a `.env` file in the root directory and add your API keys:
+
+```env
+VITE_WEATHER_API_KEY=your_api_key_here
+VITE_GOOGLE_MAPS_API_KEY=your_google_maps_key
+VITE_GOONG_MAP_KEY=your_goong_key
+```
+
+---
+
+## 🧪 Development
+
+Run the development server:
+
+```bash
+npm run dev
+```
+
+App will be available at:
+
+```
+http://localhost:3000
+```
+
+---
+
+## 🏗️ Build
+
+To build the app for production:
+
+```bash
+npm run build
+```
+
+Preview the production build:
+
+```bash
+npm run preview
+```
+
+---
+
+## 🧹 Code Quality
+
+### Lint
+
+```bash
+npm run lint
+```
+
+### Fix lint issues
+
+```bash
+npm run lint:fix
+```
+
+### Format code with Prettier
+
+```bash
+npm run prettier:fix
+```
+
+---
+
+## 📁 Project Structure
+
+```
+weather-forecast/
+│── src/
+│   ├── components/     # Reusable UI components
+│   ├── pages/          # Application pages
+│   ├── services/       # API calls
+│   ├── hooks/          # Custom React hooks
+│   ├── utils/          # Utility functions
+│   ├── assets/         # Images, icons, styles
+│   └── App.tsx
+│
+│── public/
+│── index.html
+│── vite.config.ts
+│── tsconfig.json
+```
+
+---
+
+## 🌐 API Integration
+
+This project uses external weather APIs (OpenWeather).
+Make sure you register and obtain an API key before running the app.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 👨‍💻 Author
+
+Developed by **Nguyen Son Tung, Phung Quang Tra, Do Hong Dang, Le Minh Hieu, Vu Quang Dung**
+
+---
+
+## ⭐ Acknowledgements
+
+* React ecosystem
+* Vite team
+* Chart.js contributors
+* Leaflet & map providers
+
+---
+
+## 📬 Contact
+
+If you have any questions or feedback, feel free to reach out!
+
+---
