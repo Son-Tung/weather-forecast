@@ -35,7 +35,10 @@ const MapComponent = ({ coord, city, weather, weather5day }: WeatherMapProps) =>
     goongjs.accessToken = accessToken
     const map = new goongjs.Map({
       container: 'map',
-      style: 'https://tiles.goong.io/assets/goong_map_web.json',
+      style: 'https://api.maptiler.com/maps/streets-v2/style.json?key=4x3S6QzuSMfDRQGn1FJN',
+      // style: 'https://tiles.stadiamaps.com/styles/alidade_smooth.json',
+      // style: 'https://tiles.stadiamaps.com/styles/outdoors.json',
+      // style: 'https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json',
       center: [105.83991, 21.028],
       zoom: 7,
       maxZoom: 19,
