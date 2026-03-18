@@ -118,10 +118,22 @@ const MapComponent = ({ coord, city, weather, weather5day }: WeatherMapProps) =>
       }
 
       return () => {
-        if (mapRef.current?.getLayer(layerId)) {
-          mapRef.current.removeLayer(layerId)
-          mapRef.current.removeSource(sourceId)
-        }
+  const map = mapRef.current;
+
+  if (!map) return;
+
+  try {
+    if (map.getLayer(layerId)) {
+      map.removeLayer(layerId);
+    }
+
+    if (map.getSource(sourceId)) {
+      map.removeSource(sourceId);
+    }
+  } catch (e) {
+    // tránh crash khi map đã bị destroy
+    console.warn("Map already destroyed:", e);
+  }
       }
     }
   }, [mapType, apiKey])

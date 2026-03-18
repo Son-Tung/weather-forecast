@@ -25,32 +25,38 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="glass-footer">
-      <div className="footer-wrapper">
+  <div className="footer-wrapper">
 
-        {/* Brand */}
-        <div className="footer-brand">
-          🌤️ <span>Weather Forecast</span>
-        </div>
-
-        {/* Nav */}
-        <nav className="footer-nav">
-          <Link to="/">🏠 Home</Link>
-          <Link to="/news">📰 News</Link>
-          <Link to="/map">🗺️ Map</Link>
-          <Link to="/air-quality">🌫️ Air Quality</Link>
-        </nav>
-
-        {/* Toggle */}
-        <button className="theme-toggle" onClick={toggleTheme}>
-          {theme === "dark" ? "🌙 Dark" : "☀️ Light"}
-        </button>
-
-        {/* Copyright */}
-        <p className="footer-copy">
-          © 2024 - {currentYear} Weather Forecast
-        </p>
+    {/* Top row */}
+    <div className="footer-top">
+      {/* Brand */}
+      <div className="footer-brand">
+        🌤️ <span>Weather Forecast</span>
       </div>
-    </footer>
+
+      {/* Nav */}
+      <nav className="footer-nav">
+        <Link to="/">🏠 Home</Link>
+        <Link to="/news">📰 News</Link>
+        <Link to="/map">🗺️ Map</Link>
+        <Link to="/air-quality">🌫️ Air Quality</Link>
+      </nav>
+
+      {/* Toggle */}
+      <button className="theme-toggle" onClick={toggleTheme}>
+        {theme === "dark" ? "🌙 Dark" : "☀️ Light"}
+      </button>
+    </div>
+
+    {/* Bottom row */}
+    <div className="footer-bottom">
+      <p className="footer-copy">
+        © 2024 - {currentYear} Weather Forecast
+      </p>
+    </div>
+
+  </div>
+</footer>
   );
 };
 

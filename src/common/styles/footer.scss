@@ -8,21 +8,21 @@
   --text-color: #1a1a1a;
 }
 
-/* Gradient animated background */
+/* ===== FOOTER ===== */
 .glass-footer {
   font-family: 'Inter', sans-serif;
   position: relative;
-  margin-top: 40px;
-  padding: 30px 15px;
+  padding: 30px 20px;
   overflow: hidden;
-
   color: var(--text-color);
 
+  /* Gradient nền */
   background: linear-gradient(270deg, #1e3c72, #2a5298, #6dd5ed, #2193b0);
   background-size: 600% 600%;
   animation: gradientMove 12s ease infinite;
 
   backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255,255,255,0.2);
 }
 
 /* animation */
@@ -32,25 +32,33 @@
   100% { background-position: 0% 50%; }
 }
 
+/* wrapper */
 .footer-wrapper {
   max-width: 1200px;
   margin: auto;
-  text-align: center;
+}
+
+/* ===== TOP ROW ===== */
+.footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
 }
 
 /* Brand */
 .footer-brand {
   font-size: 20px;
   font-weight: 600;
-  margin-bottom: 14px;
+  letter-spacing: 0.5px;
 }
 
 /* Nav */
 .footer-nav {
   display: flex;
-  justify-content: center;
-  gap: 24px;
-  margin-bottom: 16px;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
@@ -59,18 +67,19 @@
   text-decoration: none;
   padding: 6px 12px;
   border-radius: 10px;
-  transition: 0.25s;
+  opacity: 0.85;
+  transition: all 0.25s ease;
 }
 
 .footer-nav a:hover {
   background: rgba(255, 255, 255, 0.2);
+  opacity: 1;
   transform: translateY(-2px);
 }
 
 /* Toggle button */
 .theme-toggle {
-  margin-bottom: 12px;
-  padding: 8px 16px;
+  padding: 6px 14px;
   border: none;
   border-radius: 20px;
   cursor: pointer;
@@ -79,15 +88,34 @@
   color: var(--text-color);
 
   backdrop-filter: blur(6px);
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
 .theme-toggle:hover {
   background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.05);
 }
 
-/* Copy */
+/* ===== BOTTOM ===== */
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.2);
+  padding-top: 12px;
+  text-align: center;
+}
+
 .footer-copy {
   font-size: 14px;
-  opacity: 0.85;
+  opacity: 0.7;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .footer-top {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-nav {
+    justify-content: center;
+  }
 }
