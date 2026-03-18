@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  --text-color: #ffffff;
+}
+
+[data-theme="light"] {
+  --text-color: #1a1a1a;
+}
+
+/* Gradient animated background */
+.glass-footer {
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  margin-top: 40px;
+  padding: 30px 15px;
+  overflow: hidden;
+
+  color: var(--text-color);
+
+  background: linear-gradient(270deg, #1e3c72, #2a5298, #6dd5ed, #2193b0);
+  background-size: 600% 600%;
+  animation: gradientMove 12s ease infinite;
+
+  backdrop-filter: blur(12px);
+}
+
+/* animation */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.footer-wrapper {
+  max-width: 1200px;
+  margin: auto;
+  text-align: center;
+}
+
+/* Brand */
+.footer-brand {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+/* Nav */
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.footer-nav a {
+  color: var(--text-color);
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 10px;
+  transition: 0.25s;
+}
+
+.footer-nav a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Toggle button */
+.theme-toggle {
+  margin-bottom: 12px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--text-color);
+
+  backdrop-filter: blur(6px);
+  transition: 0.3s;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* Copy */
+.footer-copy {
+  font-size: 14px;
+  opacity: 0.85;
+}
