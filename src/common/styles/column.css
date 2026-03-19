@@ -1,6 +1,7 @@
 .every-hour-display {
   position: relative;
   overflow: hidden;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .every-hour-display-container {

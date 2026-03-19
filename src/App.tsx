@@ -108,11 +108,10 @@ function App() {
                 />
               }
             />
-            <Route path='/map' element={<Map />} />
+            <Route path='/map' element={<Map coord={geoData || { lat: 0, lon: 0 }} city={city} />} />
             <Route path='/news' element={<Info />} />
             <Route path='/air-quality' element={<Air />} />
             <Route path='/moredetails' element={<MoreDetails selectedWeather={selectedWeather} weather={weather} />} />{' '}
-            {/* Added MoreDetails route */}
           </Routes>
           <Footer />
         </div>
