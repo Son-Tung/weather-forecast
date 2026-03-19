@@ -416,11 +416,11 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
                 </div>
                 <div>
                   <FaThermometerHalf className="weather-icon" style={{ color: 'red' }} />{' '}
-                  <strong>Min Temperature:</strong> {Math.ceil(minTemp)}°C
+                  <strong>Max Temperature:</strong> {Math.ceil(maxTemp)}°C
                 </div>
                 <div>
                   <FaThermometerHalf className="weather-icon" style={{ color: 'red' }} />{' '}
-                  <strong>Max Temperature:</strong> {Math.ceil(maxTemp)}°C
+                  <strong>Min Temperature:</strong> {Math.ceil(minTemp)}°C
                 </div>
                 <div>
                   <FaTachometerAlt className="weather-icon" style={{ color: 'darkgray' }} />{' '}

@@ -1,62 +1,74 @@
 import "../styles/footer.scss";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
 
-  // Load theme từ localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem("theme") as "light" | "dark" | null;
-    if (saved) {
-      setTheme(saved);
-      document.documentElement.setAttribute("data-theme", saved);
-    }
-  }, []);
-
-  // Toggle theme
-  const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    document.documentElement.setAttribute("data-theme", newTheme);
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <footer className="glass-footer">
-  <div className="footer-wrapper">
+      <div className="footer-wrapper">
+        {/* Top row */}
+        <div className="footer-top">
+          {/* Brand */}
+          <div className="footer-brand" aria-label="Weather Forecast">
+            <span className="footer-logo">🌤️</span>
+            <span className="footer-title">Weather Forecast</span>
+          </div>
 
-    {/* Top row */}
-    <div className="footer-top">
-      {/* Brand */}
-      <div className="footer-brand">
-        🌤️ <span>Weather Forecast</span>
+          {/* Nav */}
+          <nav className="footer-nav" aria-label="Footer navigation">
+            <Link to="/">Home</Link>
+            <Link to="/news">News</Link>
+            <Link to="/map">Map</Link>
+            <Link to="/air-quality">Air Quality</Link>
+          </nav>
+
+          {/* Actions (no new page) */}
+          <div className="footer-actions" aria-label="Footer actions">
+            <a
+              className="footer-icon"
+              href="mailto:your-email@example.com"
+              aria-label="Email"
+              title="Email"
+            >
+              ✉️
+            </a>
+            <a
+              className="footer-icon"
+              href="https://github.com/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="GitHub"
+              title="GitHub"
+            >
+              🧑‍💻
+            </a>
+
+            <button
+              type="button"
+              className="back-to-top"
+              onClick={scrollToTop}
+              aria-label="Back to top"
+              title="Back to top"
+            >
+              ↑ Top
+            </button>
+          </div>
+        </div>
+
+        <div className="footer-divider" />
+
+        {/* Bottom row */}
+        <div className="footer-bottom">
+          <p className="footer-copy">© 2024 – {currentYear} Weather Forecast</p>
+          <p className="footer-meta">Built with React • Weather & Air Quality</p>
+        </div>
       </div>
-
-      {/* Nav */}
-      <nav className="footer-nav">
-        <Link to="/">🏠 Home</Link>
-        <Link to="/news">📰 News</Link>
-        <Link to="/map">🗺️ Map</Link>
-        <Link to="/air-quality">🌫️ Air Quality</Link>
-      </nav>
-
-      {/* Toggle */}
-      <button className="theme-toggle" onClick={toggleTheme}>
-        {theme === "dark" ? "🌙 Dark" : "☀️ Light"}
-      </button>
-    </div>
-
-    {/* Bottom row */}
-    <div className="footer-bottom">
-      <p className="footer-copy">
-        © 2024 - {currentYear} Weather Forecast
-      </p>
-    </div>
-
-  </div>
-</footer>
+    </footer>
   );
 };
 

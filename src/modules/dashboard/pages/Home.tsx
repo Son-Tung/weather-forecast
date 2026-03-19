@@ -3,7 +3,7 @@ import FivedayWeather from '../../../common/components/fivedayWeather'
 import Main from '../../../common/components/main'
 import MapComponent from '../../../common/components/MapComponent'
 // import WeatherMap from '../../../common/components/WeatherMap'
-import WeatherDashboard from './WeatherDashboard'
+import WeatherDashboard from '../../../common/components/WeatherDashboard'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 
 const Home: React.FC<{

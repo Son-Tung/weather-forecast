@@ -1,0 +1,327 @@
+/* ================= DASHBOARD ================= */
+.dashboard {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 0 24px;
+  margin-bottom: 80px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ================= CARD ================= */
+.card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  min-height: 260px;
+}
+
+/* ================= TITLE ================= */
+.dashboard-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* ================= TEXT ================= */
+.card p {
+  margin: 4px 0;
+}
+
+.temp-description,
+.feellike-description,
+.humid-description,
+.press-description,
+.visibility-description,
+.aqi-description,
+.uv-description {
+  font-size: 13px;
+  color: #666;
+  margin-top: 6px;
+}
+
+/* ================= STATUS ================= */
+.temp-warning,
+.feelike-warning,
+.humid-warning,
+.visibility-warning,
+.press-warning,
+.aqi-warning,
+.uv-warning {
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+/* ================= TEMPERATURE ================= */
+.temp-dsc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.temper {
+  position: absolute;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+/* ================= FEELS LIKE ================= */
+.feellike-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.feellike-container-temp {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.feellike-container-label {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+/* ================= HUMIDITY ================= */
+.humid-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.humid-content-img {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 70px;
+}
+
+.humidLevelBar {
+  width: 6px;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+}
+
+.humidPercent {
+  width: 100%;
+  height: 70%;
+  background-color: #6994fa;
+  border-radius: 6px;
+}
+
+.hmintro {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.dewpoint {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+/* ================= WIND ================= */
+.wind-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 👉 FIX QUAN TRỌNG */
+.wind-content-img {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+/* icon */
+.wind-icon {
+  width: 100%;
+  height: 100%;
+}
+
+/* hướng */
+.North,
+.South,
+.East,
+.West {
+  position: absolute;
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+/* TOP */
+.North {
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* BOTTOM */
+.South {
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* LEFT */
+.West {
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* RIGHT */
+.East {
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* info */
+.wind-content-info {
+  width: 110px;
+}
+
+.windintro {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wind-dsc {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.wind-unit,
+.wind-text {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.wind-title {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+/* ================= PRESSURE ================= */
+.press-content {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.presscurrent {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.presstitle {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.presstime {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+/* ================= VISIBILITY ================= */
+.visibilityLevelBarContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.visibilityLevelBar {
+  height: 10px;
+  border-radius: 6px;
+}
+
+.visibilityText h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+/* ================= AQI ================= */
+.aqi-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.aqi-content p {
+  position: absolute;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.aqi-icon {
+  width: 125px;
+}
+
+/* ================= UV ================= */
+.uv-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.uv-content p {
+  position: absolute;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.uv-icon {
+  width: 120px;
+}
+
+/* ================= PUSH DETAILS ================= */
+.temp-details,
+.feellike-details,
+.humid-details,
+.press-details,
+.visibility-details,
+.aqi-details,
+.uv-details {
+  margin-top: auto;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1200px) {
+  .dashboard {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+}
