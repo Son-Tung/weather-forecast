@@ -1,0 +1,133 @@
+/* ===== Variables ===== */
+$primary-color: #1677ff;
+$hover-color: #4096ff;
+$bg-light: #f8fafc;
+$border-light: #e2e8f0;
+
+/* ===== Background ===== */
+.air-container {
+  min-height: 100vh;
+  padding: 24px;
+
+  background: linear-gradient(135deg, #dbeafe, #eef2ff, #f8fafc);
+  background-size: 200% 200%;
+  animation: gradientMove 10s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: left; }
+  50% { background-position: right; }
+  100% { background-position: left; }
+}
+
+/* ===== Loading ===== */
+.air-loading {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===== Card chung (Glass UI) ===== */
+.air-card {
+  border-radius: 18px;
+  margin-bottom: 24px;
+
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* ===== Search ===== */
+.search-card {
+  .ant-select {
+    &-selector {
+      border-radius: 12px !important;
+      height: 46px !important;
+
+      display: flex;
+      align-items: center;
+
+      background: $bg-light !important;
+      border: 1px solid $border-light !important;
+
+      transition: all 0.3s;
+
+      &:hover {
+        border-color: $hover-color !important;
+      }
+    }
+
+    &-focused {
+      .ant-select-selector {
+        border-color: $primary-color !important;
+        box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.2);
+      }
+    }
+  }
+}
+
+/* ===== AQI ===== */
+.aqi-card {
+  text-align: center;
+}
+
+.aqi-wrapper {
+  margin: 24px 0;
+  display: flex;
+  justify-content: center;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.05), transparent);
+    border-radius: 50%;
+    z-index: 0;
+  }
+}
+
+/* ===== Components ===== */
+.component-card {
+  border-radius: 14px;
+  text-align: center;
+
+  background: linear-gradient(135deg, #ffffff, $bg-light);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .air-container {
+    padding: 16px;
+  }
+
+  .air-card {
+    border-radius: 14px;
+  }
+
+  .aqi-wrapper {
+    &::after {
+      width: 140px;
+      height: 140px;
+    }
+  }
+}
