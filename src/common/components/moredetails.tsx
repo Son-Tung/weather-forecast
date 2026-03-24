@@ -448,7 +448,7 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
                 </div>
                 <div>
                   <FaEye className="weather-icon" style={{ color: 'green' }} />{' '}
-                  <strong>Visibility:</strong> {selectedWeather[0].visibility} m
+                  <strong>Visibility:</strong> {Number((selectedWeather[0].visibility / 1000).toFixed(1))} km
                 </div>
                 <div>
                   <FaWind className="weather-icon" style={{ color: 'lightblue' }} />{' '}

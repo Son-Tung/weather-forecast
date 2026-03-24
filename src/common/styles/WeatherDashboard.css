@@ -25,11 +25,23 @@
   min-height: 260px;
 }
 
+.card-temperature,
+.humidity,
+.wind,
+.pressure,
+.visibility,
+.aqi,
+.uv {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: linear-gradient(180deg, #ffffff 0%, #f9fbff 100%);
+}
+
 /* ================= TITLE ================= */
 .dashboard-name {
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 10px;
+  letter-spacing: 0.2px;
 }
 
 /* ================= TEXT ================= */
@@ -71,29 +83,75 @@
   justify-content: center;
   align-items: center;
   position: relative;
+  margin: 4px 0 8px;
+}
+
+.temp-dsc img {
+  height: auto;
 }
 
 .temper {
   position: absolute;
   font-size: 36px;
   font-weight: 700;
+  color: #2657b9;
+}
+
+.temp-warning {
+  color: #2f6edb;
 }
 
 /* ================= FEELS LIKE ================= */
-.feellike-container {
+.feelslike {
   display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
+  flex-direction: column;
+}
+
+.fl-icon {
+  width: 230px;
+  height: auto;
+  align-self: center;
+  margin: 2px 0 10px;
+}
+
+.feellike-container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.feellike-container > div {
+  background: rgba(105, 148, 250, 0.08);
+  border: 1px solid rgba(105, 148, 250, 0.2);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .feellike-container-temp {
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 26px;
+  line-height: 1;
+  font-weight: 700;
 }
 
 .feellike-container-label {
-  font-size: 11px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
   color: rgba(0, 0, 0, 0.6);
+}
+
+.feellike-details {
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.feelike-warning {
+  color: #2f6edb;
 }
 
 /* ================= HUMIDITY ================= */
@@ -101,6 +159,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
 }
 
 .humid-content-img {
@@ -129,9 +188,25 @@
   font-weight: 600;
 }
 
+.humid-content-info {
+  min-width: 110px;
+  display: grid;
+  gap: 2px;
+}
+
+.humid-text,
+.dewpoint-text {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.62);
+}
+
 .dewpoint {
   font-size: 20px;
   font-weight: 500;
+}
+
+.humid-warning {
+  color: #2f6edb;
 }
 
 /* ================= WIND ================= */
@@ -139,6 +214,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
 }
 
 /* 👉 FIX QUAN TRỌNG */
@@ -146,6 +222,8 @@
   position: relative;
   width: 100px;
   height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(105, 148, 250, 0.14) 0%, rgba(105, 148, 250, 0.04) 70%);
 }
 
 /* icon */
@@ -195,12 +273,18 @@
 /* info */
 .wind-content-info {
   width: 110px;
+  display: grid;
+  gap: 6px;
 }
 
 .windintro {
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .wind-dsc {
@@ -217,7 +301,11 @@
 .wind-title {
   font-size: 12px;
   color: #666;
-  margin-bottom: 4px;
+  margin-bottom: 0;
+}
+
+.wind .humid-details .humid-warning {
+  color: #2f6edb;
 }
 
 /* ================= PRESSURE ================= */
@@ -225,11 +313,26 @@
   display: flex;
   align-items: baseline;
   gap: 6px;
+  margin: 6px 0 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(105, 148, 250, 0.1);
+}
+
+.pressure > img {
+  height: auto;
+  align-self: center;
 }
 
 .presscurrent {
   font-size: 26px;
   font-weight: 700;
+}
+
+.pressmeme {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
 }
 
 .presstitle {
@@ -242,22 +345,36 @@
   color: rgba(0, 0, 0, 0.7);
 }
 
+.press-warning {
+  color: #2f6edb;
+}
+
 /* ================= VISIBILITY ================= */
 .visibilityLevelBarContainer {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  margin-top: 6px;
 }
 
 .visibilityLevelBar {
   height: 10px;
   border-radius: 6px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
 }
 
 .visibilityText h2 {
   font-size: 24px;
   font-weight: 600;
-  margin-top: 8px;
+  margin-top: 10px;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: rgba(105, 148, 250, 0.12);
+}
+
+.visibility-warning {
+  color: #2f6edb;
 }
 
 /* ================= AQI ================= */
@@ -266,16 +383,25 @@
   justify-content: center;
   align-items: center;
   position: relative;
+  margin-top: 4px;
+  padding: 8px 0;
+  border-radius: 12px;
+  background: radial-gradient(circle, rgba(105, 148, 250, 0.16) 0%, rgba(105, 148, 250, 0.03) 72%);
 }
 
 .aqi-content p {
   position: absolute;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 700;
+  color: #1f4d9d;
 }
 
 .aqi-icon {
   width: 125px;
+}
+
+.aqi-warning {
+  color: #2f6edb;
 }
 
 /* ================= UV ================= */
@@ -284,16 +410,25 @@
   justify-content: center;
   align-items: center;
   position: relative;
+  margin-top: 4px;
+  padding: 8px 0;
+  border-radius: 12px;
+  background: radial-gradient(circle, rgba(105, 148, 250, 0.16) 0%, rgba(105, 148, 250, 0.03) 72%);
 }
 
 .uv-content p {
   position: absolute;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 700;
+  color: #1f4d9d;
 }
 
 .uv-icon {
   width: 120px;
+}
+
+.uv-warning {
+  color: #2f6edb;
 }
 
 /* ================= PUSH DETAILS ================= */
@@ -305,6 +440,8 @@
 .aqi-details,
 .uv-details {
   margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 /* ================= RESPONSIVE ================= */
