@@ -125,7 +125,7 @@ const getInitialWeatherData = (): WeatherData => ({
 
 const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-const useSunriseSunset = (lat: number, lon: number) => {
+const useSunriseSunset = (lat?: number, lon?: number) => {
   const [sunData, setSunData] = useState<{ [key: string]: SunriseSunsetData }>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -169,8 +169,10 @@ const useSunriseSunset = (lat: number, lon: number) => {
       }
     };
 
-    if (lat && lon) {
+    if (lat !== undefined && lon !== undefined && Number.isFinite(lat) && Number.isFinite(lon)) {
       fetchSunData();
+    } else {
+      setLoading(false);
     }
   }, [lat, lon]);
 
@@ -178,16 +180,11 @@ const useSunriseSunset = (lat: number, lon: number) => {
 };
 
 const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
-  const [weatherData, setWeatherData] = useState<WeatherData>(getInitialWeatherData());
-  const { sunData } = useSunriseSunset(weather.coord.lat, weather.coord.lon);
-
-  useEffect(() => {
-    if (selectedWeather.length === 0) {
-      setWeatherData(getInitialWeatherData());
-    } else {
-      setWeatherData(selectedWeather[0]);
-    }
-  }, [selectedWeather]);
+  const primaryWeather: WeatherData = selectedWeather?.[0] || getInitialWeatherData();
+  const hasWeather = selectedWeather?.length > 0;
+  const lat = weather?.coord?.lat ?? selectedWeather?.[0]?.coord?.lat;
+  const lon = weather?.coord?.lon ?? selectedWeather?.[0]?.coord?.lon;
+  const { sunData } = useSunriseSunset(lat, lon);
 
   const formatTime = (timestamp: string | number): string => {
     if (!timestamp) return 'N/A';
@@ -234,120 +231,67 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
   const firstDay = Object.keys(groupedByDay || {})[0];
   const minTemp = firstDay ? groupedByDay[firstDay].temp_min : 'N/A';
   const maxTemp = firstDay ? groupedByDay[firstDay].temp_max : 'N/A';
+  const displayMinTemp = typeof minTemp === 'number' ? Math.ceil(minTemp) : 'N/A';
+  const displayMaxTemp = typeof maxTemp === 'number' ? Math.ceil(maxTemp) : 'N/A';
 
-  // Function to get wind gust and default to 0 if no data
-  const getWindGustData = () => {
-    const gustData = weatherData?.wind?.gust;
-    return gustData !== undefined ? `${gustData} km/h` : '0 km/h';
-  };
+const getAverageByDay = (
+  weatherData: any[],
+  valueExtractor: (item: any) => number,
+  unit: string,
+  round: boolean = false
+): string => {
+  const groupedData = weatherData.reduce((acc: any, curr) => {
+    const date = new Date(curr.dt * 1000).toLocaleDateString('en-US', {
+      weekday: 'long',
+      day: 'numeric',
+    });
 
-  const getRainData = (selectedWeather: any[]): string => {
-    // Nhóm các bản ghi theo ngày
-    const groupedRainData = selectedWeather.reduce((acc: any, curr) => {
-      const date = new Date(curr.dt * 1000).toLocaleDateString('en-US', {
-        weekday: 'long',
-        day: 'numeric',
-      });
-  
-      if (!acc[date]) {
-        acc[date] = [];
-      }
-  
-      // Lấy lượng mưa trong 3 giờ, nếu không có thì là 0
-      const rainValue = curr.rain?.['3h'] || 0;
-      acc[date].push(rainValue);
-  
-      return acc;
-    }, {});
-  
-    // Lấy dữ liệu của ngày đầu tiên (hiện tại)
-    const firstDay = Object.keys(groupedRainData || {})[0];
-  
-    if (firstDay && groupedRainData[firstDay].length > 0) {
-      const totalRain = groupedRainData[firstDay].reduce(
-        (sum: number, val: number) => sum + val,
-        0
-      );
-      const averageRain = totalRain / groupedRainData[firstDay].length;
-      return `${averageRain.toFixed(2)} mm`; // Giới hạn 2 chữ số thập phân
+    if (!acc[date]) {
+      acc[date] = [];
     }
-  
-    return '0 mm';
-  };
 
-  const getSnowData = (weatherData: any[]): string => {
-    // Nhóm các bản ghi theo ngày
-    const groupedSnowData = weatherData.reduce((acc: any, curr) => {
-      const date = new Date(curr.dt * 1000).toLocaleDateString('en-US', {
-        weekday: 'long',
-        day: 'numeric',
-      });
-  
-      if (!acc[date]) {
-        acc[date] = [];
-      }
-  
-      // Lấy lượng tuyết trong 3 giờ, nếu không có thì là 0
-      const snowValue = curr.snow?.['3h'] || 0;
-      acc[date].push(snowValue);
-  
-      return acc;
-    }, {});
-  
-    // Lấy dữ liệu của ngày đầu tiên (hiện tại)
-    const firstDay = Object.keys(groupedSnowData || {})[0];
-  
-    if (firstDay && groupedSnowData[firstDay].length > 0) {
-      const totalSnow = groupedSnowData[firstDay].reduce(
-        (sum: number, val: number) => sum + val,
-        0
-      );
-      const averageSnow = totalSnow / groupedSnowData[firstDay].length;
-      return `${averageSnow.toFixed(2)} mm`; // Giới hạn 2 chữ số thập phân
-    }
-  
-    return '0 mm';
-  };
-  
-  const getAverageHumidity = (weatherData: any[]): string => {
-    // Nhóm các bản ghi theo ngày
-    const groupedHumidityData = weatherData.reduce((acc: any, curr) => {
-      const date = new Date(curr.dt * 1000).toLocaleDateString('en-US', {
-        weekday: 'long',
-        day: 'numeric',
-      });
-  
-      if (!acc[date]) {
-        acc[date] = [];
-      }
-  
-      // Lấy độ ẩm cho mỗi bản cập nhật, nếu không có thì mặc định là 0
-      const humidityValue = curr.main.humidity || 0;
-      acc[date].push(humidityValue);
-  
-      return acc;
-    }, {});
-  
-    // Lấy dữ liệu của ngày đầu tiên (hiện tại)
-    const firstDay = Object.keys(groupedHumidityData || {})[0];
-  
-    if (firstDay && groupedHumidityData[firstDay].length > 0) {
-      const totalHumidity = groupedHumidityData[firstDay].reduce(
-        (sum: number, val: number) => sum + val,
-        0
-      );
-      const averageHumidity = totalHumidity / groupedHumidityData[firstDay].length;
-  
-      // Làm tròn thành số nguyên và trả về giá trị độ ẩm trung bình
-      return `${Math.round(averageHumidity)}%`;
-    }
-  
-    return ''; // Nếu không có dữ liệu cho firstDay, trả về chuỗi rỗng
-  };
-  
-  const averageRain = getRainData(selectedWeather);
-  const averageSnow = getSnowData(selectedWeather);
-  const averageHumidity = getAverageHumidity(selectedWeather);
+    const value = valueExtractor(curr) ?? 0;
+    acc[date].push(value);
+
+    return acc;
+  }, {});
+
+  const firstDay = Object.keys(groupedData || {})[0];
+
+  if (firstDay && groupedData[firstDay].length > 0) {
+    const total = groupedData[firstDay].reduce(
+      (sum: number, val: number) => sum + val,
+      0
+    );
+
+    const avg = total / groupedData[firstDay].length;
+
+    return round
+      ? `${Math.round(avg)}${unit}`
+      : `${avg.toFixed(2)}${unit}`;
+  }
+
+  return `0${unit}`;
+};
+
+  const averageRain = getAverageByDay(
+  selectedWeather,
+  (item) => item.rain?.['3h'],
+  " mm"
+);
+
+  const averageSnow = getAverageByDay(
+  selectedWeather,
+  (item) => item.snow?.['3h'],
+  " mm"
+);
+
+  const averageHumidity = getAverageByDay(
+  selectedWeather,
+  (item) => item.main?.humidity,
+  "%",
+  true
+);
 
   const getCountryName = (countryCode: string): string => {
     try {
@@ -361,7 +305,7 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
   return (
     <div className="details">
       <div className="details-content">
-        {selectedWeather[0] && (
+        {hasWeather && (
           <>
             <div className="weather-info-left">
               <h3>Sun Information</h3>
@@ -371,7 +315,7 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
                   <div className="info-text">
                     <p>Lat and Lon</p>
                     <p className="lat-lon-value">
-                      {weather.coord.lat} and {weather.coord.lon}
+                      {lat ?? 'N/A'} and {lon ?? 'N/A'}
                     </p>
                   </div>
                 </div>
@@ -400,39 +344,39 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
               <div className="weather-details">
                 <div>
                   <FaMapPin className="weather-icon" style={{ color: 'black' }} />{' '}
-                  <strong>Location:</strong> {weather.name}
+                  <strong>Location:</strong> {weather?.name || primaryWeather.name}
                 </div>
                 <div>
                   <FaClock className="weather-icon" style={{ color: 'gray' }} />{' '}
-                  <strong>Timezone:</strong> {weather.timezone / 3600} UTC
+                  <strong>Timezone:</strong> {(weather?.timezone ?? primaryWeather.timezone) / 3600} UTC
                 </div>
                 <div>
                   <FaThermometerHalf className="weather-icon" style={{ color: 'red' }} />{' '}
-                  <strong>Temperature:</strong> {selectedWeather[0].main.temp}°C
+                  <strong>Temperature:</strong> {primaryWeather.main.temp}°C
                 </div>
                 <div>
                   <FaThermometerHalf className="weather-icon" style={{ color: 'red' }} />{' '}
-                  <strong>Feels Like:</strong> {selectedWeather[0].main.feels_like}°C
+                  <strong>Feels Like:</strong> {primaryWeather.main.feels_like}°C
                 </div>
                 <div>
                   <FaThermometerHalf className="weather-icon" style={{ color: 'red' }} />{' '}
-                  <strong>Max Temperature:</strong> {Math.ceil(maxTemp)}°C
+                  <strong>Max Temperature:</strong> {displayMaxTemp}°C
                 </div>
                 <div>
                   <FaThermometerHalf className="weather-icon" style={{ color: 'red' }} />{' '}
-                  <strong>Min Temperature:</strong> {Math.ceil(minTemp)}°C
+                  <strong>Min Temperature:</strong> {displayMinTemp}°C
                 </div>
                 <div>
                   <FaTachometerAlt className="weather-icon" style={{ color: 'darkgray' }} />{' '}
-                  <strong>Pressure:</strong> {selectedWeather[0].main.pressure} hPa
+                  <strong>Pressure:</strong> {primaryWeather.main.pressure} hPa
                 </div>
                 <div>
                   <FaWater className="weather-icon" style={{ color: 'blue' }} />{' '}
-                  <strong>Sea Pressure:</strong> {selectedWeather[0].main.sea_level} hPa
+                  <strong>Sea Pressure:</strong> {primaryWeather.main.sea_level} hPa
                 </div>
                 <div>
                   <FaMountain className="weather-icon" style={{ color: 'brown' }} />{' '}
-                  <strong>Ground Pressure:</strong> {selectedWeather[0].main.grnd_level} hPa
+                  <strong>Ground Pressure:</strong> {primaryWeather.main.grnd_level} hPa
                 </div>
                 <div>
                   <FaSnowflake className="weather-icon" style={{ color: 'lightblue' }} />{' '}
@@ -448,27 +392,26 @@ const MoreDetails = ({ selectedWeather, weather }: MoreDetailsProps) => {
                 </div>
                 <div>
                   <FaEye className="weather-icon" style={{ color: 'green' }} />{' '}
-                  <strong>Visibility:</strong> {Number((selectedWeather[0].visibility / 1000).toFixed(1))} km
+                  <strong>Visibility:</strong> {Number((primaryWeather.visibility / 1000).toFixed(1))} km
                 </div>
                 <div>
                   <FaWind className="weather-icon" style={{ color: 'lightblue' }} />{' '}
-                  <strong>Wind Gust:</strong> {getWindGustData()}
+                  <strong>Wind Gust:</strong> {primaryWeather.wind.gust ? `${primaryWeather.wind.gust} km/h` : '0 km/h'}
                 </div>
                 <div>
                   <FaWind className="weather-icon" style={{ color: 'lightblue' }} />{' '}
-                  <strong>Wind Direction:</strong> {selectedWeather[0].wind.deg}°
+                  <strong>Wind Direction:</strong> {primaryWeather.wind.deg}°
                 </div>
                 <div>
                   <FaCloud className="weather-icon" style={{ color: 'gray' }} />{' '}
-                  <strong>Clouds:</strong> {selectedWeather[0].clouds.all}%
+                  <strong>Clouds:</strong> {primaryWeather.clouds.all}%
                 </div>
-                {/* Add weather description */}
                 <div>
-                  <strong>Weather:</strong> {selectedWeather[0]?.weather[0]?.description || 'No data available'}
+                  <strong>Weather:</strong> {primaryWeather?.weather[0]?.description || 'No data available'}
                 </div>
                 <div>
                   <FaMapMarkerAlt className="weather-icon" style={{ color: 'darkblue' }} />{' '}
-                  <strong>Country:</strong> {getCountryName(weather.sys.country)} ({weather.sys.country})
+                  <strong>Country:</strong> {getCountryName((weather?.sys?.country || primaryWeather.sys.country))} ({weather?.sys?.country || primaryWeather.sys.country})
                 </div>
               </div>
             </div>

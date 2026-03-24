@@ -8,7 +8,6 @@ import Map from './modules/dashboard/pages/map.tsx'
 import Info from './modules/dashboard/pages/TinTuc.tsx'
 import Air from './modules/dashboard/pages/KhongKhi.tsx'
 import './common/styles/FiveWeather.scss'
-import MoreDetails from './common/components/moredetails.tsx'
 import './common/styles/all.css'
 
 function App() {
@@ -111,7 +110,6 @@ function App() {
             <Route path='/map' element={<Map coord={geoData || { lat: 0, lon: 0 }} city={city} />} />
             <Route path='/news' element={<Info />} />
             <Route path='/air-quality' element={<Air />} />
-            <Route path='/moredetails' element={<MoreDetails selectedWeather={selectedWeather} weather={weather} />} />{' '}
           </Routes>
           <Footer />
         </div>
