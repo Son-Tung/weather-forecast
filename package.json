@@ -34,6 +34,7 @@
     "react-leaflet": "^4.2.1",
     "react-loading-skeleton": "^3.5.0",
     "react-router-dom": "^6.27.0",
+    "recharts": "^3.8.0",
     "sass": "^1.79.4",
     "swiper": "^11.1.14"
   },
@@ -43,6 +44,7 @@
     "@types/node": "^22.7.4",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "@types/suncalc": "^1.9.2",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "eslint": "^9.9.0",
     "eslint-config-prettier": "^9.1.0",

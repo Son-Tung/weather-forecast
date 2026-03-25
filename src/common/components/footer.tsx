@@ -25,6 +25,9 @@ const Footer: React.FC = () => {
             <Link to="/news">News</Link>
             <Link to="/map">Map</Link>
             <Link to="/air-quality">Air Quality</Link>
+            <Link to="/weather-analytics">Weather Analytics</Link>
+            <Link to="/sun">Sun</Link>
+            <Link to="/moon">Moon</Link>
           </nav>
 
           {/* Actions (no new page) */}

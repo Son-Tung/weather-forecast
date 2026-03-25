@@ -9,6 +9,10 @@ import Info from './modules/dashboard/pages/TinTuc.tsx'
 import Air from './modules/dashboard/pages/KhongKhi.tsx'
 import './common/styles/FiveWeather.scss'
 import './common/styles/all.css'
+import WeatherAnalytics from './modules/dashboard/pages/WeatherAnalytics.tsx'
+import SunPage from './modules/dashboard/pages/SunPage.tsx'
+import MoonPage from './modules/dashboard/pages/MoonPage.tsx'
+
 
 function App() {
   // khai báo sate và refs
@@ -110,6 +114,9 @@ function App() {
             <Route path='/map' element={<Map coord={geoData || { lat: 0, lon: 0 }} city={city} />} />
             <Route path='/news' element={<Info />} />
             <Route path='/air-quality' element={<Air />} />
+            <Route path='/weather-analytics' element={<WeatherAnalytics />} />
+            <Route path='/sun' element={<SunPage />} />
+            <Route path='/moon' element={<MoonPage />} />
           </Routes>
           <Footer />
         </div>
