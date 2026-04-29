@@ -1,0 +1,253 @@
+.news {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #0f172a;
+
+  /* TITLE */
+  &__title {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    letter-spacing: -0.3px;
+  }
+
+  /* STATES */
+  &__loading,
+  &__error,
+  &__empty {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+
+  &__loading {
+    color: #64748b;
+  }
+
+  &__error {
+    color: #ef4444;
+  }
+
+  &__empty {
+    color: #94a3b8;
+  }
+
+  /* HERO */
+  &__hero {
+    position: relative;
+    display: block;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 28px;
+    text-decoration: none;
+    color: inherit;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+
+    img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    &:hover img {
+      transform: scale(1.06);
+    }
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.65),
+      rgba(0, 0, 0, 0.15),
+      transparent
+    );
+
+    color: #fff;
+
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 10px 0 8px;
+      line-height: 1.3;
+    }
+
+    p {
+      font-size: 14px;
+      opacity: 0.9;
+      line-height: 1.5;
+      max-width: 90%;
+    }
+  }
+
+  &__tag {
+    background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    width: fit-content;
+  }
+
+  /* GRID */
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+  }
+
+  &__card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    &:hover img {
+      transform: scale(1.08);
+    }
+  }
+
+  &__cardOverlay {
+    position: absolute;
+    inset: 0;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.65),
+      rgba(0, 0, 0, 0.1),
+      transparent
+    );
+
+    color: #fff;
+
+    opacity: 0.95;
+    transition: opacity 0.3s ease;
+
+    h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    span {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+  }
+
+  &__card:hover &__cardOverlay {
+    opacity: 1;
+  }
+
+  /* LINKS GLOBAL */
+  a {
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* SKELETON LOADING */
+  &__skeleton {
+    height: 190px;
+    border-radius: 14px;
+    background: linear-gradient(
+      90deg,
+      #e5e7eb 25%,
+      #f1f5f9 37%,
+      #e5e7eb 63%
+    );
+    background-size: 400% 100%;
+    animation: shimmer 1.3s ease infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 100% 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    &__hero img {
+      height: 320px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 16px;
+
+    &__title {
+      font-size: 24px;
+    }
+
+    &__hero img {
+      height: 240px;
+    }
+
+    &__overlay h2 {
+      font-size: 18px;
+    }
+
+    &__overlay p {
+      font-size: 13px;
+    }
+
+    &__grid {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    &__hero {
+      border-radius: 14px;
+    }
+
+    &__card {
+      border-radius: 12px;
+    }
+  }
+}

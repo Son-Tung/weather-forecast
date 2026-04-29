@@ -1,0 +1,464 @@
+/* ================= DASHBOARD ================= */
+.dashboard {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 0 24px;
+  margin-bottom: 80px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ================= CARD ================= */
+.card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  min-height: 260px;
+}
+
+.card-temperature,
+.humidity,
+.wind,
+.pressure,
+.visibility,
+.aqi,
+.uv {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: linear-gradient(180deg, #ffffff 0%, #f9fbff 100%);
+}
+
+/* ================= TITLE ================= */
+.dashboard-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  letter-spacing: 0.2px;
+}
+
+/* ================= TEXT ================= */
+.card p {
+  margin: 4px 0;
+}
+
+.temp-description,
+.feellike-description,
+.humid-description,
+.press-description,
+.visibility-description,
+.aqi-description,
+.uv-description {
+  font-size: 13px;
+  color: #666;
+  margin-top: 6px;
+}
+
+/* ================= STATUS ================= */
+.temp-warning,
+.feelike-warning,
+.humid-warning,
+.visibility-warning,
+.press-warning,
+.aqi-warning,
+.uv-warning {
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+/* ================= TEMPERATURE ================= */
+.temp-dsc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: 4px 0 8px;
+}
+
+.temp-dsc img {
+  height: auto;
+}
+
+.temper {
+  position: absolute;
+  font-size: 36px;
+  font-weight: 700;
+  color: #2657b9;
+}
+
+.temp-warning {
+  color: #2f6edb;
+}
+
+/* ================= FEELS LIKE ================= */
+.feelslike {
+  display: flex;
+  flex-direction: column;
+}
+
+.fl-icon {
+  width: 230px;
+  height: auto;
+  align-self: center;
+  margin: 2px 0 10px;
+}
+
+.feellike-container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.feellike-container > div {
+  background: rgba(105, 148, 250, 0.08);
+  border: 1px solid rgba(105, 148, 250, 0.2);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.feellike-container-temp {
+  font-size: 26px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.feellike-container-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.feellike-details {
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.feelike-warning {
+  color: #2f6edb;
+}
+
+/* ================= HUMIDITY ================= */
+.humid-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.humid-content-img {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 70px;
+}
+
+.humidLevelBar {
+  width: 6px;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+}
+
+.humidPercent {
+  width: 100%;
+  height: 70%;
+  background-color: #6994fa;
+  border-radius: 6px;
+}
+
+.hmintro {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.humid-content-info {
+  min-width: 110px;
+  display: grid;
+  gap: 2px;
+}
+
+.humid-text,
+.dewpoint-text {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.62);
+}
+
+.dewpoint {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.humid-warning {
+  color: #2f6edb;
+}
+
+/* ================= WIND ================= */
+.wind-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 👉 FIX QUAN TRỌNG */
+.wind-content-img {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(105, 148, 250, 0.14) 0%, rgba(105, 148, 250, 0.04) 70%);
+}
+
+/* icon */
+.wind-icon {
+  width: 100%;
+  height: 100%;
+}
+
+/* hướng */
+.North,
+.South,
+.East,
+.West {
+  position: absolute;
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+/* TOP */
+.North {
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* BOTTOM */
+.South {
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* LEFT */
+.West {
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* RIGHT */
+.East {
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* info */
+.wind-content-info {
+  width: 110px;
+  display: grid;
+  gap: 6px;
+}
+
+.windintro {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.wind-dsc {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.wind-unit,
+.wind-text {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.wind-title {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 0;
+}
+
+.wind .humid-details .humid-warning {
+  color: #2f6edb;
+}
+
+/* ================= PRESSURE ================= */
+.press-content {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 6px 0 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(105, 148, 250, 0.1);
+}
+
+.pressure > img {
+  height: auto;
+  align-self: center;
+}
+
+.presscurrent {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.pressmeme {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.presstitle {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.presstime {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.press-warning {
+  color: #2f6edb;
+}
+
+/* ================= VISIBILITY ================= */
+.visibilityLevelBarContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 6px;
+}
+
+.visibilityLevelBar {
+  height: 10px;
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+}
+
+.visibilityText h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 10px;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: rgba(105, 148, 250, 0.12);
+}
+
+.visibility-warning {
+  color: #2f6edb;
+}
+
+/* ================= AQI ================= */
+.aqi-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-top: 4px;
+  padding: 8px 0;
+  border-radius: 12px;
+  background: radial-gradient(circle, rgba(105, 148, 250, 0.16) 0%, rgba(105, 148, 250, 0.03) 72%);
+}
+
+.aqi-content p {
+  position: absolute;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f4d9d;
+}
+
+.aqi-icon {
+  width: 125px;
+}
+
+.aqi-warning {
+  color: #2f6edb;
+}
+
+/* ================= UV ================= */
+.uv-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-top: 4px;
+  padding: 8px 0;
+  border-radius: 12px;
+  background: radial-gradient(circle, rgba(105, 148, 250, 0.16) 0%, rgba(105, 148, 250, 0.03) 72%);
+}
+
+.uv-content p {
+  position: absolute;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f4d9d;
+}
+
+.uv-icon {
+  width: 120px;
+}
+
+.uv-warning {
+  color: #2f6edb;
+}
+
+/* ================= PUSH DETAILS ================= */
+.temp-details,
+.feellike-details,
+.humid-details,
+.press-details,
+.visibility-details,
+.aqi-details,
+.uv-details {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1200px) {
+  .dashboard {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+}

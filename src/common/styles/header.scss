@@ -1,22 +1,46 @@
+
 * {
   box-sizing: border-box;
 }
 
+body {
+  margin: 0
+}
+/* Văn bản chung cho responsive */
+.responsive-text {
+  font-size: 1em;
+}
+.main-content {
+  padding-top: 100px; // Thêm khoảng cách tương ứng với chiều cao của header
+}
 /* Header */
 .App-header {
-  background-color: #fff;
+  background-image: url('../../assets/images/—Pngtree—cumulonimbus\ capillatus\ incus\ in\ the_15539280.png'); // Thay đổi đường dẫn đến bức ảnh của bạn
+  background-size: cover; // Đảm bảo bức ảnh phủ kín toàn bộ header
+  background-position:bottom; // Căn giữa bức ảnh
   padding: 20px 50px;
-  display: flex;
-  justify-content: space-between;
+  display: flex;  
   align-items: center;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   top: 0;
   width: 100%;
-  z-index: 98;
+  font-family: 'Arial', 'Calibri', sans-serif;
+  justify-content: center;
+  position: sticky; // Đặt header cố định
+  top: 0; // Đảm bảo header nằm ở trên cùng
+  left: 0; // Đảm bảo header nằm ở bên trái
+  right: 0; // Đảm bảo header mở rộng hết chiều ngang
+  z-index: 99;
+
+  &-body {
+    width: 100%;
+  }
 
   img {
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 120px;
+    max-height: 120px;
+    margin-bottom: 20px;
+    margin-left: -10px;
   }
 
   h1 {
@@ -24,128 +48,40 @@
     margin: 0;
     display: flex;
     align-items: center;
-    margin-left: 0px;
-    margin-top: 25px;
+    margin-left: 10px;
+    width: 350px;
+    color: #ffffff;
   }
 
-  nav {
+  .header-content {
     display: flex;
-    justify-content: center;
-    margin-top: 15px;
-  }
+    justify-content:space-between;
+    width: 100%;
+    align-items: center;
 
-  ul {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    margin-right: 600px;
-
-    li {
-      max-width: 40px;
-      max-height: 40px;
-      margin-left: 130px;
-
-      a {
-        color: rgb(0, 0, 0);
-        text-decoration: none;
-        font-size: 1.8em;
-        white-space: nowrap;
-        position: relative;
-        transition: color 0.3s ease;
-
-        &::after {
-          content: '';
-          position: absolute;
-          width: 0;
-          height: 2px;
-          bottom: -5px;
-          left: 0;
-          background-color: #4e9afb;
-          transition: width 0.3s ease;
-        }
-
-        &:hover {
-          color: #4e9afb;
-
-          &::after {
-            width: 100%;
-          }
-        }
-      }
+    .header-logo {
+      display: flex;
     }
   }
 }
-
-.logo-title {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.menu-icon {
-  font-size: 2.2em;
-  margin-left: 0px;
-  color: #4e9afb;
-  max-width: 100%;
-
-  &:hover {
-    color: #4e76f2;
-    transform: scale(1.4);
-    transition:
-      transform 0.5s ease,
-      color 0.5s ease;
-  }
-}
-
-.bell-icon {
-  animation: shake 0.5s infinite;
-}
-
-.App-header .city-suggestions {
-  list-style-type: none; /* Loại bỏ dấu đầu dòng */
-  padding: 0; /* Loại bỏ padding mặc định */
-  margin: 5px 0 0 0; /* Loại bỏ margin mặc định */
-  border: 1px solid #ccc; /* Đường viền cho danh sách */
-  border-radius: 4px; /* Bo góc cho danh sách */
-  background-color: white; /* Màu nền trắng */
-  position: absolute; /* Đảm bảo danh sách gợi ý hiển thị dưới ô tìm kiếm */
-  width: 100%; /* Đảm bảo danh sách rộng bằng với ô input */
-  display: block;
-  height: min-content;
-  max-height: 300px;
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  div {
-    margin-left: 35px;
-    max-width: 200px;
-    font-size: 1.2em;
-    margin-top: 15px;
-    margin-bottom: 20px;
-    cursor: pointer; /* Con trỏ chuột thay đổi khi hover */
-
-    &:hover {
-      background-color: #f0f0f0; /* Đổi màu nền khi hover */
-    }
-  }
-}
-
 /* Search Container in Header */
 .search-container {
   display: flex;
   justify-content: flex-start;
-  margin-top: 15px;
-  margin-left: 22px;
+  margin-top: 0px;
+  margin-left: 0px;
 }
 
 .input-wrapper {
   position: relative;
-  display: inline-block;
+  display: flex; // Sử dụng flex để căn chỉnh các phần tử
 
   input {
-    padding: 8px 30px 8px 10px;
-    width: 250px;
+    padding: 8px 10px; // Giảm padding bên phải để có chỗ cho nút
+    width: 400px;
+    border-radius: 20px;
+    border: 1px solid #ccc; // Thêm border cho input
+    border-radius: 15px;
 
     &:focus + .search-icon {
       display: none;
@@ -159,14 +95,17 @@
   button {
     padding: 9px 12px;
     background-color: #ffffff;
-    color: #4e9afb;
-    border: 1px solid #868686;
+    color: #000000;
+    border: 1px solid #000000;
     cursor: pointer;
+    border-radius: 20px;
+    margin-left: -69px; // Điều chỉnh vị trí của nút
+    z-index: 1; // Đảm bảo nút nằm trên input
 
     &:hover {
-      background-color: #4e76f2;
-      color: white;
-      border-color: #4e76f2;
+      background-color: #1770eb;
+      color: rgb(255, 255, 255);
+      border-color: #1770eb;
       transition:
         background-color 0.3s ease,
         color 0.3s ease;
@@ -175,49 +114,86 @@
 
   .search-icon {
     position: absolute;
-    right: 85px;
+    right: 78px; // Điều chỉnh vị trí của biểu tượng tìm kiếm
     top: 10px;
-    color: #4e9afb;
+    color: #000000;
   }
 }
 
-/* Pop-up */
-.popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 99;
+.App-header .city-suggestions {
+  list-style-type: none; /* Loại bỏ dấu đầu dòng */
+  padding: 0; /* Loại bỏ padding mặc định */
+  margin: 5px 0 0 0; /* Loại bỏ margin mặc định */
+  border: 1px solid #ccc; /* Đường viền cho danh sách */
+  border-radius: 20px; /* Bo góc cho danh sách */
+  background-color: white; /* Màu nền trắng */
+  position:absolute; /* Đảm bảo danh sách gợi ý hiển thị dưới ô tìm kiếm */
+  width: 98%; /* Đảm bảo danh sách rộng bằng với ô input */
+  display: block;
+  height: min-content;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-top: 34px;
+  z-index: 2;
 
-  .popup-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+  div {
+    margin-left: 20px;
+    max-width: none;
+    width: 100%;
+    font-size: 1.2em;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    cursor: pointer; /* Con trỏ chuột thay đổi khi hover */
 
-    h3 {
-      margin: 0;
-      font-size: 1.5em;
+    &:hover {
+      color: #1770eb; /* Đổi màu nền khi hover */
+      
+    }
+  }
+}
+
+/* Media Queries */
+@media (max-width: 1098px) {
+  .App-header {
+    flex-direction: column; /* Chuyển hướng thành cột trên màn hình nhỏ */
+    padding: 10px 20px; /* Giảm padding */
+  }
+
+  .header-content {
+    flex-direction: column; /* Đặt các phần tử trong header-content theo chiều dọc */
+    align-items: flex-start; /* Căn chỉnh các phần tử bên trái */
+    width: 62%;
+    margin-right: 1px;
+
+    img {
+      justify-self: center;
+      max-width: 200px;
+      max-height: 200px;
     }
 
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #4e9afb;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+    h1 {
+      justify-content: center;
+    }
+  }
+  
+  .search-container {
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  .notification-icon {
+    display: none;
+  }
+}
 
-      &:hover {
-        background-color: #4e76f2;
+@media (max-width: 1098px){
+  .App-header{
+    .header-content{
+      h1{
+        display: none;
       }
     }
   }
 }
+

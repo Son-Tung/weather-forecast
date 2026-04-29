@@ -1,65 +1,123 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import { BrowserRouter as Router } from 'react-router-dom'
-import Footer from './common/components/footer.tsx'
-import Main from './common/components/main.tsx'
+import { useState, useEffect } from 'react'
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import Header from '../src/common/components/header.tsx'
-import './common/styles/index.scss'
-import '@fortawesome/fontawesome-free/css/all.min.css'
-import Detail5day from './common/components/detail5day.tsx'
-import { useState, useEffect, useRef } from 'react'
-import { forecastWeather } from './common/services/api.tsx'
-import { createRoot } from 'react-dom/client' // Thay thế ReactDOM.render
-import FivedayWeather from './common/components/fivedayWeather.tsx'
-import Details from './common/components/details.tsx'
+import Footer from './common/components/footer.tsx'
+import Home from './modules/dashboard/pages/Home.tsx'
+import Map from './modules/dashboard/pages/map.tsx'
+import Info from './modules/dashboard/pages/TinTuc.tsx'
+import Air from './modules/dashboard/pages/KhongKhi.tsx'
+import './common/styles/FiveWeather.scss'
+import './common/styles/all.css'
+import WeatherAnalytics from './modules/dashboard/pages/WeatherAnalytics.tsx'
+import SunPage from './modules/dashboard/pages/SunPage.tsx'
+import MoonPage from './modules/dashboard/pages/MoonPage.tsx'
+
 
 function App() {
+  // khai báo sate và refs
   const [city, setCity] = useState<string>('Hanoi')
   const [weather, setWeather] = useState<any>(null)
   const [weather5day, setWeather5day] = useState<any>(null)
-  const [loadingWeather, setLoadingWeather] = useState<boolean>(true)
-  const detailSectionRef = useRef<HTMLElement>(null)
-  
-  const getWeather = async (city: string) => {
+  const [selectedWeather, setSelectedWeather] = useState<any[]>([])
+  const [geoData, setGeoData] = useState(null)
+  const [dateSelected, setDateSelected] = useState<any>(null)
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout | undefined; 
+    function handleResize() {
+      if (timer) {
+        clearTimeout(timer);
+      }
+
+      timer = setTimeout(() => {
+        setWindowWidth(window.innerWidth);
+      }, 100);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const getDateWithoutTime = (date: Date): Date => {
+    const newDate = new Date(date); // Tạo một bản sao của date
+    newDate.setHours(0, 0, 0, 0); // Thiết lập giờ, phút, giây, mili giây thành 0
+    return newDate;
+  }
+
+  const onItemSelected = (date: Date, weather: any, weather5day: any) => {
     try {
-      const weather = await forecastWeather(city)
-      setWeather(weather.weatherData)
-      setWeather5day(weather.forecastData)
-      console.log('data', weather)
-    } catch (error) {
-      console.error('Error fetching weather data:', error)
-    } finally {
-      setLoadingWeather(false) // Đánh dấu đã tải xong thời tiết
-    }
-  }
-  
-  useEffect(() => {
-    getWeather(city);
-  }, [city])
+      let dateNow: Date = getDateWithoutTime(new Date())
+      let dateSelect: Date = getDateWithoutTime(date)
+      let weatherFilter: any = []
+      let startTime: Date
+      let endTime: Date
 
-  const renderDetail5day = () => {
-    if (detailSectionRef.current && weather && weather5day) {
-      const root = createRoot(detailSectionRef.current) // Tạo root mới
-      root.render(<Detail5day weather={weather} weather5day={weather5day} />)
-    }
-  }
+      if (dateSelect.getTime() === dateNow.getTime()) {
+        startTime = new Date()
+        startTime.setHours(startTime.getHours() - (startTime.getHours() % 3) + 3, 0, 0)
+        weatherFilter.push(weather)
+      } else {
+        startTime = getDateWithoutTime(date)
+      }
 
-  useEffect(() => {
-    if (!loadingWeather) {
-      renderDetail5day()
-    }
-  }, [loadingWeather, weather, weather5day])
+      endTime = new Date(startTime)
+      endTime.setDate(endTime.getDate() + 1)
+
+      const startTimestamp = startTime.getTime() / 1000
+      const endTimestamp = endTime.getTime() / 1000
+
+      weather5day?.list?.forEach((getWeather: any) => {
+        if (startTimestamp <= getWeather?.dt && getWeather?.dt <= endTimestamp) {
+          weatherFilter.push(getWeather)
+        }
+      })
+
+      if (dateSelected == null || dateSelected.getTime() != dateSelect.getTime()) {
+        setDateSelected(dateSelect)
+      }
+
+      setSelectedWeather(weatherFilter)
+    } catch (error) {}
+  }
 
   return (
     <>
       <Router>
-        <div className='App'>
-          <Header city={city} setCity={setCity} setWeather={setWeather} />
-          <div className='content'>
-            <Main weather={weather} />
-            <FivedayWeather weather5day={weather5day} getWeather={getWeather} />
-            <section className='detail-5-day' ref={detailSectionRef}></section>
-            <Details />
-          </div>
+        <div className='total-container'>
+          <Header
+            city={city}
+            setCity={setCity}
+            setWeather={setWeather}
+            setWeather5day={setWeather5day}
+            setGeoData={setGeoData}
+          />
+          <Routes>
+            <Route
+              path='/'
+              element={
+                <Home
+                  weather={weather}
+                  weather5day={weather5day}
+                  onItemSelected={onItemSelected}
+                  selectedWeather={selectedWeather}
+                  city={city}
+                  geoData={geoData}
+                  dateSelected={dateSelected}
+                  windowWidth={windowWidth}
+                />
+              }
+            />
+            <Route path='/map' element={<Map coord={geoData || { lat: 0, lon: 0 }} city={city} />} />
+            <Route path='/news' element={<Info />} />
+            <Route path='/air-quality' element={<Air />} />
+            <Route path='/weather-analytics' element={<WeatherAnalytics />} />
+            <Route path='/sun' element={<SunPage />} />
+            <Route path='/moon' element={<MoonPage />} />
+          </Routes>
           <Footer />
         </div>
       </Router>

@@ -1,68 +1,26 @@
 import '../styles/detail.scss'
-// import React, { useState,  } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css'
-// import { fetchWeather } from '../services/api'
-import SunnyImage from '../../assets/images/svg/Screenshot_15-10-2024_101422_assets.msn.com.jpeg' // ảnh trời nắng
-import RainyImage from '../../assets/images/svg/Screenshot_15-10-2024_103233_assets.msn.com.jpeg' // ảnh trời mưa
-import CloudyImage from '../../assets/images/svg/Screenshot_15-10-2024_10259_assets.msn.com.jpeg' // ảnh trời mây
-import MistImage from '../../assets/images/svg/Screenshot 2024-10-18 093724.png' // ảnh trời sương mù
-// import { lstCities } from '../../assets/cities'
+import SunnyImage from '../../assets/images/sunny_detail.png' // ảnh trời nắng
+import RainyImage from '../../assets/images/light_rain.png' // ảnh trời mưa
+import CloudyImage from '../../assets/images/cloudy_detail.png' // ảnh trời mây
+import MistImage from '../../assets/images/mist_detail.png' // ảnh trời sương mù
+import BigRain from '../../assets/images/muatovcl.png' // ảnh trời mưa to
+import SnowImage from '../../assets/images/snowdy.png' // ảnh trời có tuyết
+import SmokeImage from '../../assets/images/mist_detail.png' // ảnh trời có khói
 
-function Detail({ weather }: any) {
-  // const [city, setCity] = useState<string>('')
-  // const [weather, setWeather] = useState<any>(null)
-  // const [filteredCities, setFilteredCities] = useState<any[]>([])
-
+function Detail({ weather, geoData }: any) {
   const weatherImages: { [key: string]: string } = {
     clear: SunnyImage,
     rain: RainyImage,
     clouds: CloudyImage,
     mist: MistImage,
-    haze: MistImage
+    haze: MistImage,
+    frost: MistImage,
+    Thunderstorm_with_rain: BigRain,
+    smoke: SmokeImage,
+    snow: SnowImage
     // thêm các tình trạng thời tiết khác nếu cần
   }
-
-  // Lọc thành phố theo đầu vào từ thanh tìm kiếm
-  //  const handleCityChange = (input: string) => {
-  //   setCity(input)
-  //   try {
-  //     if (input.length > 0) {
-  //       const filtered = lstCities.filter((city) => city.name.toLowerCase().includes(input.toLowerCase()))
-  //       // if(filtered?.length){
-  //         setFilteredCities(filtered)
-  //       // }
-  //     } else {
-  //       setFilteredCities([])
-  //     }
-  //   } catch (e) {
-  //     console.log(e)
-  //   }
-  // }
-
-  // const handleCityClick = (city: string) => {
-  //   setCity('')
-  //   getWeather(city) // Gọi hàm để lấy thông tin thời tiết
-  // }
-
-  // const getWeather = async (scopeCity?: string) => {
-  //   try {
-  //     const data = await fetchWeather(scopeCity || city)
-  //     setWeather(data)
-  //     setFilteredCities([])
-  //   } catch (error) {
-  //     console.error('Error:', error)
-  //   }
-  // }
-
-  //  // Xử lý sự kiện nhấn phím Enter
-  //  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (e.key === 'Enter') {
-  //     if (filteredCities?.length) {
-  //       getWeather(filteredCities[0].name) // Gọi hàm tìm kiếm khi nhấn Enter
-  //       setCity('')
-  //     }
-  //   }
-  // }
 
   return (
     <div className='App'>
@@ -78,12 +36,14 @@ function Detail({ weather }: any) {
               />
               <div className='temperature-details'>
                 <h1>{weather?.main?.temp}°C</h1>
+                <h2><i className="fas fa-map-marker-alt"></i> {/* Icon vị trí */}
+                  {geoData && Object.keys(geoData)?.length > 0 ? geoData?.name : 'Không tìm thấy vị trí'}
+                </h2> {/* Hiển thị tên thành phố ở đây */}
                 <p className='weather-description'>
                   {weather?.weather?.[0]?.description.charAt(0).toUpperCase() +
                     weather?.weather?.[0]?.description?.slice(1)}
                 </p>
-
-                <p className='feels-like'>Feels like {weather?.main?.feels_like}°C</p>
+                <p className='feels-like'>Feels like: {weather?.main?.feels_like}°C</p>
               </div>
             </div>
             <div className='additional-info'>

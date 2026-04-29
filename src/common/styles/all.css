@@ -1,0 +1,17 @@
+.total-container {
+  background: #d0e5ff;
+}
+
+.detail-5-day-container {
+  width: 80%;
+  margin: 0 10%;
+  background: white;
+  border-radius: 20px;
+}
+
+
+/*
+.detail-5-day-sidebar, .detail-5-day-content {
+  background: white;
+}
+*/

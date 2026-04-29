@@ -1,0 +1,311 @@
+// Import Google Fonts 
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+
+// Variables with enhanced colors
+$primary-text-color: #2c3e50;
+$background-light: #f8fafc;
+$background-lighter: #ffffff;
+$background-white: #ffffff;
+$border-color: rgba(0, 0, 0, 0.08);
+$sun-color: #ffd700;
+$card-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+$hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+// Enhanced Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+}
+
+@mixin base-card {
+  background-color: $background-white;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: $card-shadow;
+  transition: box-shadow 0.3s ease;
+  
+  &:hover {
+    box-shadow: $hover-shadow;
+  }
+}
+
+// Base styles
+.details {
+  width: 100%;
+  margin: 0 auto;
+  background-color: $background-light;
+  color: $primary-text-color;
+  font-family: 'Open Sans', sans-serif;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.details-sidebar {
+  display: flex;
+  padding: 15px 15px 0;
+  border-bottom: 1px solid $border-color;
+
+  button {
+    background-color: transparent;
+    border: none;
+    color: $primary-text-color;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba($primary-text-color, 0.04);
+    }
+
+    &.active {
+      border-bottom-color: $primary-text-color;
+      font-weight: 600;
+    }
+  }
+}
+
+.details-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 25px;
+  gap: 25px;
+}
+
+// Weather info sections with enhanced styling
+.weather-info-left {
+  @include base-card;
+  flex: 1;
+  min-width: 300px;
+}
+
+.weather-info-right {
+  @extend .weather-info-left;
+  flex: 3;
+}
+
+// Enhanced headings
+h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: $primary-text-color;
+  background-color: $background-light;
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid $border-color;
+}
+
+// Enhanced Sun and Moon section
+.sun-moon-info {
+  display: flex;
+  gap: 25px;
+}
+
+.sun-info {
+  flex: 1;
+  background: linear-gradient(to bottom, $background-lighter, $background-white);
+  border-radius: 16px;
+  padding: 39px;
+  box-shadow: $card-shadow;
+}
+
+// Improved info components
+.info-header {
+  @include flex-center;
+  gap: 15px;
+  margin-bottom: 30px;
+  padding: 12px;
+  background: rgba($primary-text-color, 0.03);
+  border-radius: 12px;
+}
+
+.info-text {
+  p {
+    margin: 0;
+
+    &:first-child {
+      margin-bottom: 8px;
+      color: rgba($primary-text-color, 0.7);
+      font-size: 13px;
+      font-weight: 500;
+    }
+  }
+}
+
+// Enhanced icons and values
+.weather-icon {
+  width: 24px;
+  height: 24px;
+  margin-top: 0;
+  transition: transform 0.2s ease;
+
+  &.location {
+    color: $sun-color;
+  }
+  
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.lat-lon-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: $primary-text-color;
+}
+
+// Enhanced path components
+.path-container {
+  margin: 35px 0;
+}
+
+.path-line {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-top: 2px dashed rgba($primary-text-color, 0.15);
+  transform: translateY(-20px);
+}
+
+// Enhanced sun path
+.sun-path {
+  position: relative;
+  height: 2px;
+  background: rgba($primary-text-color, 0.08);
+  margin: 45px 0;
+  border-radius: 4px;
+}
+
+.sun-indicator {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: $sun-color;
+  box-shadow: 0 0 15px rgba($sun-color, 0.4);
+}
+
+// Enhanced time components
+.time {
+  font-size: 15px;
+  font-weight: 600;
+  color: $primary-text-color;
+}
+
+.time-labels {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+}
+
+.time-label {
+  p:first-child {
+    color: rgba($primary-text-color, 0.7);
+    font-size: 13px;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  &.sunrise, &.sunset {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+// Enhanced weather details grid
+.weather-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  background-color: $background-lighter;
+  border-radius: 16px;
+
+  div {
+    @include flex-center;
+    font-size: 14px;
+    color: $primary-text-color;
+    padding: 15px;
+    background: $background-white;
+    border-radius: 12px;
+    box-shadow: $card-shadow;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $hover-shadow;
+    }
+  }
+
+  strong {
+    color: rgba($primary-text-color, 0.7);
+    margin-right: 10px;
+    font-weight: 600;
+  }
+
+  .weather-icon {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+}
+
+// Enhanced images
+.sunrise-icon,
+.sunset-icon {
+  border: 2px solid $sun-color;
+  border-radius: 50%;
+  padding: 4px;
+  width: 24px;
+  height: 24px;
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+// Optimized media queries
+@media (max-width: 1439px) {
+  .details-content {
+    flex-direction: column;
+  }
+
+  .weather-info-left {
+    margin-bottom: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .details {
+    width: 95%;
+  }
+
+  .details-content {
+    padding: 15px;
+  }
+
+  .sun-moon-info {
+    flex-direction: column;
+  }
+
+  .weather-details {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+  
+  h3 {
+    font-size: 18px;
+    padding: 10px;
+  }
+}

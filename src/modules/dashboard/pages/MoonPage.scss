@@ -1,0 +1,140 @@
+/* 🌌 Background */
+.moon-container {
+  min-height: 100vh;
+  padding: 24px;
+  background: radial-gradient(circle at top, #020617, #000);
+  color: #fff;
+}
+
+/* Title */
+.moon-title {
+  color: #fff !important;
+  margin-bottom: 20px;
+}
+
+/* 🌙 Moon section */
+.moon-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+/* 🌙 Moon */
+.moon-wrapper {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  animation: rotateMoon 25s linear infinite;
+}
+
+.moon {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff, #d1d5db);
+
+  box-shadow:
+    0 0 40px rgba(255,255,255,0.2),
+    inset -10px 0 40px rgba(0,0,0,0.7);
+
+  animation: glow 5s ease-in-out infinite;
+}
+
+/* 🌙 Glow */
+@keyframes glow {
+  0%, 100% {
+    box-shadow:
+      0 0 30px rgba(255,255,255,0.2),
+      inset -10px 0 40px rgba(0,0,0,0.7);
+  }
+  50% {
+    box-shadow:
+      0 0 70px rgba(167,139,250,0.4),
+      inset -10px 0 40px rgba(0,0,0,0.7);
+  }
+}
+
+/* 🌙 Rotate */
+@keyframes rotateMoon {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 🌙 Phase text */
+.moon-phase-text {
+  margin-top: 12px;
+  color: #cbd5f5;
+  font-size: 14px;
+}
+
+/* 🌙 Cards */
+.moon-card {
+  border-radius: 16px !important;
+  background: rgba(139, 92, 246, 0.1) !important;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  transition: 0.3s;
+}
+
+.moon-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* Statistic */
+.ant-statistic-title {
+  color: rgba(255,255,255,0.7) !important;
+}
+
+.ant-statistic-content {
+  color: #fff !important;
+}
+
+/* Chart */
+.moon-chart-card {
+  margin-top: 20px;
+  border-radius: 20px !important;
+  background: rgba(139, 92, 246, 0.08) !important;
+  backdrop-filter: blur(10px);
+}
+
+/* 🔍 Search */
+.search-box {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+  color: white;
+}
+
+.suggestions {
+  position: absolute;
+  width: 100%;
+  margin-top: 8px;
+  border-radius: 12px;
+  background: rgba(15,23,42,0.95);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.suggestion-item {
+  padding: 12px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background: rgba(167,139,250,0.2);
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .moon-container {
+    padding: 12px;
+  }
+}

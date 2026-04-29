@@ -1,66 +1,138 @@
+
 /* Phần thân */
 .App-body {
   flex: 1;
   padding: 40px;
-  background: linear-gradient(to right, #f5f8fc, #ffffff);
+  background: linear-gradient(to right, #dae9fb, #dae9fb);
   text-align: center;
   border-radius: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   max-width: 100%;
+  font-family: 'Arial', 'Calibri', sans-serif;
 }
 
+/* Thẻ chứa phần hiển thị thời tiết chính */
 .weather-info {
   background-color: #fff;
-  padding: 30px;
-  border-radius: 20px;
+  padding: 20px;
+  border-radius: 80px;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  margin-top: 20px;
+  align-items: center;
+  margin: 40px auto;
+  max-width: 100%;
+  width: 100%;
   transition: transform 0.3s ease;
-  width: 95%;
-  margin-left: 50px;
 
+  /* Phần tiêu đề với hình ảnh thời tiết và chi tiết nhiệt độ */
   .weather-header {
     display: flex;
     align-items: center;
-    margin-left: 570px;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    margin-right: 10px;
   }
 
+  /* Hình ảnh thời tiết */
   .weather-image {
-    width: 160px;
-    height: 160px;
-    margin-right: 20px;
+    width: 380px;
+    height: 290px;
+    margin-top: 30px;
   }
 
-  .temperature-details h1 {
-    font-size: 5.5em;
-    color: #333;
-    margin: 0;
+  /* Chi tiết nhiệt độ */
+  .temperature-details {
+    h1 {
+      font-size: clamp(3em, 5vw, 6.5em);
+      color: #2a2a2a;
+      margin: 0;
+      text-align: center;
+    }
+
+    h2{
+      color: #606060;
+    }
   }
 
   .weather-description {
-    font-size: 2em;
-    color: #666;
+    font-size: clamp(2.5em, 3vw, 2em);
+    color: #4c4c4c;
     margin: 10px 0;
+    text-align: center;
   }
 
   .feels-like {
-    font-size: 1.2em;
+    font-size: clamp(1.6em, 2vw, 1.2em);
     color: #888;
+    text-align: center;
   }
 
+  /* Thông tin thời tiết bổ sung */
   .additional-info {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
     width: 100%;
     margin-top: 20px;
-    
 
     p {
-      font-size: 1.2em;
+      font-size: clamp(1.4em, 1.5vw, 1.2em);
       color: #333;
+      text-align:center;
+      flex: 1 1 200px;
+    }
+  }
+}
+
+
+
+@media (max-width: 1320px) {
+  .weather-info {
+    .additional-info {
+      display: grid; // Sử dụng grid để chia thành cột
+      grid-template-columns: repeat(3, 1fr); // Chia thành 3 cột
+      gap: 20px; // Khoảng cách giữa các cột
+
+      p {
+        flex: 1 1 auto; // Giữ cho các phần tử co giãn
+        text-align: center; // Canh giữa nội dung
+        // Không cần thiết phải đặt chiều rộng ở đây, vì grid sẽ tự động quản lý
+      }
+    }
+  }
+}
+
+@media (max-width: 960px) {
+  .weather-info {
+    .additional-info {
+      display: grid; // Sử dụng grid để chia thành cột
+      grid-template-columns: repeat(2, 1fr); // Chia thành 3 cột
+      gap: 20px; // Khoảng cách giữa các cột
+
+      p {
+        flex: 1 1 auto; // Giữ cho các phần tử co giãn
+        text-align: center; // Canh giữa nội dung
+        // Không cần thiết phải đặt chiều rộng ở đây, vì grid sẽ tự động quản lý
+      }
+    }
+  }
+}
+
+@media (max-width: 540px) {
+  .weather-info {
+    .additional-info {
+      display: grid; // Sử dụng grid để chia thành cột
+      grid-template-columns: repeat(1, 1fr); // Chia thành 3 cột
+      //gap: 20px; // Khoảng cách giữa các cột
+
+      p {
+        flex: 1 1 auto; // Giữ cho các phần tử co giãn
+        text-align: center; // Canh giữa nội dung
+        // Không cần thiết phải đặt chiều rộng ở đây, vì grid sẽ tự động quản lý
+      }
     }
   }
 }
